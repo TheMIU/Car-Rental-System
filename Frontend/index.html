@@ -15,8 +15,18 @@
     <!-- fontawsome -->
     <link href="assets/fontawsome/css/all.min.css" rel="stylesheet">
 
+    <!--Override all input field colors-->
+    <style>
+        .modal-body input[type="text"],
+        .modal-body input[type="password"],
+        .modal-body input[type="email"] {
+            background-color: #dadada !important;
+            color: #050505 !important;
+        }
+    </style>
+
 </head>
-<body>
+<body class="bg-black">
 <!-- nav bar ============================================= -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -34,10 +44,21 @@
                 <li class="nav-item"><a href="#" class="nav-link">Cars</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
             </ul>
-            <span class="navbar-text">
-       <button class="btn btn-outline-info btn-sm">Register</button>
-       <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#login"> Login </button>
-      </span>
+            <!--not logged-->
+            <span id="not_logged" class="navbar-text">
+       <button class="btn btn-outline-info btn-sm" data-bs-toggle="modal"
+               data-bs-target="#registerInfo">Register</button>
+       <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+               data-bs-target="#login"> Login </button>
+            </span>
+
+            <!--logged - profile image-->
+            <span class="navbar-text" id="profileImage">
+                <button id="profileButton" type="button" style="background: none; border: none; padding: 0;"
+                        data-bs-toggle="modal" data-bs-target="#Logged">
+                <img src="assets/img/profile.png" width="30%" alt="Profile Image">
+                </button>
+            </span>
         </div>
     </div>
 </nav>
@@ -48,9 +69,10 @@
     <div class="modal-dialog">
         <div class="modal-content bg-dark text-light">
             <div class="modal-header bg-dark">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Login</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close" style="color: #fff;" ></button>
+                <h1 class="modal-title fs-5" id="LoginModalLabel">Login</h1>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
             </div>
 
             <div class="modal-body">
@@ -58,15 +80,17 @@
                     <div class="row mb-3">
                         <label for="username" class="col-sm-3 col-form-label text-light">Username</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                            <input type="text" class="form-control" id="username" name="username"
+                                   placeholder="Enter your username" required>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="password" class="col-sm-3 col-form-label text-light">Password</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
-                                <button type="button" id="toggle-password" class="btn btn-outline-secondary">
+                                <input type="password" class="form-control" id="password" name="password"
+                                       placeholder="Enter your password" required>
+                                <button type="button" class="toggle-password btn btn-outline-secondary">
                                     <i class="fas fa-eye"></i>
                                 </button>
                             </div>
@@ -76,7 +100,9 @@
                     <div class="row mb-3">
                         <div class="col-sm-3"></div>
                         <div class="col-sm-9">
-                            <button type="button" class="btn btn-info float-end">Login</button>
+                            <button id="loginButton" type="button" class="btn btn-info float-end"
+                                    data-bs-dismiss="modal">Login
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -86,7 +112,181 @@
 </div>
 <!-- ============================================= Login Modal END -->
 
+<!-- Register Modal ============================================= -->
+<div class="modal fade" id="registerInfo" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="registerModalLabel"> Register </h1>
+
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-sm-3 text-light">
+                            <label for="name" class="form-label">Name</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3 text-light">
+                            <label for="address" class="form-label">Address</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="address" name="address" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3 text-light">
+                            <label for="contact" class="form-label">Contact</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="contact" name="contact" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3 text-light">
+                            <label for="email" class="form-label">Email</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3 text-light">
+                            <label for="nic_num" class="form-label">NIC Number</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="nic_num" name="nic_num" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3 text-light">
+                            <label for="license_num" class="form-label">License Number</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="license_num" name="license_num" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3 text-light">
+                            <label for="id_img_front" class="form-label">ID Card Front</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="file" class="form-control" id="id_img_front" name="id_img_front"
+                                   accept="image/*" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3 text-light">
+                            <label for="id_img_back" class="form-label">ID Card Back</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="file" class="form-control" id="id_img_back" name="id_img_back" accept="image/*"
+                                   required>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <!--cus_username-->
+                    <div class="row mb-3">
+                        <div class="col-sm-3 text-light">
+                            <label for="username" class="col-sm-3 col-form-label text-light">Username</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="cus_username" name="cus_username"
+                                   placeholder="Enter username" required>
+                        </div>
+                    </div>
+
+                    <!--cus_password-->
+                    <div class="row mb-3">
+                        <label for="password" class="col-sm-3 col-form-label text-light">Password</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="cus_password"
+                                       name="cus_password"
+                                       placeholder="Enter password" required>
+                                <button type="button" class="toggle-password btn btn-outline-secondary">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--confirm_cus_password-->
+                    <div class="row mb-3">
+                        <label for="password" class="col-sm-3 col-form-label text-light">Confirm
+                            Password</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="con_cus_password"
+                                       name="con_cus_password"
+                                       placeholder="Confirm password" required>
+                                <button type="button" class="toggle-password btn btn-outline-secondary">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--submit-->
+                    <div class="row mb-3">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-9">
+                            <button type="submit" class="btn btn-info float-end">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= Register Modal END -->
+
+<!-- Logged Modal ============================================= -->
+<div class="modal fade" id="Logged" tabindex="-1" aria-labelledby="LoggedLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="LoggedLabel"> John Smith </h1>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!--logout-->
+                <div class="row mb-3">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <button id="btnLogout" type="submit" class="btn btn-info float-end" data-bs-dismiss="modal">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= Logged Modal END -->
+
 <h1><i class="fa-solid fa-user-secret"></i> Hello</h1>
+
+
 <script src="assets/js/main.js"></script>
 <script src="assets/js/jquery-3.6.1.min.js"></script>
 <script src="assets/boostrap/js/bootstrap.min.js"></script>
