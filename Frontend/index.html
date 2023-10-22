@@ -15,25 +15,50 @@
     <!-- fontawsome -->
     <link href="assets/fontawsome/css/all.min.css" rel="stylesheet">
 
-    <!--Override all input field colors-->
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Gabarito&family=Kanit:wght@100;200;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
     <style>
+        * {
+            font-family: 'Kanit', cursive;
+        }
+
+        /* Override all input field colors */
         .modal-body input[type="text"],
         .modal-body input[type="password"],
         .modal-body input[type="email"] {
             background-color: #dadada !important;
             color: #050505 !important;
         }
+
+        .custom-navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .active {
+            background-color: #0072b7;
+            color: #fff;
+        }
     </style>
 
 </head>
-<body class="bg-black">
+<body class="bg-dark text-white">
 <!-- nav bar ============================================= -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar ">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Easy Car Rental</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
+
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -284,8 +309,62 @@
 </div>
 <!-- ============================================= Logged Modal END -->
 
-<h1><i class="fa-solid fa-user-secret"></i> Hello</h1>
+<!-- background image slider ============================================= -->
+<div style="position: relative; height: 95vh">
+    <!-- Image Slider -->
+    <div id="imageSlider" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="0" class="active"
+                    aria-current="true"
+                    aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="height: 100vh; width: 100vw;">
+                <img src="assets/img/car1.jpg" class="d-block w-100 h-100" style="object-fit: cover; ">
+                <div class="carousel-caption d-none d-md-block bg-opacity-75 bg-black"
+                     style=" left: 0; right: 0;bottom: 0">
+                    <a href="#" class="btn btn-info">Rent a Car</a>
+                    <p>Explore our wide range of cars and find the perfect one for your journey.</p>
+                    <br>
+                </div>
+            </div>
 
+            <div class="carousel-item " style="height: 100vh; width: 100vw;">
+                <img src="assets/img/car2.jpg" class="d-block w-100 h-100" style="object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block bg-opacity-75 bg-black"
+                     style=" left: 0; right: 0;bottom: 0">
+                    <a href="#" class="btn btn-info">Rent a Car</a>
+                    <p>Explore our wide range of cars and find the perfect one for your journey.</p>
+                    <br>
+                </div>
+            </div>
+
+            <div class="carousel-item" style="height: 100vh; width: 100vw;">
+                <img src="assets/img/car3.jpg" class="d-block w-100 h-100" style="object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block bg-opacity-75 bg-black"
+                     style=" left: 0; right: 0;bottom: 0">
+                    <a href="#" class="btn btn-info">Rent a Car</a>
+                    <p>Explore our wide range of cars and find the perfect one for your journey.</p>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#imageSlider" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#imageSlider" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+<!-- ============================================= background image slider END-->
 
 <script src="assets/js/main.js"></script>
 <script src="assets/js/jquery-3.6.1.min.js"></script>
