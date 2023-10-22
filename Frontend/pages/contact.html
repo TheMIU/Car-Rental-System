@@ -6,13 +6,13 @@
     <meta content="width=device-width initial-scale=1" name="viewport">
 
     <!-- Stylesheets -->
-    <link href="assets/css/normalize.css" rel="stylesheet">
+    <link href="../assets/css/normalize.css" rel="stylesheet">
 
     <!-- boostrap -->
-    <link href="assets/boostrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../assets/boostrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- fontawsome -->
-    <link href="assets/fontawsome/css/all.min.css" rel="stylesheet">
+    <link href="../assets/fontawsome/css/all.min.css" rel="stylesheet">
 
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,12 +60,12 @@
 
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-                <li class="nav-item "><a href="pages/about.html" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="pages/services.html" class="nav-link">Services</a></li>
-                <li class="nav-item"><a href="pages/pricing.html" class="nav-link">Pricing</a></li>
-                <li class="nav-item"><a href="pages/cars.html" class="nav-link">Cars</a></li>
-                <li class="nav-item"><a href="pages/contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
+                <li class="nav-item"><a href="cars.html" class="nav-link">Cars</a></li>
+                <li class="nav-item active"><a href="contact.html" class="nav-link">Contact</a></li>
             </ul>
             <!--not logged-->
             <span id="not_logged" class="navbar-text">
@@ -79,7 +79,7 @@
             <span class="navbar-text" id="profileImage">
                 <button id="profileButton" type="button" style="background: none; border: none; padding: 0;"
                         data-bs-toggle="modal" data-bs-target="#Logged">
-                <img src="assets/img/profile.png" width="30%" alt="Profile Image">
+                <img src="../assets/img/profile.png" width="30%" alt="Profile Image">
                 </button>
             </span>
         </div>
@@ -307,62 +307,18 @@
 </div>
 <!-- ============================================= Logged Modal END -->
 
-<!-- background image slider ============================================= -->
-<div style="position: relative; height: 95vh">
-    <!-- Image Slider -->
-    <div id="imageSlider" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="0" class="active"
-                    aria-current="true"
-                    aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active" style="height: 100vh; width: 100vw;">
-                <img src="assets/img/car1.jpg" class="d-block w-100 h-100" style="object-fit: cover;">
-                <div class="carousel-caption bg-opacity-75 bg-black" style="left: 0; right: 0; bottom: 0;">
-                    <a href="pages/cars.html" class="btn btn-info">Rent a Car</a>
-                    <p>Explore our wide range of cars and find the perfect one for your journey.</p>
-                    <br>
-                </div>
-            </div>
-
-            <div class="carousel-item " style="height: 100vh; width: 100vw;">
-                <img src="assets/img/car2.jpg" class="d-block w-100 h-100" style="object-fit: cover;">
-                <div class="carousel-caption bg-opacity-75 bg-black" style="left: 0; right: 0; bottom: 0;">
-                    <a href="pages/cars.html" class="btn btn-info">Rent a Car</a>
-                    <p>Explore our wide range of cars and find the perfect one for your journey.</p>
-                    <br>
-                </div>
-            </div>
-
-            <div class="carousel-item" style="height: 100vh; width: 100vw;">
-                <img src="assets/img/car3.jpg" class="d-block w-100 h-100" style="object-fit: cover;">
-                <div class="carousel-caption bg-opacity-75 bg-black" style="left: 0; right: 0; bottom: 0;">
-                    <a href="pages/cars.html" class="btn btn-info">Rent a Car</a>
-                    <p>Explore our wide range of cars and find the perfect one for your journey.</p>
-                    <br>
-                </div>
-            </div>
-        </div>
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#imageSlider" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#imageSlider" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="container bg-black">
+        <h1>Contact</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias amet consectetur
+            cupiditate, eaque esse facilis fugit inventore, ipsa modi nesciunt nobis perspiciatis
+            reprehenderit sequi tempora totam ut voluptate! Non, provident.</p>
     </div>
 </div>
-<!-- ============================================= background image slider END-->
 
-<script src="assets/js/main.js"></script>
-<script src="assets/js/jquery-3.6.1.min.js"></script>
-<script src="assets/boostrap/js/bootstrap.js"></script>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/jquery-3.6.1.min.js"></script>
+<script src="../assets/boostrap/js/bootstrap.js"></script>
 </body>
 </html>
