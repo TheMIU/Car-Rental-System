@@ -1,10 +1,22 @@
 package lk.ijse.car_rental.controller;
 
-import org.springframework.stereotype.Controller;
+import lk.ijse.car_rental.dto.UserDTO;
+import lk.ijse.car_rental.service.UserService;
+import lk.ijse.car_rental.util.ResponseUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@CrossOrigin
+@RestController
+@RequestMapping("/user")
 public class UserController {
-    public UserController() {
-        System.out.println("User Controller");
+    @Autowired
+    private UserService service;
+
+    // save user
+    @PostMapping
+    public ResponseUtil saveCustomer(@ModelAttribute UserDTO dto) {
+        service.saveUser(dto);
+        return new ResponseUtil("Ok", "Success", dto);
     }
 }

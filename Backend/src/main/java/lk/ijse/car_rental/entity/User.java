@@ -13,9 +13,9 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @ToString
 @Entity
-public class User {
+public class User{
     @Id
-    private String user_id;
+    private String userId;
     private String name;
     private String address;
     private double salary;
@@ -23,7 +23,8 @@ public class User {
     private String email;
     private String nic_num;
     private String license_num;
-    private String id_img;
+    private String id_img_front;
+    private String id_img_back;
     private boolean editable;
     private boolean is_approved;
 }

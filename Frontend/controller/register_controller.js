@@ -1,19 +1,20 @@
 $(document).ready(function () {
+    const baseURL = 'http://localhost:8080/Backend_war/';
+
     $("#registerInfo form").submit(function (e) {
         e.preventDefault();
 
         var formData = $(this).serialize();
 
-        // Send the form data to the server
         $.ajax({
             type: "POST",
-            url: "",
+            url: baseURL + 'user',
             data: formData,
             success: function (response) {
-                console.log(response);
+                alert(response.message);
             },
             error: function (error) {
-                console.error("AJAX error:", error);
+                alert('failed : '+error.responseJSON.message);
             }
         });
     });
