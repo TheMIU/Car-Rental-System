@@ -16,7 +16,13 @@ public class UserController {
     // save user
     @PostMapping
     public ResponseUtil saveCustomer(@ModelAttribute UserDTO dto) {
+        System.out.println("invoked");
+        System.out.println(dto);
+        System.out.println(dto.getAddress());
+        System.out.println(dto.getId_img_back());
+
         service.saveUser(dto);
-        return new ResponseUtil("Ok", "Success", dto);
+        return new ResponseUtil("Ok", "Success", null);
     }
 }
+

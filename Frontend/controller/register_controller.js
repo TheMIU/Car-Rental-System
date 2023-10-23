@@ -4,17 +4,20 @@ $(document).ready(function () {
     $("#registerInfo form").submit(function (e) {
         e.preventDefault();
 
-        var formData = $(this).serialize();
+        const formData = new FormData(this);
 
         $.ajax({
             type: "POST",
             url: baseURL + 'user',
             data: formData,
+            processData: false,
+            contentType: false,
+
             success: function (response) {
                 alert(response.message);
             },
             error: function (error) {
-                alert('failed : '+error.responseJSON.message);
+                alert('failed : ' + error.responseJSON.message);
             }
         });
     });

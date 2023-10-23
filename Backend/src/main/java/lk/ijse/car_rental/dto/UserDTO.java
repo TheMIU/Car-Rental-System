@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @NoArgsConstructor
@@ -18,8 +19,8 @@ public class UserDTO {
     private String email;
     private String nic_num;
     private String license_num;
-    private String id_img_front;
-    private String id_img_back;
+    private MultipartFile id_img_front;
+    private MultipartFile id_img_back;
     private boolean editable;
     private boolean is_approved;
 }
