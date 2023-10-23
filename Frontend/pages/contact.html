@@ -22,7 +22,7 @@
 
     <style>
         * {
-            font-family: 'Kanit', cursive;
+            font-family: 'Kanit', sans-serif;
         }
 
         /* Override all input field colors */
@@ -137,7 +137,7 @@
 
 <!-- Register Modal ============================================= -->
 <div class="modal fade" id="registerInfo" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content bg-dark text-light">
             <div class="modal-header bg-dark">
                 <h1 class="modal-title fs-5" id="registerModalLabel"> Register </h1>
@@ -149,129 +149,143 @@
 
             <div class="modal-body">
                 <form>
-                    <div class="row mb-3">
-                        <div class="col-sm-3 text-light">
-                            <label for="name" class="form-label">Name</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="name" name="name" required>
-                        </div>
-                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="name" class="form-label">Name</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                            </div>
 
-                    <div class="row mb-3">
-                        <div class="col-sm-3 text-light">
-                            <label for="address" class="form-label">Address</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="address" name="address" required>
-                        </div>
-                    </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="address" class="form-label">Address</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="address" name="address" required>
+                                </div>
+                            </div>
 
-                    <div class="row mb-3">
-                        <div class="col-sm-3 text-light">
-                            <label for="contact" class="form-label">Contact</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="contact" name="contact" required>
-                        </div>
-                    </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="contact" class="form-label">Contact</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="contact" name="contact" required>
+                                </div>
+                            </div>
 
-                    <div class="row mb-3">
-                        <div class="col-sm-3 text-light">
-                            <label for="email" class="form-label">Email</label>
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="email" class="form-label">Email</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-9">
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-                    </div>
 
-                    <div class="row mb-3">
-                        <div class="col-sm-3 text-light">
-                            <label for="nic_num" class="form-label">NIC Number</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="nic_num" name="nic_num" required>
-                        </div>
-                    </div>
+                        <div class="col-sm-6">
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="nic_num" class="form-label">NIC Number</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="nic_num" name="nic_num" required>
+                                </div>
+                            </div>
 
-                    <div class="row mb-3">
-                        <div class="col-sm-3 text-light">
-                            <label for="license_num" class="form-label">License Number</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="license_num" name="license_num" required>
-                        </div>
-                    </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="license_num" class="form-label">License Number</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="license_num" name="license_num"
+                                           required>
+                                </div>
+                            </div>
 
-                    <div class="row mb-3">
-                        <div class="col-sm-3 text-light">
-                            <label for="id_img_front" class="form-label">ID Card Front</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="file" class="form-control" id="id_img_front" name="id_img_front"
-                                   accept="image/*" required>
-                        </div>
-                    </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="id_img_front" class="form-label">ID Card Front</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" id="id_img_front" name="id_img_front"
+                                           accept="image/*" required>
+                                </div>
+                            </div>
 
-                    <div class="row mb-3">
-                        <div class="col-sm-3 text-light">
-                            <label for="id_img_back" class="form-label">ID Card Back</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="file" class="form-control" id="id_img_back" name="id_img_back" accept="image/*"
-                                   required>
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="id_img_back" class="form-label">ID Card Back</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" id="id_img_back" name="id_img_back"
+                                           accept="image/*"
+                                           required>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <hr>
-                    <!--cus_username-->
-                    <div class="row mb-3">
-                        <div class="col-sm-3 text-light">
-                            <label for="username" class="col-sm-3 col-form-label text-light">Username</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="cus_username" name="cus_username"
-                                   placeholder="Enter username" required>
-                        </div>
-                    </div>
 
-                    <!--cus_password-->
-                    <div class="row mb-3">
-                        <label for="password" class="col-sm-3 col-form-label text-light">Password</label>
-                        <div class="col-sm-9">
-                            <div class="input-group">
-                                <input type="password" class="form-control" id="cus_password"
-                                       name="cus_password"
-                                       placeholder="Enter password" required>
-                                <button type="button" class="toggle-password btn btn-outline-secondary">
-                                    <i class="fas fa-eye"></i>
-                                </button>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6">
+                            <!--cus_username-->
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="username" class="col-sm-3 col-form-label text-light">Username</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="cus_username" name="cus_username"
+                                           placeholder="Enter username" required>
+                                </div>
+                            </div>
+
+                            <!--cus_password-->
+                            <div class="row mb-3">
+                                <label for="password" class="col-sm-3 col-form-label text-light">Password</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="cus_password"
+                                               name="cus_password"
+                                               placeholder="Enter password" required>
+                                        <button type="button" class="toggle-password btn btn-outline-secondary">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--confirm_cus_password-->
+                            <div class="row mb-3">
+                                <label for="password" class="col-sm-3 col-form-label text-light">Confirm
+                                    Password</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="con_cus_password"
+                                               name="con_cus_password"
+                                               placeholder="Confirm password" required>
+                                        <button type="button" class="toggle-password btn btn-outline-secondary">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--submit-->
+                            <div class="row mb-3">
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-9">
+                                    <button type="submit" class="btn btn-info float-end">Submit</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!--confirm_cus_password-->
-                    <div class="row mb-3">
-                        <label for="password" class="col-sm-3 col-form-label text-light">Confirm
-                            Password</label>
-                        <div class="col-sm-9">
-                            <div class="input-group">
-                                <input type="password" class="form-control" id="con_cus_password"
-                                       name="con_cus_password"
-                                       placeholder="Confirm password" required>
-                                <button type="button" class="toggle-password btn btn-outline-secondary">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--submit-->
-                    <div class="row mb-3">
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-9">
-                            <button type="submit" class="btn btn-info float-end">Submit</button>
-                        </div>
                     </div>
                 </form>
             </div>
@@ -317,8 +331,11 @@
 </div>
 
 
-<script src="../assets/js/main.js"></script>
+<!-- scripts ============================================= -->
 <script src="../assets/js/jquery-3.6.1.min.js"></script>
 <script src="../assets/boostrap/js/bootstrap.js"></script>
+<script src="../assets/js/main.js"></script>
+<script src="../controller/register_controller.js"></script>
+<!-- ============================================= scripts END -->
 </body>
 </html>
