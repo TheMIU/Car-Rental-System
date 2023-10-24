@@ -13,10 +13,6 @@ import java.io.File;
 @Import(JPAConfig.class)
 @ComponentScan(basePackages = "lk.ijse.car_rental.service")
 public class WebRootConfig {
-    public WebRootConfig() {
-        System.out.println("WebRootConfig invoked");
-    }
-
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();

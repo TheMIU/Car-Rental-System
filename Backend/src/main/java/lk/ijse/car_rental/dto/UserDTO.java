@@ -22,5 +22,5 @@ public class UserDTO {
     private MultipartFile id_img_front;
     private MultipartFile id_img_back;
     private boolean editable;
-    private boolean is_approved;
+    private boolean approved;
 }

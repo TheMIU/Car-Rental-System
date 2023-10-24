@@ -22,7 +22,7 @@ class UserRepoTest {
 
     @Test
     void test() {
-        String allAndOrderBySubstring = userRepo.findAllOrderedBySubstring();
+        String allAndOrderBySubstring = userRepo.findLastRecord();
         System.out.println(allAndOrderBySubstring);
     }
 }

@@ -8,7 +8,4 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @ComponentScan(basePackages = {"lk.ijse.car_rental.controller", "lk.ijse.car_rental.adviser"})
 public class WebAppConfig {
-    public WebAppConfig() {
-        System.out.println("WebAppConfig");
-    }
 }

@@ -5,6 +5,7 @@ import lk.ijse.car_rental.entity.User;
 import lk.ijse.car_rental.repo.UserRepo;
 import lk.ijse.car_rental.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -54,8 +57,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDTO> getAllUsers() {
+        List<User> all = userRepo.findAllOrderedBySubstring();
+        return mapper.map(all, new TypeToken<ArrayList<UserDTO>>() {
+        }.getType());
+    }
+
+    @Override
+    public void updateUser(UserDTO dto) {
+        if (!userRepo.existsById(dto.getUserId())) throw new RuntimeException("User not exists!");
+
+        User userByUserId = userRepo.findUserByUserId(dto.getUserId());
+
+        // update only this information
+        userByUserId.setName(dto.getName());
+        userByUserId.setAddress(dto.getAddress());
+        userByUserId.setSalary(dto.getSalary());
+        userByUserId.setContact(dto.getContact());
+        userByUserId.setEmail(dto.getEmail());
+        userByUserId.setEditable(dto.isEditable());
+        userByUserId.set_approved(dto.isApproved());
+
+        userRepo.save(userByUserId);
+    }
+
+    @Override
+    public void deleteUser(String id) {
+        userRepo.deleteById(id);
+    }
+
+    @Override
     public String getNextUserID() {
-        String lastUserId = userRepo.findAllOrderedBySubstring();
+        String lastUserId = userRepo.findLastRecord();
         System.out.println("Last : " + lastUserId);
 
         if (lastUserId == null) {
