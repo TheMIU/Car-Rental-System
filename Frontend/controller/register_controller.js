@@ -1,9 +1,10 @@
-$(document).ready(function () {
-    const baseURL = 'http://localhost:8080/Backend_war/';
+const baseURL = 'http://localhost:8080/Backend_war/';
 
-    $("#registerInfo form").submit(function (e) {
-        e.preventDefault();
+$("#registerForm").submit(function (e) {
+    e.preventDefault();
 
+    if ($('#registerForm')[0].checkValidity()) { // check form filled or not
+        // submit form
         const formData = new FormData(this);
 
         $.ajax({
@@ -14,11 +15,21 @@ $(document).ready(function () {
             contentType: false,
 
             success: function (response) {
-                alert(response.message);
+                console.log(response.message);
             },
             error: function (error) {
                 alert('failed : ' + error.responseJSON.message);
             }
         });
-    });
+
+        // show the second modal
+        $('#registerSubmitted').modal('show');
+        $('#registerInfo').modal('hide');
+
+
+    } else {
+        // Required fields are not filled, display an error message
+        alert('Please fill in all required fields before submitting.');
+    }
 });
+

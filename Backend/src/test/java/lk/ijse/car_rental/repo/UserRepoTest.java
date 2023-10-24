@@ -5,16 +5,12 @@ import lk.ijse.car_rental.entity.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebRootConfig.class})
@@ -26,7 +22,7 @@ class UserRepoTest {
 
     @Test
     void test() {
-        User firstByOrderByUserIdDesc = userRepo.findFirstByOrderByUserIdDesc();
-        System.out.println(firstByOrderByUserIdDesc);
+        String allAndOrderBySubstring = userRepo.findAllOrderedBySubstring();
+        System.out.println(allAndOrderBySubstring);
     }
 }
