@@ -15,14 +15,9 @@ public class UserController {
 
     // save user
     @PostMapping
-    public ResponseUtil saveCustomer(@ModelAttribute UserDTO dto) {
-        System.out.println("invoked");
-
-        // rename files
-        // save images in new directory
-
+    public ResponseUtil saveUser(@ModelAttribute UserDTO dto) {
         service.saveUser(dto);
-        return new ResponseUtil("Ok", "Success", null);
+        return new ResponseUtil("Ok", "saveUser Success", null);
     }
 }
 

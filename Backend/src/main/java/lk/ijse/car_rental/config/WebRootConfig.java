@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import java.io.File;
+
 @Configuration
 @Import(JPAConfig.class)
 @ComponentScan(basePackages = "lk.ijse.car_rental.service")

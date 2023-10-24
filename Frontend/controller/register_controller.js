@@ -26,6 +26,9 @@ $("#registerForm").submit(function (e) {
         $('#registerSubmitted').modal('show');
         $('#registerInfo').modal('hide');
 
+        // Clear register form
+        $("#registerForm").find("input:not([type='submit'])").val("");
+
 
     } else {
         // Required fields are not filled, display an error message

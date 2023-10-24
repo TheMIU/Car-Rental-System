@@ -7,27 +7,54 @@ import lk.ijse.car_rental.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
     @Autowired
-    UserRepo userRepo;
+    private UserRepo userRepo;
 
     @Autowired
-    ModelMapper mapper;
+    private ModelMapper mapper;
+
+    String idImagesFolderPath;
 
     @Override
     public void saveUser(UserDTO dto) {
-        dto.setUserId(getLastUserID());
+        User user = mapper.map(dto, User.class);
 
-        if (userRepo.existsById(dto.getUserId())) throw new RuntimeException("Error, already added!");
-        userRepo.save(mapper.map(dto, User.class));
+        // generate new ID
+        String nextUserID = getNextUserID();
+        user.setUserId(nextUserID);
+
+        // save multipart files
+        MultipartFile id_img_front = dto.getId_img_front();
+        MultipartFile id_img_back = dto.getId_img_back();
+
+        checkIdUploadFolderCreated();
+
+        // save in created location, with new file names
+        try {
+            id_img_front.transferTo(new File(idImagesFolderPath + nextUserID + "_ID_Front.jpg"));
+            id_img_back.transferTo(new File(idImagesFolderPath + nextUserID + "_ID_Back.jpg"));
+        } catch (IOException e) {
+            throw new RuntimeException(e.toString());
+        }
+
+        // set saved file name
+        user.setId_img_front(nextUserID + "_ID_Front.jpg");
+        user.setId_img_back(nextUserID + "_ID_Back.jpg");
+
+        userRepo.save(user);
     }
 
     @Override
-    public String getLastUserID() {
+    public String getNextUserID() {
         String lastUserId = userRepo.findAllOrderedBySubstring();
         System.out.println("Last : " + lastUserId);
 
@@ -42,5 +69,18 @@ public class UserServiceImpl implements UserService {
 
             return "C" + newId;
         }
+    }
+
+    public void checkIdUploadFolderCreated() {
+        // get user directory and create folders
+        idImagesFolderPath = System.getProperty("user.dir") + File.separator
+                + "Car Rental System" + File.separator + "uploads" + File.separator + "usersIdImages" + File.separator;
+        System.out.println("uploadsFolderPath : " + idImagesFolderPath);
+
+        // Create a File object to represent the 'uploads' folder based on the specified path
+        File uploadsFolder = new File(idImagesFolderPath);
+
+        // Check if the 'uploads' folder exists
+        if (!uploadsFolder.exists()) uploadsFolder.mkdirs();
     }
 }
