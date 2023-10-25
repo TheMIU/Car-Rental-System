@@ -71,48 +71,33 @@
 </nav>
 <!-- ============================================= nav bar END -->
 
-<!-- admin dashboard content ============================================= -->
-<div class="container d-flex align-items-center bg-dark">
-    <div class="container">
-        <div class="row mt-4 text-center">
-            <div class="row mt-4">
-                <div class="row mt-4">
-                    <div class="col-md-3">
-                        <button class="btn btn-outline-info btn-block mb-3" style="width: 80%; height: 100px;">
-                            <i class="fas fa-users fa-2x"></i> <br> Pending Customers
-                        </button>
-                    </div>
-                    <div class="col-md-3">
-                        <button class="btn btn-outline-info btn-block mb-3" style="width: 80%; height: 100px;">
-                            <i class="fas fa-users fa-2x"></i> <br> Manage Customer
-                        </button>
-                    </div>
-                    <div class="col-md-3">
-                        <button class="btn btn-outline-info btn-block mb-3" style="width: 80%; height: 100px;">
-                            <i class="fas fa-car fa-2x"></i> <br> Manage Drivers
-                        </button>
-                    </div>
-                    <div class="col-md-3">
-                        <button class="btn btn-outline-info btn-block mb-3" style="width: 80%; height: 100px;">
-                            <i class="fas fa-truck fa-2x"></i> <br> Manage Vehicles
-                        </button>
-                    </div>
-                    <div class="col-md-3">
-                        <button class="btn btn-outline-info btn-block mb-3" style="width: 80%; height: 100px;">
-                            <i class="fas fa-credit-card fa-2x"></i> <br> Manage Payment
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- pending customers table ============================= -->
+<div class="container mt-4">
+    <h4>Pending Customers</h4>
+    <table class="table table-bordered text-white">
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Contact</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
 
+    <nav>
+        <ul class="pagination" id="pagination"></ul>
+    </nav>
 </div>
-<!-- ============================================= admin dashboard content END -->
+<!-- ============================= pending customers table END -->
 
 <!-- scripts ============================================= -->
 <script src="../../assets/js/jquery-3.6.1.min.js"></script>
 <script src="../../assets/boostrap/js/bootstrap.js"></script>
+<script src="../../controller/admin/pending_customers_controller.js"></script>
 <!-- ============================================= scripts END -->
 </body>
 </html>
