@@ -1,6 +1,8 @@
 package lk.ijse.car_rental.controller;
 
+import lk.ijse.car_rental.dto.LoginDTO;
 import lk.ijse.car_rental.dto.UserDTO;
+import lk.ijse.car_rental.service.LoginService;
 import lk.ijse.car_rental.service.UserService;
 import lk.ijse.car_rental.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,20 @@ public class UserController {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private LoginService loginService;
+
+    // get next user id
+    @GetMapping("/next_id")
+    public ResponseUtil getNextUserId() {
+        return new ResponseUtil("Ok", "Get next user id Success", service.getNextUserID());
+    }
+
     // save user
     @PostMapping
-    public ResponseUtil saveUser(@ModelAttribute UserDTO dto) {
+    public ResponseUtil saveUser(@ModelAttribute UserDTO dto, @ModelAttribute LoginDTO loginDTO) {
         service.saveUser(dto);
+        loginService.save(loginDTO);
         return new ResponseUtil("Ok", "Save User Success", null);
     }
 

@@ -1,6 +1,5 @@
 package lk.ijse.car_rental.service.impl;
 
-
 import lk.ijse.car_rental.config.WebRootConfig;
 import lk.ijse.car_rental.dto.UserDTO;
 import lk.ijse.car_rental.entity.User;

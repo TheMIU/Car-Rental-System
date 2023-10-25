@@ -19,19 +19,23 @@ togglePasswordButtons.forEach((togglePasswordButton) => {
 
 // login profile change
 const profileImage = document.getElementById('profileImage');
-const loginButton = document.getElementById('loginButton');
 const not_logged = document.getElementById('not_logged');
-const btnLogout = document.getElementById('btnLogout');
 
 profileImage.style.display = "none";
 not_logged.style.display = "block";
 
-loginButton.addEventListener('click', () => {
-    profileImage.style.display = "block";
-    not_logged.style.display = "none";
+function profileChange() {
+    if (logged) {
+        profileImage.style.display = "block";
+        not_logged.style.display = "none";
+    } else {
+        profileImage.style.display = "none";
+        not_logged.style.display = "block";
+    }
+}
+
+$('#btnLogout').click(function () {
+    logged = false;
+    profileChange();
 });
 
-btnLogout.addEventListener('click', () => {
-    profileImage.style.display = "none";
-    not_logged.style.display = "block";
-});

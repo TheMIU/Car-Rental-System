@@ -18,6 +18,7 @@ public class User{
     private String userId;
     private String name;
     private String address;
+    private String type;
     private double salary;
     private String contact;
     private String email;

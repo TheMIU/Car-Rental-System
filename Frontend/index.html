@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Easy Car Rental</title>
     <meta charset="UTF-8">
@@ -43,7 +43,7 @@
             transition: background-color 0.3s;
         }
 
-        .active {
+        nav .active {
             margin: 0;
             border: #00f1ff 1px solid;
             border-radius: 5px;
@@ -72,7 +72,7 @@
             <!--not logged-->
             <span id="not_logged" class="navbar-text">
        <button class="btn btn-outline-info btn-sm" data-bs-toggle="modal"
-               data-bs-target="#registerInfo">Register</button>
+               data-bs-target="#registerInfo" id="registerBtn">Register</button>
        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
                data-bs-target="#login"> Login </button>
             </span>
@@ -90,7 +90,9 @@
 <!-- ============================================= nav bar END -->
 
 <!-- Login Modal ============================================= -->
-<div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+
     <div class="modal-dialog">
         <div class="modal-content bg-dark text-light">
             <div class="modal-header bg-dark">
@@ -99,13 +101,12 @@
                     <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
                 </button>
             </div>
-
-            <div class="modal-body">
-                <form>
+            <form method="post" id="loginForm">
+                <div class="modal-body">
                     <div class="row mb-3">
                         <label for="username" class="col-sm-3 col-form-label text-light">Username</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="username" name="username"
+                            <input type="text" class="form-control" id="username" name="loginName"
                                    placeholder="Enter your username" required>
                         </div>
                     </div>
@@ -122,23 +123,19 @@
                             <a href="#" class="text-info small">Forgot password ?</a>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-9">
-                            <button id="loginButton" type="button" class="btn btn-info float-end"
-                                    data-bs-dismiss="modal">Login
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info float-end" id="loginBtn">Login</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 <!-- ============================================= Login Modal END -->
 
 <!-- Register Modal ============================================= -->
-<div class="modal fade" id="registerInfo" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+<div class="modal fade" id="registerInfo" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-xl">
         <div class="modal-content bg-dark text-light">
             <div class="modal-header bg-dark">
@@ -240,21 +237,21 @@
                             <!--cus_username-->
                             <div class="row mb-3">
                                 <div class="col-sm-3 text-light">
-                                    <label for="username" class="col-sm-3 col-form-label text-light">Username</label>
+                                    <label for="cus_username"
+                                           class="col-sm-3 col-form-label text-light">Username</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="cus_username" name="cus_username"
+                                    <input type="text" class="form-control" id="cus_username" name="loginName"
                                            placeholder="Enter username" required>
                                 </div>
                             </div>
 
                             <!--cus_password-->
                             <div class="row mb-3">
-                                <label for="password" class="col-sm-3 col-form-label text-light">Password</label>
+                                <label for="cus_password" class="col-sm-3 col-form-label text-light">Password</label>
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <input type="password" class="form-control" id="cus_password"
-                                               name="cus_password"
                                                placeholder="Enter password" required>
                                         <button type="button" class="toggle-password btn btn-outline-secondary">
                                             <i class="fas fa-eye"></i>
@@ -265,12 +262,12 @@
 
                             <!--confirm_cus_password-->
                             <div class="row mb-3">
-                                <label for="password" class="col-sm-3 col-form-label text-light">Confirm
+                                <label for="con_cus_password" class="col-sm-3 col-form-label text-light">Confirm
                                     Password</label>
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <input type="password" class="form-control" id="con_cus_password"
-                                               name="con_cus_password"
+                                               name="password"
                                                placeholder="Confirm password" required>
                                         <button type="button" class="toggle-password btn btn-outline-secondary">
                                             <i class="fas fa-eye"></i>
@@ -323,7 +320,7 @@
 
 <!-- Logged Modal ============================================= -->
 <div class="modal fade" id="Logged" tabindex="-1" aria-labelledby="LoggedLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
+    <div class="modal-dialog">
         <div class="modal-content bg-dark text-light">
             <div class="modal-header bg-dark">
                 <h1 class="modal-title fs-5" id="LoggedLabel"> John Smith </h1>
@@ -337,7 +334,7 @@
                 <div class="row mb-3">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
-                        <button id="btnLogout" type="submit" class="btn btn-info float-end" data-bs-dismiss="modal">
+                        <button id="btnLogout" type="button" class="btn btn-info float-end" data-bs-dismiss="modal">
                             Logout
                         </button>
                     </div>
@@ -405,8 +402,8 @@
 <!-- scripts ============================================= -->
 <script src="assets/js/jquery-3.6.1.min.js"></script>
 <script src="assets/boostrap/js/bootstrap.js"></script>
-<script src="assets/js/main.js"></script>
 <script src="controller/register_controller.js"></script>
+<script src="assets/js/main.js"></script>
 <!-- ============================================= scripts END -->
 </body>
 </html>

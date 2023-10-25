@@ -31,9 +31,7 @@ public class UserServiceImpl implements UserService {
     public void saveUser(UserDTO dto) {
         User user = mapper.map(dto, User.class);
 
-        // generate new ID
-        String nextUserID = getNextUserID();
-        user.setUserId(nextUserID);
+        String nextUserID = dto.getUserId();
 
         // save multipart files
         MultipartFile id_img_front = dto.getId_img_front();
