@@ -94,10 +94,155 @@
 </div>
 <!-- ================================= existing customers table END -->
 
+<!-- Register Modal ============================================= -->
+<div class="modal fade" id="moreInfo" tabindex="-1" aria-labelledby="moreModalLabel" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="moreModalLabel"> Customer Details </h1>
+
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row mb-3">
+                            <div class="col-sm-3 text-light">
+                                <label for="name" class="form-label">Name</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3 text-light">
+                                <label for="address" class="form-label">Address</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="address" name="address" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3 text-light">
+                                <label for="contact" class="form-label">Contact</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="contact" name="contact" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3 text-light">
+                                <label for="email" class="form-label">Email</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3 text-light">
+                                <label for="nic_num" class="form-label">NIC Number</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="nic_num" name="nic_num" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3 text-light">
+                                <label for="license_num" class="form-label">License Number</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="license_num" name="license_num"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="row mb-3">
+                            <div class="col-sm-3 text-light">
+                                <label class="form-label">ID Card Front</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <img class="enlargeableImg" src="../../assets/img/car2.jpg" width="50%"
+                                     alt="id_img_front" style="cursor: zoom-in;">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3 text-light">
+                                <label class="form-label">ID Card Back</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <img class="enlargeableImg" src="../../assets/img/car1.jpg" width="50%"
+                                     alt="id_img_back" style="cursor: zoom-in;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row justify-content-center">
+                    <!--submit-->
+                    <div class="row mb-3 text-end">
+                        <div class="col">
+                            <button type="button" class="btn btn-danger" id="deleteUser"> Delete</button>
+                            <button type="button" class="btn btn-info" id="editUser">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= Register Modal END -->
+
+<!-- Image enlarge =============================================  -->
+<!--<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document"> &lt;!&ndash; Use modal-xl class to make it extra-large &ndash;&gt;
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title fs-5" id="imageModalLabel"> Image </h5>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body text-center">
+                <img id="modalImage" src="#" class="img-fluid" alt="Modal Image">
+            </div>
+        </div>
+    </div>
+</div>-->
+<!-- ============================================= Image enlarge END -->
+
+
 <!-- scripts ============================================= -->
 <script src="../../assets/js/jquery-3.6.1.min.js"></script>
 <script src="../../assets/boostrap/js/bootstrap.js"></script>
 <script src="../../controller/admin/manage_customers_controller.js"></script>
+<script>
+
+     $(".enlargeableImg").click(function () {
+         const imageUrl = this.src; // Get the image URL from the src attribute
+         window.open(imageUrl, "_blank"); // Open the image in a new tab
+     });
+
+   /* $(".enlargeableImg").click(function () {
+        const imageUrl = this.src; // Get the image URL from the src attribute
+        $("#modalImage").attr("src", imageUrl); // Set the modal image's source
+        $("#imageModal").modal("show"); // Show the modal
+    });*/
+</script>
 <!-- ============================================= scripts END -->
 </body>
 </html>

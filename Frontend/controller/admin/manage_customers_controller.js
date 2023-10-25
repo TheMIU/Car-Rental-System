@@ -44,7 +44,8 @@ function displayData() {
                 <td>${item.name}</td>
                 <td>${item.address}</td>
                 <td>${item.contact}</td>
-                <td><button class="btn btn-primary">More</button></td>
+                <td><button class="btn btn-outline-info btn-sm more-button" data-bs-toggle="modal"
+            data-bs-target="#moreInfo"> <i class="fas fa-ellipsis-h"></i>  More</button></td>
             `;
         tableBody.appendChild(row);
     });
@@ -61,3 +62,17 @@ function updatePagination() {
         pagination.appendChild(li);
     }
 }
+
+//////////////// "More" buttons
+document.getElementById("table-body").addEventListener("click", function(event) {
+    if (event.target.classList.contains("more-button")) {
+        // Calculate the actual index of the data based on the current page
+        const dataIndex = (currentPage - 1) * itemsPerPage + Array.from(this.children).indexOf(event.target.closest("tr"));
+        const item = data[dataIndex];
+
+        // Update the modal
+        $('#name').val(item.name);
+        $('#address').val(item.address);
+    }
+});
+
