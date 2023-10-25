@@ -13,5 +13,5 @@ public interface LoginService {
 
     void delete(String id);
 
-    boolean checkValidUser(LoginDTO dto);
+    LoginDTO checkValidUser(LoginDTO dto);
 }

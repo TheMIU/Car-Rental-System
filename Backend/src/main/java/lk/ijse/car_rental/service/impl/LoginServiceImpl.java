@@ -46,9 +46,15 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public boolean checkValidUser(LoginDTO dto) {
+    public LoginDTO checkValidUser(LoginDTO dto) {
         boolean loginNameContaining = loginRepo.existsByLoginNameEquals(dto.getLoginName());
         boolean passwordContaining = loginRepo.existsByPasswordEquals(dto.getPassword());
-        return loginNameContaining && passwordContaining;
+
+        if (loginNameContaining && passwordContaining) {
+            Login loginByLoginName = loginRepo.findLoginByLoginName(dto.getLoginName());
+            return mapper.map(loginByLoginName, LoginDTO.class);
+        } else {
+            return null;
+        }
     }
 }

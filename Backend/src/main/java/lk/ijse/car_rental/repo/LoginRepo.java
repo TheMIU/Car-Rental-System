@@ -1,7 +1,6 @@
 package lk.ijse.car_rental.repo;
 
 import lk.ijse.car_rental.entity.Login;
-import lk.ijse.car_rental.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -17,4 +16,6 @@ public interface LoginRepo extends JpaRepository<Login, String> {
     boolean existsByLoginNameEquals(String loginName);
 
     boolean existsByPasswordEquals(String password);
+
+    Login findLoginByLoginName(String loginName);
 }

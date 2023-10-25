@@ -38,4 +38,3 @@ $('#btnLogout').click(function () {
     logged = false;
     profileChange();
 });
-

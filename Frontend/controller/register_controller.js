@@ -13,7 +13,14 @@ $("#loginBtn").on("click", function () {
 
         success: function (response) {
             console.log(response.data)
-            if(response.data){
+            /* console.log(response.data.type)*/
+            if (response.data === null || response.data.type === null) {
+                alert("Login failed !");
+            } else if (response.data.type === 'admin') {
+                window.location.href = '../pages/admin/admin_dashboard.html';
+            } else if (response.data.type === 'driver') {
+                window.location.href = '../pages/driver/driver_dashboard.html';
+            } else if (response.data.type === 'customer') {
                 alert("Login success !");
                 logged = true;
                 profileChange();
@@ -21,8 +28,6 @@ $("#loginBtn").on("click", function () {
 
                 // Clear register form
                 $("#loginForm").find("input:not([type='submit'])").val("");
-            }else {
-                alert("Login failed !");
             }
         },
         error: function (error) {
