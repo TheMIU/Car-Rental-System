@@ -25,10 +25,7 @@
             font-family: 'Kanit', sans-serif;
         }
 
-        /* Override all input field colors */
-        .modal-body input[type="text"],
-        .modal-body input[type="password"],
-        .modal-body input[type="email"] {
+        input{
             background-color: #dadada !important;
             color: #050505 !important;
         }
@@ -54,8 +51,9 @@
 
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item active"><a href="#" class="nav-link">Dashboard</a></li>
-                <li class="nav-item active"><a href="#" class="nav-link">Customer</a></li>
+                <li class="nav-item active"><a href="admin_dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item active"><a href="manage_customer.html" class="nav-link">Customer</a></li>
+                <li class="nav-item active"><a href="pending_customers.html" class="nav-link">Pending Customers</a></li>
                 <li class="nav-item active"><a href="#" class="nav-link">Drivers</a></li>
                 <li class="nav-item active"><a href="#" class="nav-link">Vehicles</a></li>
                 <li class="nav-item active"><a href="#" class="nav-link">Payment</a></li>
@@ -73,7 +71,22 @@
 
 <!-- existing customers table ================================= -->
 <div class="container mt-4">
-    <h4>Manage Customers</h4>
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Manage Customers</h4>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group m-1">
+                <input type="text" id="search" class="form-control" placeholder="Search...">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-info" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <table class="table table-bordered text-white">
         <thead>
         <tr>
@@ -94,7 +107,7 @@
 </div>
 <!-- ================================= existing customers table END -->
 
-<!-- Register Modal ============================================= -->
+<!-- customer details Modal ============================================= -->
 <div class="modal fade" id="moreInfo" tabindex="-1" aria-labelledby="moreModalLabel" aria-hidden="true"
      data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-xl">
@@ -195,8 +208,11 @@
                     <!--submit-->
                     <div class="row mb-3 text-end">
                         <div class="col">
-                            <button type="button" class="btn btn-danger" id="deleteUser"> Delete</button>
-                            <button type="button" class="btn btn-info" id="editUser">Edit</button>
+                            <button type="button" class="btn btn-outline-warning" id="editable"> Make Non-Editable
+                            </button>
+                            <button type="button" class="btn btn-outline-danger" id="delete"> Delete</button>
+                            <button type="button" class="btn btn-outline-info" id="edit">Edit</button>
+                            <button type="button" class="btn btn-outline-light" id="cancel"> Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -204,7 +220,7 @@
         </div>
     </div>
 </div>
-<!-- ============================================= Register Modal END -->
+<!-- ============================================= customer details modal END -->
 
 <!-- scripts ============================================= -->
 <script src="../../assets/js/jquery-3.6.1.min.js"></script>
