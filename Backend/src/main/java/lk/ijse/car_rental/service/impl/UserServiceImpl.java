@@ -115,7 +115,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getImage(String imageName) throws IOException {
         Path imagePath = Paths.get(idImagesFolderPath + imageName);
-        System.out.println(imagePath);
 
         if (Files.exists(imagePath)) {
             byte[] imageBytes = Files.readAllBytes(imagePath);

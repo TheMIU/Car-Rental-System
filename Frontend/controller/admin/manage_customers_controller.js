@@ -61,7 +61,7 @@ function updatePagination() {
 }
 
 //////////////// "More" buttons
-document.getElementById("table-body").addEventListener("click", function(event) {
+document.getElementById("table-body").addEventListener("click", function (event) {
     if (event.target.classList.contains("more-button")) {
         // Calculate the actual index of the data based on the current page
         const dataIndex = (currentPage - 1) * itemsPerPage + Array.from(this.children).indexOf(event.target.closest("tr"));
@@ -74,9 +74,21 @@ document.getElementById("table-body").addEventListener("click", function(event) 
         $('#email').val(user.email);
         $('#nic_num').val(user.nic_num);
         $('#license_num').val(user.license_num);
-        console.log(baseURL+user.id_img_front)
-        console.log(baseURL+`${user.id_img_front}`)
-        //$('#id_img_front').src(baseURL+`${user.id_img_front}`);
+
+        loadImages(user.id_img_front, $('#id_img_front'));
+        loadImages(user.id_img_back, $('#id_img_back'));
     }
 });
 
+function loadImages(imageName, imgElement) {
+    $.ajax({
+        url: baseURL + 'user/get_image/' + imageName,
+        method: 'GET',
+        success: function (response) {
+            imgElement.attr('src', "data:image/jpeg;base64," + response);
+        },
+        error: function (error) {
+            console.log("Error loading image: " + error);
+        }
+    });
+}

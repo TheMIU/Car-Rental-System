@@ -3,6 +3,7 @@ const baseURL = 'http://localhost:8080/Backend_war/';
 
 ////////////// enlarge images when click
 $(".enlargeableImg").click(function () {
-    const imageUrl = this.src; // Get the image URL from the src attribute
-    window.open(imageUrl, "_blank"); // Open the image in a new tab
+    var newWindow = window.open("", "_blank");
+    newWindow.document.write("<div style=' background-color: black;position: absolute; top: 0; left: 0; right: 0;" +
+        " bottom: 0; display: flex; justify-content: center; align-items: center;'><img src=" + this.src + " /></div>");
 });

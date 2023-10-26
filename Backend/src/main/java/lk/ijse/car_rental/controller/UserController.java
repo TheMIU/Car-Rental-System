@@ -42,12 +42,8 @@ public class UserController {
 
     // get image (base64) by name
     @GetMapping("/get_image/{imageName}")
-    public ResponseUtil getImage(@PathVariable String imageName) throws IOException {
-        if (service.getImage(imageName) != null) {
-            return new ResponseUtil("Ok", "image get done", service.getImage(imageName));
-        } else {
-            return new ResponseUtil("Error", "image not found", null);
-        }
+    public String getImage(@PathVariable String imageName) throws IOException {
+        return service.getImage(imageName);
     }
 
     // save user
