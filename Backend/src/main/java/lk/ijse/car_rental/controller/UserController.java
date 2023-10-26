@@ -6,17 +6,8 @@ import lk.ijse.car_rental.service.LoginService;
 import lk.ijse.car_rental.service.UserService;
 import lk.ijse.car_rental.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
 
 @CrossOrigin
 @RestController
@@ -53,7 +44,6 @@ public class UserController {
         loginService.save(loginDTO);
         return new ResponseUtil("Ok", "Save User Success", null);
     }
-
 
     // update user
     @PutMapping
