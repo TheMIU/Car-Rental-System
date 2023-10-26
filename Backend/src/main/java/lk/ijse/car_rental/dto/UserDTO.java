@@ -20,8 +20,8 @@ public class UserDTO {
     private String email;
     private String nic_num;
     private String license_num;
-    private MultipartFile id_img_front;
-    private MultipartFile id_img_back;
+    private Object id_img_front;
+    private Object id_img_back;
     private boolean editable;
     private boolean approved;
 }

@@ -4,16 +4,22 @@ import lk.ijse.car_rental.dto.UserDTO;
 import lk.ijse.car_rental.entity.User;
 import lk.ijse.car_rental.repo.UserRepo;
 import lk.ijse.car_rental.service.UserService;
+import lk.ijse.car_rental.util.ResponseUtil;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -27,6 +33,10 @@ public class UserServiceImpl implements UserService {
 
     String idImagesFolderPath;
 
+    public UserServiceImpl() {
+        checkIdUploadFolderCreated();
+    }
+
     @Override
     public void saveUser(UserDTO dto) {
         User user = mapper.map(dto, User.class);
@@ -34,8 +44,8 @@ public class UserServiceImpl implements UserService {
         String nextUserID = dto.getUserId();
 
         // save multipart files
-        MultipartFile id_img_front = dto.getId_img_front();
-        MultipartFile id_img_back = dto.getId_img_back();
+        MultipartFile id_img_front = (MultipartFile) dto.getId_img_front();
+        MultipartFile id_img_back = (MultipartFile) dto.getId_img_back();
 
         checkIdUploadFolderCreated();
 
@@ -102,7 +112,22 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public String getImage(String imageName) throws IOException {
+        Path imagePath = Paths.get(idImagesFolderPath + imageName);
+        System.out.println(imagePath);
+
+        if (Files.exists(imagePath)) {
+            byte[] imageBytes = Files.readAllBytes(imagePath);
+            return Base64.getEncoder().encodeToString(imageBytes);
+        } else {
+            return null;
+        }
+    }
+
     public void checkIdUploadFolderCreated() {
+        //String appPath = servletContext.getRealPath("/");
+
         // get user directory and create folders
         idImagesFolderPath = System.getProperty("user.dir") + File.separator
                 + "Car Rental System" + File.separator + "uploads" + File.separator + "usersIdImages" + File.separator;

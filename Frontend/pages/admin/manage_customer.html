@@ -172,7 +172,7 @@
                                 <label class="form-label">ID Card Front</label>
                             </div>
                             <div class="col-sm-9">
-                                <img class="enlargeableImg" src="../../assets/img/car2.jpg" width="50%"
+                                <img class="enlargeableImg"  width="50%"
                                      alt="id_img_front" style="cursor: zoom-in;">
                             </div>
                         </div>
@@ -182,7 +182,7 @@
                                 <label class="form-label">ID Card Back</label>
                             </div>
                             <div class="col-sm-9">
-                                <img class="enlargeableImg" src="../../assets/img/car1.jpg" width="50%"
+                                <img class="enlargeableImg"  width="50%"
                                      alt="id_img_back" style="cursor: zoom-in;">
                             </div>
                         </div>
@@ -206,43 +206,11 @@
 </div>
 <!-- ============================================= Register Modal END -->
 
-<!-- Image enlarge =============================================  -->
-<!--<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document"> &lt;!&ndash; Use modal-xl class to make it extra-large &ndash;&gt;
-        <div class="modal-content bg-dark">
-            <div class="modal-header">
-                <h5 class="modal-title fs-5" id="imageModalLabel"> Image </h5>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
-                </button>
-            </div>
-
-            <div class="modal-body text-center">
-                <img id="modalImage" src="#" class="img-fluid" alt="Modal Image">
-            </div>
-        </div>
-    </div>
-</div>-->
-<!-- ============================================= Image enlarge END -->
-
-
 <!-- scripts ============================================= -->
 <script src="../../assets/js/jquery-3.6.1.min.js"></script>
 <script src="../../assets/boostrap/js/bootstrap.js"></script>
 <script src="../../controller/admin/manage_customers_controller.js"></script>
-<script>
-
-     $(".enlargeableImg").click(function () {
-         const imageUrl = this.src; // Get the image URL from the src attribute
-         window.open(imageUrl, "_blank"); // Open the image in a new tab
-     });
-
-   /* $(".enlargeableImg").click(function () {
-        const imageUrl = this.src; // Get the image URL from the src attribute
-        $("#modalImage").attr("src", imageUrl); // Set the modal image's source
-        $("#imageModal").modal("show"); // Show the modal
-    });*/
-</script>
+<script src="../../assets/js/common-js.js"></script>
 <!-- ============================================= scripts END -->
 </body>
 </html>

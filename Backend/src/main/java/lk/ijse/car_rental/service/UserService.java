@@ -2,6 +2,7 @@ package lk.ijse.car_rental.service;
 
 import lk.ijse.car_rental.dto.UserDTO;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface UserService {
@@ -14,4 +15,6 @@ public interface UserService {
     void deleteUser(String id);
 
     String getNextUserID();
+
+    String getImage(String imageName) throws IOException;
 }

@@ -6,7 +6,17 @@ import lk.ijse.car_rental.service.LoginService;
 import lk.ijse.car_rental.service.UserService;
 import lk.ijse.car_rental.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 
 @CrossOrigin
 @RestController
@@ -24,6 +34,22 @@ public class UserController {
         return new ResponseUtil("Ok", "Get next user id Success", service.getNextUserID());
     }
 
+    // get all users
+    @GetMapping
+    public ResponseUtil getAllUsers() {
+        return new ResponseUtil("Ok", "Get all users Success", service.getAllUsers());
+    }
+
+    // get image (base64) by name
+    @GetMapping("/get_image/{imageName}")
+    public ResponseUtil getImage(@PathVariable String imageName) throws IOException {
+        if (service.getImage(imageName) != null) {
+            return new ResponseUtil("Ok", "image get done", service.getImage(imageName));
+        } else {
+            return new ResponseUtil("Error", "image not found", null);
+        }
+    }
+
     // save user
     @PostMapping
     public ResponseUtil saveUser(@ModelAttribute UserDTO dto, @ModelAttribute LoginDTO loginDTO) {
@@ -32,11 +58,6 @@ public class UserController {
         return new ResponseUtil("Ok", "Save User Success", null);
     }
 
-    // get all users
-    @GetMapping
-    public ResponseUtil getAllUsers() {
-        return new ResponseUtil("Ok", "Get all users Success", service.getAllUsers());
-    }
 
     // update user
     @PutMapping
