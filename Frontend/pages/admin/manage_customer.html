@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Easy Car Rental</title>
+    <title>Manage Customers</title>
     <meta charset="UTF-8">
     <meta content="width=device-width initial-scale=1" name="viewport">
 
@@ -25,7 +25,7 @@
             font-family: 'Kanit', sans-serif;
         }
 
-        input{
+        input {
             background-color: #dadada !important;
             color: #050505 !important;
         }
@@ -59,7 +59,7 @@
                 <li class="nav-item active"><a href="#" class="nav-link">Payment</a></li>
             </ul>
             <span class="navbar-text">
-                <button type="button" style="background: none; border: none; padding: 0;"
+                <button id="profileButton" type="button" style="background: none; border: none; padding: 0;"
                         data-bs-toggle="modal" data-bs-target="#Logged">
                         <img src="../../assets/img/profile.png" width="30%" alt="Profile Image">
                 </button>
@@ -68,6 +68,34 @@
     </div>
 </nav>
 <!-- ============================================= nav bar END -->
+
+<!-- Logged Modal ============================================= -->
+<div class="modal fade" id="Logged" tabindex="-1" aria-labelledby="LoggedLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="LoggedLabel"> Admin </h1>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!--logout-->
+                <div class="row mb-3">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <button href="../../index.html" id="btnLogout" type="button" class="btn btn-info float-end"
+                                data-bs-dismiss="modal">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= Logged Modal END -->
 
 <!-- existing customers table ================================= -->
 <div class="container mt-4">
@@ -125,10 +153,19 @@
                     <div class="col-sm-6">
                         <div class="row mb-3">
                             <div class="col-sm-3 text-light">
+                                <label for="userId" class="form-label">Customer ID</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="userId" name="userId" required readonly>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3 text-light">
                                 <label for="name" class="form-label">Name</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="name" name="name" required>
+                                <input type="text" class="form-control" id="name" name="name" required readonly>
                             </div>
                         </div>
 
@@ -137,7 +174,7 @@
                                 <label for="address" class="form-label">Address</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="address" name="address" required>
+                                <input type="text" class="form-control" id="address" name="address" required readonly>
                             </div>
                         </div>
 
@@ -146,7 +183,7 @@
                                 <label for="contact" class="form-label">Contact</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="contact" name="contact" required>
+                                <input type="text" class="form-control" id="contact" name="contact" required readonly>
                             </div>
                         </div>
 
@@ -155,7 +192,7 @@
                                 <label for="email" class="form-label">Email</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <input type="email" class="form-control" id="email" name="email" required readonly>
                             </div>
                         </div>
 
@@ -164,7 +201,7 @@
                                 <label for="nic_num" class="form-label">NIC Number</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nic_num" name="nic_num" required>
+                                <input type="text" class="form-control" id="nic_num" name="nic_num" required readonly>
                             </div>
                         </div>
 
@@ -174,7 +211,7 @@
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="license_num" name="license_num"
-                                       required>
+                                       required readonly>
                             </div>
                         </div>
                     </div>
@@ -208,11 +245,14 @@
                     <!--submit-->
                     <div class="row mb-3 text-end">
                         <div class="col">
+                            Customer details <i id="icon" class="fas fa-angle-double-right"></i>
                             <button type="button" class="btn btn-outline-warning" id="editable"> Make Non-Editable
                             </button>
                             <button type="button" class="btn btn-outline-danger" id="delete"> Delete</button>
                             <button type="button" class="btn btn-outline-info" id="edit">Edit</button>
-                            <button type="button" class="btn btn-outline-light" id="cancel"> Cancel</button>
+                            <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" id="cancel">
+                                Cancel
+                            </button>
                         </div>
                     </div>
                 </div>

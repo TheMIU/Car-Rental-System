@@ -1,20 +1,30 @@
-// get customer data to table
-let data;
-$.ajax({
-    url: 'http://localhost:8080/Backend_war/user',
-    method: 'GET',
-    dataType: 'json',
-    success: function (response) {
-        data = response.data;
-
-        // Initial display
-        displayData();
-        updatePagination();
-    },
-    error: function (error) {
-        console.log("Error fetching data: " + error);
-    }
+////////// navigation
+$('#btnLogout').click(function () {
+    window.location.href = '../../index.html';
 });
+
+////////// get customer data to table
+let data;
+updateTable();
+
+function updateTable() {
+    $.ajax({
+        url: 'http://localhost:8080/Backend_war/user',
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            data = response.data;
+            console.log(response.data)
+            // Initial display
+            displayData();
+            updatePagination();
+        },
+        error: function (error) {
+            console.log("Error fetching data: " + error);
+        }
+    });
+}
+
 
 const tableBody = document.getElementById("table-body");
 const pagination = document.getElementById("pagination");
@@ -68,6 +78,7 @@ document.getElementById("table-body").addEventListener("click", function (event)
         const user = data[dataIndex];
 
         // Update the modal
+        $('#userId').val(user.userId);
         $('#name').val(user.name);
         $('#address').val(user.address);
         $('#contact').val(user.contact);
@@ -77,6 +88,16 @@ document.getElementById("table-body").addEventListener("click", function (event)
 
         loadImages(user.id_img_front, $('#id_img_front'));
         loadImages(user.id_img_back, $('#id_img_back'));
+
+        if(user.editable){
+            console.log('user editable '+user.editable);
+            $('#editable').text('Make Editable');
+            $('#editable').removeClass('btn-outline-warning').addClass('btn-outline-danger');
+        }else {
+            console.log('user editable '+user.editable);
+            $('#editable').text('Make Non-Editable');
+            $('#editable').removeClass('btn-outline-danger').addClass('btn-outline-danger');
+        }
     }
 });
 
@@ -92,3 +113,70 @@ function loadImages(imageName, imgElement) {
         }
     });
 }
+
+////////////// Delete customer
+$('#delete').click(function () {
+    let userId = $('#userId').val();
+    if (confirm('Are you sure you want to delete this customer?')) {
+        $.ajax({
+            type: 'DELETE',
+            url: baseURL + 'user/' + userId,
+            success: function (response) {
+                alert(response.data + ' Customer deleted');
+                updateTable();
+                $('#moreInfo').modal('hide');
+            },
+            error: function (error) {
+                alert('Error: ' + error.responseJSON.message);
+            }
+        });
+    }
+});
+
+////////////// Edit customer
+$('#edit').click(function () {
+    // make editable text fields
+    $('#name').removeAttr('readonly');
+    $('#address').removeAttr('readonly');
+    $('#contact').removeAttr('readonly');
+    $('#email').removeAttr('readonly');
+    $('#nic_num').removeAttr('readonly');
+    $('#license_num').removeAttr('readonly');
+});
+
+$('#cancel').click(function () {
+    // make non editable text fields
+    $('#name').attr('readonly', true);
+    $('#address').attr('readonly', true);
+    $('#contact').attr('readonly', true);
+    $('#email').attr('readonly', true);
+    $('#nic_num').attr('readonly', true);
+    $('#license_num').attr('readonly', true);
+});
+
+////////////// toggle editable & non-editable customer
+$('#editable').click(function () {
+    let userId = $('#userId').val();
+    $.ajax({
+        type: 'PUT',
+        url: baseURL + 'user/' + userId,
+        success: function (response) {
+            console.log(response)
+            alert('Changed');
+        },
+        error: function (error) {
+            alert('Error: ' + error.responseJSON.message);
+        }
+    });
+    updateTable();
+   /* if ($('#editable').text() === 'Make Editable') {
+        alert("Customer can edit details.");
+        $('#editable').text('Make Non-Editable');
+        $('#editable').removeClass('btn-outline-warning').addClass('btn-outline-danger');
+    } else {
+        alert("Customer can't edit details !");
+        $('#editable').text('Make Editable');
+        $('#editable').removeClass('btn-outline-danger').addClass('btn-outline-warning');
+    }*/
+});
+

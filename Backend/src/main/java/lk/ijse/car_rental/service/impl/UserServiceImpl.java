@@ -9,6 +9,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
@@ -118,6 +119,19 @@ public class UserServiceImpl implements UserService {
             return Base64.getEncoder().encodeToString(imageBytes);
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public void toggleEditable(String userId) {
+        System.out.println(userId);
+        boolean isApprovedByUserID = userRepo.findIsApprovedByUserID(userId);
+        System.out.println(isApprovedByUserID);
+
+        if (isApprovedByUserID) {
+            userRepo.changeIsApprovedFalse(userId);
+        } else {
+            userRepo.changeIsApprovedTrue(userId);
         }
     }
 

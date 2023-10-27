@@ -22,7 +22,12 @@ class UserRepoTest {
 
     @Test
     void test() {
-        String allAndOrderBySubstring = userRepo.findLastRecord();
-        System.out.println(allAndOrderBySubstring);
+        boolean c2 = userRepo.findIsApprovedByUserID("C2");
+        System.out.println(c2);
+    }
+
+    @Test
+    void test2() {
+        int c2 = userRepo.changeIsApprovedTrue("C2");
     }
 }

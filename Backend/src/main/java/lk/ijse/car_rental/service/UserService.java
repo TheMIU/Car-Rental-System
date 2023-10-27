@@ -17,4 +17,6 @@ public interface UserService {
     String getNextUserID();
 
     String getImage(String imageName) throws IOException;
+
+    void toggleEditable(String isEditable);
 }

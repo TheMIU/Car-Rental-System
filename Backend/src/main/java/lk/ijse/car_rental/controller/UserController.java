@@ -53,10 +53,16 @@ public class UserController {
     }
 
     // delete user
-    @DeleteMapping
-    public ResponseUtil deleteUser(String userId) {
+    @DeleteMapping("/{userId}")
+    public ResponseUtil deleteUser(@PathVariable String userId) {
         service.deleteUser(userId);
         return new ResponseUtil("Ok", "Delete User Success", userId);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseUtil toggleEditable(@PathVariable String userId){
+        service.toggleEditable(userId);
+        return new ResponseUtil("Ok", "Changed", null);
     }
 }
 
