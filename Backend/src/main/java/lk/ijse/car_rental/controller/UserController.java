@@ -7,6 +7,7 @@ import lk.ijse.car_rental.service.UserService;
 import lk.ijse.car_rental.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
 
 @CrossOrigin
@@ -60,9 +61,17 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseUtil toggleEditable(@PathVariable String userId){
+    public ResponseUtil toggleEditable(@PathVariable String userId) {
         service.toggleEditable(userId);
         return new ResponseUtil("Ok", "Changed", null);
+    }
+
+    // delete image in server
+    @DeleteMapping("delete/{imageName}")
+    public ResponseUtil deleteImage(@PathVariable String imageName) {
+        System.out.println(imageName);
+        service.deleteImage(imageName);
+        return new ResponseUtil("Ok", "Delete image done", null);
     }
 }
 

@@ -19,4 +19,6 @@ public interface UserService {
     String getImage(String imageName) throws IOException;
 
     void toggleEditable(String isEditable);
+
+    void deleteImage(String imageName);
 }

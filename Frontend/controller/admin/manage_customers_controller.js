@@ -85,16 +85,18 @@ document.getElementById("table-body").addEventListener("click", function (event)
         $('#email').val(user.email);
         $('#nic_num').val(user.nic_num);
         $('#license_num').val(user.license_num);
+        $('#id_img_front_label').val(user.id_img_front);
+        $('#id_img_back_label').val(user.id_img_back);
 
         loadImages(user.id_img_front, $('#id_img_front'));
         loadImages(user.id_img_back, $('#id_img_back'));
 
-        if(user.editable){
-            console.log('user editable '+user.editable);
+        if (user.editable) {
+            console.log('user editable ' + user.editable);
             $('#editable').text('Make Editable');
             $('#editable').removeClass('btn-outline-warning').addClass('btn-outline-danger');
-        }else {
-            console.log('user editable '+user.editable);
+        } else {
+            console.log('user editable ' + user.editable);
             $('#editable').text('Make Non-Editable');
             $('#editable').removeClass('btn-outline-danger').addClass('btn-outline-danger');
         }
@@ -117,11 +119,16 @@ function loadImages(imageName, imgElement) {
 ////////////// Delete customer
 $('#delete').click(function () {
     let userId = $('#userId').val();
+    let frontImage = $('#id_img_front_label').val();
+    let backImage = $('#id_img_back_label').val();
+
     if (confirm('Are you sure you want to delete this customer?')) {
         $.ajax({
             type: 'DELETE',
             url: baseURL + 'user/' + userId,
             success: function (response) {
+                deleteImage(frontImage);
+                deleteImage(backImage);
                 alert(response.data + ' Customer deleted');
                 updateTable();
                 $('#moreInfo').modal('hide');
@@ -132,6 +139,23 @@ $('#delete').click(function () {
         });
     }
 });
+
+////////////// delete images when customer delete
+function deleteImage(imageName) {
+    $(document).ready(function () {
+        $.ajax({
+            type: 'DELETE',
+            url: baseURL + 'user/delete/' + imageName,
+            success: function () {
+                console.log("deleted");
+            },
+            error: function () {
+                alert('Error');
+            }
+        });
+    });
+}
+
 
 ////////////// Edit customer
 $('#edit').click(function () {
@@ -169,14 +193,14 @@ $('#editable').click(function () {
         }
     });
     updateTable();
-   /* if ($('#editable').text() === 'Make Editable') {
-        alert("Customer can edit details.");
-        $('#editable').text('Make Non-Editable');
-        $('#editable').removeClass('btn-outline-warning').addClass('btn-outline-danger');
-    } else {
-        alert("Customer can't edit details !");
-        $('#editable').text('Make Editable');
-        $('#editable').removeClass('btn-outline-danger').addClass('btn-outline-warning');
-    }*/
+    /* if ($('#editable').text() === 'Make Editable') {
+         alert("Customer can edit details.");
+         $('#editable').text('Make Non-Editable');
+         $('#editable').removeClass('btn-outline-warning').addClass('btn-outline-danger');
+     } else {
+         alert("Customer can't edit details !");
+         $('#editable').text('Make Editable');
+         $('#editable').removeClass('btn-outline-danger').addClass('btn-outline-warning');
+     }*/
 });
 

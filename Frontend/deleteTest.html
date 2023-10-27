@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+    $(document).ready(function () {
+        let imageName = "C2_ID_Front.jpg";
+        let baseURL = "http://localhost:8080/Backend_war/";
+
+        $.ajax({
+            type: 'DELETE',
+            url: baseURL + 'user/delete/' + imageName,
+            success: function (response) {
+                console.log(response);
+                console.log("deleted");
+            },
+            error: function (error) {
+                alert('Error');
+            }
+        });
+    });
+</script>
+</html>
