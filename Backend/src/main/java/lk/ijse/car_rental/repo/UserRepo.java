@@ -27,4 +27,8 @@ public interface UserRepo extends JpaRepository<User, String> {
     int changeIsApprovedFalse(@Param("userId") String userId);
 
     User findUserByUserId(String id);
+
+    @Modifying
+    @Query("UPDATE User u SET u.is_approved = true WHERE u.userId = :userId")
+    void approveUser(@Param("userId") String userId);
 }

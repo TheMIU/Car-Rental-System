@@ -21,4 +21,6 @@ public interface UserService {
     void toggleEditable(String isEditable);
 
     void deleteImage(String imageName);
+
+    void approveUser(String userId);
 }

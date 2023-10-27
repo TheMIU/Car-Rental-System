@@ -97,16 +97,6 @@ function updateModal(user) {
 
     loadImages(user.id_img_front, $('#id_img_front'));
     loadImages(user.id_img_back, $('#id_img_back'));
-
-    if (user.editable) {
-        console.log('user editable ' + user.editable);
-        $('#editable').text('Make Non-Editable');
-        $('#editable').addClass('btn-outline-danger').removeClass('btn-outline-warning');
-    } else {
-        console.log('user editable ' + user.editable);
-        $('#editable').text('Make Editable');
-        $('#editable').addClass('btn-outline-warning').removeClass('btn-outline-danger');
-    }
 }
 
 function loadImages(imageName, imgElement) {
@@ -121,86 +111,6 @@ function loadImages(imageName, imgElement) {
         }
     });
 }
-
-////////////// Delete customer
-$('#delete').click(function () {
-    let userId = $('#userId').val();
-    let frontImage = $('#id_img_front_label').val();
-    let backImage = $('#id_img_back_label').val();
-
-    if (confirm('Are you sure you want to delete this customer?')) {
-        $.ajax({
-            type: 'DELETE',
-            url: baseURL + 'user/' + userId,
-            success: function (response) {
-                deleteImage(frontImage);
-                deleteImage(backImage);
-                alert(response.data + ' Customer deleted');
-                updateTable();
-                $('#moreInfo').modal('hide');
-            },
-            error: function (error) {
-                alert('Error: ' + error.responseJSON.message);
-            }
-        });
-    }
-});
-
-////////////// delete images when customer delete
-function deleteImage(imageName) {
-    $(document).ready(function () {
-        $.ajax({
-            type: 'DELETE',
-            url: baseURL + 'user/delete/' + imageName,
-            success: function () {
-                console.log("deleted");
-            },
-            error: function () {
-                alert('Error');
-            }
-        });
-    });
-}
-
-
-////////////// Edit customer
-$('#edit').click(function () {
-    // make editable text fields
-    $('#name').removeAttr('readonly');
-    $('#address').removeAttr('readonly');
-    $('#contact').removeAttr('readonly');
-    $('#email').removeAttr('readonly');
-    $('#nic_num').removeAttr('readonly');
-    $('#license_num').removeAttr('readonly');
-});
-
-$('#cancel').click(function () {
-    // make non editable text fields
-    $('#name').attr('readonly', true);
-    $('#address').attr('readonly', true);
-    $('#contact').attr('readonly', true);
-    $('#email').attr('readonly', true);
-    $('#nic_num').attr('readonly', true);
-    $('#license_num').attr('readonly', true);
-});
-
-////////////// toggle editable & non-editable customer
-$('#editable').click(function () {
-    let userId = $('#userId').val();
-    $.ajax({
-        type: 'PUT',
-        url: baseURL + 'user/' + userId,
-        success: function (response) {
-            updateTable();
-            $('#moreInfo').modal('hide');
-            alert(response.message);
-        },
-        error: function (error) {
-            updateTable();
-            alert('Error: ' + error.responseJSON.message);
-        }
-    });
-});
 
 ///////////////////// table search
 $(document).ready(function () {
@@ -234,3 +144,20 @@ $(document).ready(function () {
     });
 });
 
+///////////////////// Approve customer
+$('#approve').click(function () {
+    let userId = $('#userId').val();
+
+    $.ajax({
+        url: baseURL + 'user/approve/' + userId,
+        method: 'PUT',
+        success: function (response) {
+            alert(response.message);
+            updateTable();
+            $('#moreInfo').modal('hide');
+        },
+        error: function (error) {
+            console.log("Error: " + error.responseJSON.message);
+        }
+    });
+});

@@ -60,6 +60,7 @@ public class UserController {
         return new ResponseUtil("Ok", "Delete User Success", userId);
     }
 
+    // toggle editable user
     @PutMapping("/{userId}")
     public ResponseUtil toggleEditable(@PathVariable String userId) {
         service.toggleEditable(userId);
@@ -72,6 +73,13 @@ public class UserController {
         System.out.println(imageName);
         service.deleteImage(imageName);
         return new ResponseUtil("Ok", "Delete image done", null);
+    }
+
+    // approve user
+    @PutMapping("approve/{userId}")
+    public ResponseUtil approveUser(@PathVariable String userId){
+        service.approveUser(userId);
+        return new ResponseUtil("Ok", userId+" Approved !", null);
     }
 }
 

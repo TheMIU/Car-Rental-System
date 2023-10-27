@@ -141,6 +141,11 @@ public class UserServiceImpl implements UserService {
         new File(idImagesFolderPath+imageName).delete();
     }
 
+    @Override
+    public void approveUser(String userId) {
+        userRepo.approveUser(userId);
+    }
+
     public void checkIdUploadFolderCreated() {
         //String appPath = servletContext.getRealPath("/");
 
