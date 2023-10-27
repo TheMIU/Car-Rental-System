@@ -85,7 +85,7 @@ $("#table-body").on("click", ".more-button", function (event) {
     }
 });
 
-function updateModal(user){
+function updateModal(user) {
     $('#userId').val(user.userId);
     $('#name').val(user.name);
     $('#address').val(user.address);
@@ -200,6 +200,38 @@ $('#editable').click(function () {
             updateTable();
             alert('Error: ' + error.responseJSON.message);
         }
+    });
+});
+
+///////////////////// table search
+$(document).ready(function () {
+    let $input = $("#search");
+    let $tableBody = $("#table-body");
+
+    // Add an event listener for the input element
+    $input.on("input", function () {
+        let filter = $input.val().toLowerCase();
+
+        $tableBody.find("tr").each(function () {
+            let $row = $(this);
+            let match = false;
+
+            // Loop through the columns (excluding the last one) and check for a match
+            $row.find("td:lt(4)").each(function () {
+                let cellText = $(this).text().toLowerCase();
+                if (cellText.includes(filter)) {
+                    match = true;
+                    return false; // Exit the loop if a match is found
+                }
+            });
+
+            // Show or hide the row based on the match
+            if (match) {
+                $row.show();
+            } else {
+                $row.hide();
+            }
+        });
     });
 });
 
