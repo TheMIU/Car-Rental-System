@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
         userByUserId.setContact(dto.getContact());
         userByUserId.setEmail(dto.getEmail());
         userByUserId.setEditable(dto.isEditable());
-        userByUserId.set_approved(dto.isApproved());
+        userByUserId.set_approved(dto.is_approved());
 
         userRepo.save(userByUserId);
     }
