@@ -5,11 +5,20 @@ $('#btnLogout').click(function () {
 
 ////////// get customer data to table
 let data;
+let tableBody;
+let pagination;
+let itemsPerPage;
+let currentPage;
 updateTable();
 
 function updateTable() {
+    tableBody = document.getElementById("table-body");
+    pagination = document.getElementById("pagination");
+    itemsPerPage = 8;
+    currentPage = 1;
+
     $.ajax({
-        url: 'http://localhost:8080/Backend_war/user',
+        url: 'http://localhost:8080/Backend_war/user?timestamp=' + Date.now(),
         method: 'GET',
         dataType: 'json',
         success: function (response) {
@@ -24,12 +33,6 @@ function updateTable() {
         }
     });
 }
-
-
-const tableBody = document.getElementById("table-body");
-const pagination = document.getElementById("pagination");
-const itemsPerPage = 8;
-let currentPage = 1;
 
 function changePage(pageNumber) {
     currentPage = pageNumber;
@@ -71,37 +74,41 @@ function updatePagination() {
 }
 
 //////////////// "More" buttons
-document.getElementById("table-body").addEventListener("click", function (event) {
-    if (event.target.classList.contains("more-button")) {
+$("#table-body").on("click", ".more-button", function (event) {
+    if ($(event.target).hasClass("more-button")) {
         // Calculate the actual index of the data based on the current page
-        const dataIndex = (currentPage - 1) * itemsPerPage + Array.from(this.children).indexOf(event.target.closest("tr"));
+        const dataIndex = (currentPage - 1) * itemsPerPage + $(event.target).closest("tr").index();
         const user = data[dataIndex];
 
         // Update the modal
-        $('#userId').val(user.userId);
-        $('#name').val(user.name);
-        $('#address').val(user.address);
-        $('#contact').val(user.contact);
-        $('#email').val(user.email);
-        $('#nic_num').val(user.nic_num);
-        $('#license_num').val(user.license_num);
-        $('#id_img_front_label').val(user.id_img_front);
-        $('#id_img_back_label').val(user.id_img_back);
-
-        loadImages(user.id_img_front, $('#id_img_front'));
-        loadImages(user.id_img_back, $('#id_img_back'));
-
-        if (user.editable) {
-            console.log('user editable ' + user.editable);
-            $('#editable').text('Make Editable');
-            $('#editable').removeClass('btn-outline-warning').addClass('btn-outline-danger');
-        } else {
-            console.log('user editable ' + user.editable);
-            $('#editable').text('Make Non-Editable');
-            $('#editable').removeClass('btn-outline-danger').addClass('btn-outline-danger');
-        }
+        updateModal(user);
     }
 });
+
+function updateModal(user){
+    $('#userId').val(user.userId);
+    $('#name').val(user.name);
+    $('#address').val(user.address);
+    $('#contact').val(user.contact);
+    $('#email').val(user.email);
+    $('#nic_num').val(user.nic_num);
+    $('#license_num').val(user.license_num);
+    $('#id_img_front_label').val(user.id_img_front);
+    $('#id_img_back_label').val(user.id_img_back);
+
+    loadImages(user.id_img_front, $('#id_img_front'));
+    loadImages(user.id_img_back, $('#id_img_back'));
+
+    if (user.editable) {
+        console.log('user editable ' + user.editable);
+        $('#editable').text('Make Non-Editable');
+        $('#editable').addClass('btn-outline-danger').removeClass('btn-outline-warning');
+    } else {
+        console.log('user editable ' + user.editable);
+        $('#editable').text('Make Editable');
+        $('#editable').addClass('btn-outline-warning').removeClass('btn-outline-danger');
+    }
+}
 
 function loadImages(imageName, imgElement) {
     $.ajax({
@@ -185,14 +192,16 @@ $('#editable').click(function () {
         type: 'PUT',
         url: baseURL + 'user/' + userId,
         success: function (response) {
-            console.log(response)
-            alert('Changed');
+            updateTable();
+            $('#moreInfo').modal('hide');
+            alert(response.message);
         },
         error: function (error) {
+            updateTable();
             alert('Error: ' + error.responseJSON.message);
         }
     });
-    updateTable();
+
     /* if ($('#editable').text() === 'Make Editable') {
          alert("Customer can edit details.");
          $('#editable').text('Make Non-Editable');
