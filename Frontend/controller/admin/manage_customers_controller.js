@@ -201,15 +201,5 @@ $('#editable').click(function () {
             alert('Error: ' + error.responseJSON.message);
         }
     });
-
-    /* if ($('#editable').text() === 'Make Editable') {
-         alert("Customer can edit details.");
-         $('#editable').text('Make Non-Editable');
-         $('#editable').removeClass('btn-outline-warning').addClass('btn-outline-danger');
-     } else {
-         alert("Customer can't edit details !");
-         $('#editable').text('Make Editable');
-         $('#editable').removeClass('btn-outline-danger').addClass('btn-outline-warning');
-     }*/
 });
 

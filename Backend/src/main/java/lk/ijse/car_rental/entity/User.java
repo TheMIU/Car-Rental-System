@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -31,7 +28,8 @@ public class User{
     private boolean editable;
     private boolean is_approved;
 
-    @OneToOne
-    @JoinColumn(name = "loginId",insertable = false,updatable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId", referencedColumnName = "loginId")
     private Login login;
+
 }

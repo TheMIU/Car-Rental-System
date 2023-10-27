@@ -5,9 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -21,4 +19,8 @@ public class Login {
     private String loginName;
     private String password;
     private String type;
+
+    @OneToOne(mappedBy = "login", cascade = CascadeType.ALL)
+    @JoinColumn(name = "loginId", referencedColumnName = "userId", unique = true)
+    private User user;
 }
