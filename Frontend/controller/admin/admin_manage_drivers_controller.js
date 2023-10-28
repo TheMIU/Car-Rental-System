@@ -1,4 +1,4 @@
-////////// get customer data to table
+////////// get driver data to table
 let data;
 let tableBody;
 let pagination;
@@ -13,12 +13,12 @@ function updateTable() {
     currentPage = 1;
 
     $.ajax({
-        url: 'http://localhost:8080/Backend_war/user',
+        url: baseURL + 'user',
         method: 'GET',
         dataType: 'json',
         success: function (response) {
             let allItems = response.data
-            let selectedItems = allItems.filter(customer => customer._approved !== false && customer.type === 'customer');
+            let selectedItems = allItems.filter(drivers => drivers.type === 'driver');
             console.log(selectedItems);
 
             data = selectedItems;
@@ -51,8 +51,8 @@ function displayData() {
         row.innerHTML = `
                 <td>${user.userId}</td>
                 <td>${user.name}</td>
-                <td>${user.address}</td>
                 <td>${user.contact}</td>
+                <td>${user.salary}</td>
                 <td><button class="btn btn-outline-info btn-sm more-button" data-bs-toggle="modal"
             data-bs-target="#moreInfo"> <i class="fas fa-ellipsis-h"></i>  More</button></td>
             `;
@@ -89,53 +89,22 @@ function updateModal(user) {
     $('#name').val(user.name);
     $('#address').val(user.address);
     $('#contact').val(user.contact);
+    $('#salary').val(user.salary);
     $('#email').val(user.email);
     $('#nic_num').val(user.nic_num);
     $('#license_num').val(user.license_num);
-    $('#id_img_front_label').val(user.id_img_front);
-    $('#id_img_back_label').val(user.id_img_back);
-
-    loadImages(user.id_img_front, $('#id_img_front'));
-    loadImages(user.id_img_back, $('#id_img_back'));
-
-    if (user.editable) {
-        console.log('user editable ' + user.editable);
-        $('#editable').text('Make Non-Editable');
-        $('#editable').addClass('btn-outline-danger').removeClass('btn-outline-warning');
-    } else {
-        console.log('user editable ' + user.editable);
-        $('#editable').text('Make Editable');
-        $('#editable').addClass('btn-outline-warning').removeClass('btn-outline-danger');
-    }
 }
 
-function loadImages(imageName, imgElement) {
-    $.ajax({
-        url: baseURL + 'user/get_image/' + imageName,
-        method: 'GET',
-        success: function (response) {
-            imgElement.attr('src', "data:image/jpeg;base64," + response);
-        },
-        error: function (error) {
-            console.log("Error loading image: " + error);
-        }
-    });
-}
-
-////////////// Delete customer
+////////////// Delete driver
 $('#delete').click(function () {
     let userId = $('#userId').val();
-    let frontImage = $('#id_img_front_label').val();
-    let backImage = $('#id_img_back_label').val();
 
-    if (confirm('Are you sure you want to delete this customer?')) {
+    if (confirm('Are you sure you want to delete this driver?')) {
         $.ajax({
             type: 'DELETE',
             url: baseURL + 'user/' + userId,
             success: function (response) {
-                deleteImage(frontImage);
-                deleteImage(backImage);
-                alert(response.data + ' Customer deleted');
+                alert(response.data + ' Driver deleted');
                 updateTable();
                 $('#moreInfo').modal('hide');
             },
@@ -146,60 +115,34 @@ $('#delete').click(function () {
     }
 });
 
-////////////// delete images when customer delete
-function deleteImage(imageName) {
-    $(document).ready(function () {
-        $.ajax({
-            type: 'DELETE',
-            url: baseURL + 'user/delete/' + imageName,
-            success: function () {
-                console.log("deleted");
-            },
-            error: function () {
-                alert('Error');
-            }
-        });
-    });
-}
-
-
 ////////////// Edit customer
 $('#edit').click(function () {
+    makeEditableTextFields();
+    $('#name').focus();
+    $('#update').show();
+    $('#edit').hide();
+});
+
+function makeEditableTextFields() {
     // make editable text fields
     $('#name').removeAttr('readonly');
     $('#address').removeAttr('readonly');
     $('#contact').removeAttr('readonly');
+    $('#salary').removeAttr('readonly');
     $('#email').removeAttr('readonly');
     $('#nic_num').removeAttr('readonly');
     $('#license_num').removeAttr('readonly');
-});
+}
 
 $('#moreInfo').on('hidden.bs.modal', function () {
     // make non editable text fields
     $('#name').attr('readonly', true);
     $('#address').attr('readonly', true);
     $('#contact').attr('readonly', true);
+    $('#salary').attr('readonly', true);
     $('#email').attr('readonly', true);
     $('#nic_num').attr('readonly', true);
     $('#license_num').attr('readonly', true);
-});
-
-////////////// toggle editable & non-editable customer
-$('#editable').click(function () {
-    let userId = $('#userId').val();
-    $.ajax({
-        type: 'PUT',
-        url: baseURL + 'user/' + userId,
-        success: function (response) {
-            updateTable();
-            $('#moreInfo').modal('hide');
-            alert(response.message);
-        },
-        error: function (error) {
-            updateTable();
-            alert('Error: ' + error.responseJSON.message);
-        }
-    });
 });
 
 ///////////////////// table search
@@ -234,3 +177,67 @@ $(document).ready(function () {
     });
 });
 
+////////////// separate save and view logics
+$(document).on('click', '.more-button', function () {
+    $('#moreModalLabel').text('Driver Details');
+    $('#save').hide();
+    $('#edit').show();
+    $('#update').hide();
+    $('#delete').show();
+});
+
+$('#addNew').click(function () {
+    $('#moreModalLabel').text('Add New Driver');
+    $('#save').show();
+    $('#edit').hide();
+    $('#update').hide();
+    $('#delete').hide();
+    updateModal('');
+    makeEditableTextFields();
+});
+
+/////////////// update
+$("#update").click(function () {
+    let userId = $('#userId').val();
+    let name = $('#name').val();
+    let address = $('#address').val();
+    let contact = $('#contact').val();
+    let salary = $('#salary').val();
+    let email = $('#email').val();
+    let nic_num = $('#nic_num').val();
+    let license_num = $('#license_num').val();
+
+    let driver = {
+        "userId": userId,
+        "name": name,
+        "address": address,
+        "contact": contact,
+        "salary": salary,
+        "email": email,
+        "nic_num": nic_num,
+        "license_num": license_num,
+        "editable":true,
+        "_approved":true,
+        "type":'driver'
+    }
+
+    let b = confirm("Do you want to Update " + userId + " ?");
+
+    if (b) {
+        $.ajax({
+            url: baseURL + 'user',
+            method: 'PUT',
+            contentType: "application/json",
+            data: JSON.stringify(driver),
+
+            success: function (res) {
+                alert(res.message);
+                updateTable();
+                $('#moreInfo').modal('hide');
+            },
+            error: function (error) {
+                alert(error.responseJSON.message);
+            }
+        });
+    }
+});

@@ -15,7 +15,7 @@ public class LoginController {
 
     // save
     @PostMapping
-    public ResponseUtil save(@ModelAttribute LoginDTO dto) {
+    public ResponseUtil save(@ModelAttribute LoginDTO dto) throws Exception {
         service.save(dto);
         return new ResponseUtil("Ok", "Save Success", null);
     }

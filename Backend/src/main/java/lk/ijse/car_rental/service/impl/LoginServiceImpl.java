@@ -23,8 +23,9 @@ public class LoginServiceImpl implements LoginService {
     private ModelMapper mapper;
 
     @Override
-    public void save(LoginDTO dto) {
+    public boolean save(LoginDTO dto) {
         loginRepo.save(mapper.map(dto, Login.class));
+        return true;
     }
 
     @Override

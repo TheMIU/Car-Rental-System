@@ -134,7 +134,10 @@
         <ul class="pagination" id="pagination"></ul>
     </nav>
     <hr>
-    <button class="btn-sm btn btn-outline-info">+ Add New</button>
+    <button id="addNew" class="btn-sm btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#moreInfo" >
+        <i class="fas fa-plus" style="margin-right: 5px;"></i> Add New
+    </button>
+
 </div>
 <!-- ================================= drivers table END -->
 
@@ -186,7 +189,7 @@
                                 <label for="salary" class="form-label">Salary</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="salary" name="salary" required readonly>
+                                <input type="number" class="form-control" id="salary" name="salary" required readonly>
                             </div>
                         </div>
                     </div>
@@ -236,11 +239,24 @@
                 <div class="row justify-content-center">
                     <div class="row mb-3 text-end">
                         <div class="col">
-                            <button type="button" class="btn btn-outline-danger" id="delete"> Delete</button>
-                            <button type="button" class="btn btn-outline-info" id="edit">Edit</button>
-                            <button type="button" class="btn btn-outline-info" id="save">Save</button>
-                            <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" id="cancel">
-                                Cancel
+                            <button type="button" class="btn btn-sm btn-outline-danger" id="delete">
+                                <i class="fas fa-trash" style="margin-right: 5px"></i>Delete
+                            </button>
+
+                            <button type="button" class="btn btn-sm btn-outline-info" id="edit">
+                                <i class="fas fa-pencil-alt" style="margin-right: 5px"></i>Edit
+                            </button>
+
+                            <button type="button" class="btn btn-sm btn-outline-info" id="update">
+                                <i class="fas fa-save" style="margin-right: 5px;"></i> Update
+                            </button>
+
+                            <button type="button" class="btn btn-sm btn-outline-info" id="save">
+                                <i class="fas fa-save" style="margin-right: 5px"></i>Save
+                            </button>
+
+                            <button type="button" class="btn btn-sm btn-outline-light" data-bs-dismiss="modal" id="cancel">
+                                <i class="fas fa-times" style="margin-right: 5px"></i>Cancel
                             </button>
                         </div>
                     </div>
@@ -254,8 +270,8 @@
 <!-- scripts ============================================= -->
 <script src="../../assets/js/jquery-3.6.1.min.js"></script>
 <script src="../../assets/boostrap/js/bootstrap.js"></script>
-<script src="../../controller/admin/admin_manage_customers_controller.js"></script>
 <script src="../../assets/js/common-js.js"></script>
+<script src="../../controller/admin/admin_manage_drivers_controller.js"></script>
 <!-- ============================================= scripts END -->
 </body>
 </html>

@@ -8,6 +8,7 @@ import lk.ijse.car_rental.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 
 @CrossOrigin
@@ -40,15 +41,16 @@ public class UserController {
 
     // save user
     @PostMapping
-    public ResponseUtil saveUser(@ModelAttribute UserDTO dto, @ModelAttribute LoginDTO loginDTO) {
-        service.saveUser(dto);
-        loginService.save(loginDTO);
+    public ResponseUtil saveUser(@ModelAttribute UserDTO dto, @ModelAttribute LoginDTO loginDTO) throws Exception {
+        boolean b = loginService.save(loginDTO);
+        if (b) service.saveUser(dto);
         return new ResponseUtil("Ok", "Save User Success", null);
     }
 
     // update user
     @PutMapping
-    public ResponseUtil updateUser(@ModelAttribute UserDTO dto) {
+    public ResponseUtil updateUser(@RequestBody UserDTO dto) {
+        System.out.println(dto);
         service.updateUser(dto);
         return new ResponseUtil("Ok", "Update User Success", dto);
     }
@@ -77,9 +79,9 @@ public class UserController {
 
     // approve user
     @PutMapping("approve/{userId}")
-    public ResponseUtil approveUser(@PathVariable String userId){
+    public ResponseUtil approveUser(@PathVariable String userId) {
         service.approveUser(userId);
-        return new ResponseUtil("Ok", userId+" Approved !", null);
+        return new ResponseUtil("Ok", userId + " Approved !", null);
     }
 }
 

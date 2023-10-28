@@ -18,7 +18,7 @@ function updateTable() {
         dataType: 'json',
         success: function (response) {
             let allItems = response.data
-            let selectedItems = allItems.filter(customer => customer._approved === false);
+            let selectedItems = allItems.filter(customer => customer._approved === false && customer.type === 'customer');
             console.log(selectedItems);
 
             data = selectedItems;

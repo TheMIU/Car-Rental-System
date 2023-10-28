@@ -5,7 +5,7 @@ import lk.ijse.car_rental.dto.LoginDTO;
 import java.util.List;
 
 public interface LoginService {
-    void save(LoginDTO dto);
+    boolean save(LoginDTO dto) throws Exception;
 
     List<LoginDTO> getAll();
 
