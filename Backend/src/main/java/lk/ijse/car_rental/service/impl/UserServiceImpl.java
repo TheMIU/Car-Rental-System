@@ -39,25 +39,29 @@ public class UserServiceImpl implements UserService {
     public void saveUser(UserDTO dto) {
         User user = mapper.map(dto, User.class);
 
-        String nextUserID = dto.getUserId();
+        System.out.println(dto);
+        // if save customer multipart files will save, if save driver no images
+        if(user.getType().equals("customer")){
+            String nextUserID = dto.getUserId();
 
-        // save multipart files
-        MultipartFile id_img_front = (MultipartFile) dto.getId_img_front();
-        MultipartFile id_img_back = (MultipartFile) dto.getId_img_back();
+            // save multipart files
+            MultipartFile id_img_front = (MultipartFile) dto.getId_img_front();
+            MultipartFile id_img_back = (MultipartFile) dto.getId_img_back();
 
-        checkIdUploadFolderCreated();
+            checkIdUploadFolderCreated();
 
-        // save in created location, with new file names
-        try {
-            id_img_front.transferTo(new File(idImagesFolderPath + nextUserID + "_ID_Front.jpg"));
-            id_img_back.transferTo(new File(idImagesFolderPath + nextUserID + "_ID_Back.jpg"));
-        } catch (IOException e) {
-            throw new RuntimeException(e.toString());
+            // save in created location, with new file names
+            try {
+                id_img_front.transferTo(new File(idImagesFolderPath + nextUserID + "_ID_Front.jpg"));
+                id_img_back.transferTo(new File(idImagesFolderPath + nextUserID + "_ID_Back.jpg"));
+            } catch (IOException e) {
+                throw new RuntimeException(e.toString());
+            }
+
+            // set saved file name
+            user.setId_img_front(nextUserID + "_ID_Front.jpg");
+            user.setId_img_back(nextUserID + "_ID_Back.jpg");
         }
-
-        // set saved file name
-        user.setId_img_front(nextUserID + "_ID_Front.jpg");
-        user.setId_img_back(nextUserID + "_ID_Back.jpg");
 
         userRepo.save(user);
     }

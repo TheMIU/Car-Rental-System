@@ -50,7 +50,6 @@ public class UserController {
     // update user
     @PutMapping
     public ResponseUtil updateUser(@RequestBody UserDTO dto) {
-        System.out.println(dto);
         service.updateUser(dto);
         return new ResponseUtil("Ok", "Update User Success", dto);
     }

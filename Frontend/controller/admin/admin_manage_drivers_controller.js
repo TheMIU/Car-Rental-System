@@ -193,7 +193,10 @@ $('#addNew').click(function () {
     $('#update').hide();
     $('#delete').hide();
     updateModal('');
+    $('#name').focus();
     makeEditableTextFields();
+    generateNextDriverID();
+
 });
 
 /////////////// update
@@ -216,9 +219,9 @@ $("#update").click(function () {
         "email": email,
         "nic_num": nic_num,
         "license_num": license_num,
-        "editable":true,
-        "_approved":true,
-        "type":'driver'
+        "editable": true,
+        "_approved": true,
+        "type": 'driver'
     }
 
     let b = confirm("Do you want to Update " + userId + " ?");
@@ -241,3 +244,39 @@ $("#update").click(function () {
         });
     }
 });
+
+/////////////// save
+$("#save").click(function () {
+    const formData = new FormData(document.getElementById('driverForm'));
+    formData.set('type', 'driver');
+    formData.set('loginId', $('#userId').val());
+    formData.set('userId', $('#userId').val());
+    formData.set('editable', true);
+    formData.set('_approved', true);
+    formData.set('id_img_back',null);
+    formData.set('id_img_front', null);
+
+    $.ajax({
+        type: "POST",
+        url: baseURL + 'user',
+        data: formData,
+        processData: false,
+        contentType: false,
+
+        success: function (response) {
+            alert(response.message);
+            updateTable();
+            $('#moreInfo').modal('hide');
+        },
+        error: function (error) {
+            alert('failed : ' + error.responseJSON.message);
+        }
+    });
+});
+
+function generateNextDriverID() {
+    let lastUserId = data[data.length - 1].userId;
+    let nextNum = parseInt(lastUserId.substring(1))+ 1;
+    $('#userId').val('D'+nextNum);
+}
+
