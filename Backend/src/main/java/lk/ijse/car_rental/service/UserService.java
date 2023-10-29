@@ -23,4 +23,6 @@ public interface UserService {
     void deleteImage(String imageName);
 
     void approveUser(String userId);
+
+    UserDTO findUser(String userId);
 }

@@ -82,5 +82,11 @@ public class UserController {
         service.approveUser(userId);
         return new ResponseUtil("Ok", userId + " Approved !", null);
     }
+
+    // find user
+    @GetMapping("{userId}")
+    public ResponseUtil findUser(@PathVariable String userId){
+        return new ResponseUtil("Ok", userId + " Approved !",  service.findUser(userId));
+    }
 }
 

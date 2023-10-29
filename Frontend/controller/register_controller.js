@@ -1,6 +1,6 @@
-const baseURL = 'http://localhost:8080/Backend_war/';
 let nextUserID = "";
 let logged = false;
+let loginId;
 
 // Login
 $("#loginBtn").on("click", function () {
@@ -13,7 +13,11 @@ $("#loginBtn").on("click", function () {
 
         success: function (response) {
             console.log(response.data)
-            /* console.log(response.data.type)*/
+
+            // get logging Id
+            loginId = response.data.loginId;
+            console.log(loginId);
+
             if (response.data === null || response.data.type === null) {
                 alert("Login failed !");
             } else if (response.data.type === 'admin') {
@@ -22,6 +26,7 @@ $("#loginBtn").on("click", function () {
                 window.location.href = '../pages/driver/driver_dashboard.html';
             } else if (response.data.type === 'customer') {
                 alert("Login success !");
+                getLoggedCustomer();
                 logged = true;
                 profileChange();
                 $('#login').modal('hide');
@@ -35,6 +40,26 @@ $("#loginBtn").on("click", function () {
         }
     });
 });
+
+// get logged customer data
+function getLoggedCustomer() {
+    $.ajax({
+        url: baseURL + 'user/' + loginId,
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            console.log(response.data)
+            $('#LoggedLabel').text(response.data.userId+' : '+response.data.name);
+            $('#cus_name').val(response.data.name);
+            $('#cus_address').val(response.data.address);
+            $('#cus_contact').val(response.data.contact);
+            $('#cus_email').val(response.data.email);
+        },
+        error: function (error) {
+            console.log("Error fetching data: " + error);
+        }
+    });
+}
 
 // get next id
 $("#registerBtn").on("click", function () {
@@ -90,3 +115,93 @@ $("#registerForm").submit(function (e) {
     }
 });
 
+//////////////////////////////
+// password field eye toggle
+const $passwordInput = $('#password');
+const $cus_passwordInput = $('#cus_password');
+const $togglePasswordButtons = $('.toggle-password');
+
+$togglePasswordButtons.click(function () {
+    if ($passwordInput.attr('type') === 'password') {
+        $passwordInput.attr('type', 'text');
+        $cus_passwordInput.attr('type', 'text');
+        $(this).html('<i class="fas fa-eye-slash"></i>');
+    } else {
+        $passwordInput.attr('type', 'password');
+        $cus_passwordInput.attr('type', 'password');
+        $(this).html('<i class="fas fa-eye"></i>');
+    }
+});
+
+//////////////////////////////
+// login profile change
+$('#profileImage').hide();
+$('#not_logged').show();
+
+function profileChange() {
+    if (logged) {
+        $('#profileImage').show();
+        $('#not_logged').hide();
+    } else {
+        $('#profileImage').hide();
+        $('#not_logged').show();
+    }
+}
+
+// logout
+$('#logout').click(function () {
+    let logoutConfirmed = confirm("Are you sure you want to log out?");
+
+    if (logoutConfirmed) {
+        location.reload();
+    }
+});
+
+$('#profileButton').click(function () {
+    $('#editCustomerFields').hide();
+    $('#update').hide();
+    $('#editData').show();
+});
+
+$('#editData').click(function () {
+    $('#editCustomerFields').show();
+    $('#update').show();
+    $('#editData').hide();
+});
+
+/////////////// update
+$("#update").click(function () {
+    let name = $('#cus_name').val();
+    let address = $('#cus_address').val();
+    let contact = $('#cus_contact').val();
+    let email = $('#cus_email').val();
+
+    let customer = {
+        "userId": loginId,
+        "name": name,
+        "address": address,
+        "contact": contact,
+        "email": email,
+    }
+    console.log(customer);
+
+    let b = confirm("Do you want to Update " + loginId + " ?");
+
+    if (b) {
+        $.ajax({
+            url: baseURL + 'user',
+            method: 'PUT',
+            contentType: "application/json",
+            data: JSON.stringify(customer),
+
+            success: function (res) {
+                alert(res.message);
+                getLoggedCustomer();
+                $('#Logged').modal('hide');
+            },
+            error: function (error) {
+                alert(error.responseJSON.message);
+            }
+        });
+    }
+});

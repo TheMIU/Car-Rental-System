@@ -252,9 +252,6 @@
                                     <div class="input-group">
                                         <input type="password" class="form-control" id="cus_password"
                                                placeholder="Enter password" required>
-                                        <button type="button" class="toggle-password btn btn-outline-secondary">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -268,9 +265,6 @@
                                         <input type="password" class="form-control" id="con_cus_password"
                                                name="password"
                                                placeholder="Confirm password" required>
-                                        <button type="button" class="toggle-password btn btn-outline-secondary">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -279,7 +273,7 @@
                             <div class="row mb-3 text-end">
                                 <div class="col">
                                     <button type="submit" class="btn btn-info" id="submitRegisterForm">
-                                        Submit
+                                        Submitted
                                     </button>
                                 </div>
                             </div>
@@ -327,18 +321,60 @@
                     <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
                 </button>
             </div>
-
-            <div class="modal-body">
-                <!--logout-->
+            <div class="modal-body" id="editCustomerFields">
                 <div class="row mb-3">
-                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3 text-light">
+                        <label for="name" class="form-label">Name</label>
+                    </div>
                     <div class="col-sm-9">
-                        <button id="btnLogout" type="button" class="btn btn-info float-end" data-bs-dismiss="modal">
-                            Logout
-                        </button>
+                        <input type="text" class="form-control" id="cus_name" name="name" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-light">
+                        <label for="address" class="form-label">Address</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="cus_address" name="address" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-light">
+                        <label for="contact" class="form-label">Contact</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="cus_contact" name="contact" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-light">
+                        <label for="email" class="form-label">Email</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" id="cus_email" name="email" required>
                     </div>
                 </div>
             </div>
+
+            <div class="modal-footer">
+                <!--editData-->
+                <button id="editData" type="button" class="btn btn-sm btn-outline-warning">
+                    <i class="fas fa-edit" style="margin-right: 5px;"></i> Edit Data
+                </button>
+
+                <!--update-->
+                <button id="update" type="button" class="btn btn-sm btn-outline-info">
+                    <i class="fas fa-save" style="margin-right: 5px;"></i> Update
+                </button>
+
+                <!--logout-->
+                <button id="logout" type="button" class="btn btn-sm btn-outline-danger">
+                    <i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i> Logout
+                </button>
+                 </div>
         </div>
     </div>
 </div>
@@ -401,8 +437,8 @@
 <!-- scripts ============================================= -->
 <script src="assets/js/jquery-3.6.1.min.js"></script>
 <script src="assets/boostrap/js/bootstrap.js"></script>
+<script src="assets/js/common-js.js"></script>
 <script src="controller/register_controller.js"></script>
-<script src="assets/js/main.js"></script>
 <!-- ============================================= scripts END -->
 </body>
 </html>

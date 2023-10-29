@@ -19,6 +19,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
         System.out.println(dto);
         // if save customer multipart files will save, if save driver no images
-        if(user.getType().equals("customer")){
+        if (user.getType().equals("customer")) {
             String nextUserID = dto.getUserId();
 
             // save multipart files
@@ -143,13 +144,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteImage(String imageName) {
-        System.out.println(idImagesFolderPath+imageName);
-        new File(idImagesFolderPath+imageName).delete();
+        System.out.println(idImagesFolderPath + imageName);
+        new File(idImagesFolderPath + imageName).delete();
     }
 
     @Override
     public void approveUser(String userId) {
         userRepo.approveUser(userId);
+    }
+
+    @Override
+    public UserDTO findUser(String userId) {
+        return mapper.map(userRepo.findById(userId), UserDTO.class);
     }
 
     public void checkIdUploadFolderCreated() {
