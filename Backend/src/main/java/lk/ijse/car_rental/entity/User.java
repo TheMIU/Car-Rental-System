@@ -26,7 +26,7 @@ public class User{
     private String id_img_front;
     private String id_img_back;
     private boolean editable;
-    private boolean is_approved;
+    private boolean approved;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId", referencedColumnName = "loginId")

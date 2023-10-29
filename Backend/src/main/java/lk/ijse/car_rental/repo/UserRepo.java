@@ -12,7 +12,7 @@ public interface UserRepo extends JpaRepository<User, String> {
     @Query(value = "SELECT * FROM user ORDER BY CAST(SUBSTRING(userId, 2) AS UNSIGNED)", nativeQuery = true)
     List<User> findAllOrderedBySubstring();
 
-    @Query(value = "SELECT userId FROM user ORDER BY CAST(SUBSTRING(userId, 2) AS UNSIGNED) DESC limit 1", nativeQuery = true)
+    @Query(value = "SELECT userId FROM user WHERE type='customer' ORDER BY CAST(SUBSTRING(userId, 2) AS UNSIGNED) DESC limit 1", nativeQuery = true)
     String findLastRecord();
 
     @Query(value = "select editable from user where userId=?", nativeQuery = true)
@@ -29,6 +29,6 @@ public interface UserRepo extends JpaRepository<User, String> {
     User findUserByUserId(String id);
 
     @Modifying
-    @Query("UPDATE User u SET u.is_approved = true WHERE u.userId = :userId")
+    @Query("UPDATE User u SET u.approved = true WHERE u.userId = :userId")
     void approveUser(@Param("userId") String userId);
 }

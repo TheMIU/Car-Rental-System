@@ -23,5 +23,5 @@ public class UserDTO {
     private Object id_img_front;
     private Object id_img_back;
     private boolean editable;
-    private boolean is_approved;
+    private boolean approved;
 }

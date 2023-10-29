@@ -184,6 +184,7 @@ $(document).on('click', '.more-button', function () {
     $('#edit').show();
     $('#update').hide();
     $('#delete').show();
+    $('#addLoginDetails').hide();
 });
 
 $('#addNew').click(function () {
@@ -193,6 +194,10 @@ $('#addNew').click(function () {
     $('#update').hide();
     $('#delete').hide();
     updateModal('');
+    $('#username').val('');
+    $('#password').val('');
+    $('#con_password').val('');
+    $('#addLoginDetails').show();
     $('#name').focus();
     makeEditableTextFields();
     generateNextDriverID();
@@ -220,9 +225,10 @@ $("#update").click(function () {
         "nic_num": nic_num,
         "license_num": license_num,
         "editable": true,
-        "_approved": true,
+        "approved": true,
         "type": 'driver'
     }
+    console.log(driver)
 
     let b = confirm("Do you want to Update " + userId + " ?");
 
@@ -252,7 +258,7 @@ $("#save").click(function () {
     formData.set('loginId', $('#userId').val());
     formData.set('userId', $('#userId').val());
     formData.set('editable', true);
-    formData.set('_approved', true);
+    formData.set('approved', true);
     formData.set('id_img_back',null);
     formData.set('id_img_front', null);
 
@@ -275,8 +281,12 @@ $("#save").click(function () {
 });
 
 function generateNextDriverID() {
-    let lastUserId = data[data.length - 1].userId;
-    let nextNum = parseInt(lastUserId.substring(1))+ 1;
-    $('#userId').val('D'+nextNum);
+    if(data.length !== 0){
+        let lastUserId = data[data.length - 1].userId;
+        let nextNum = parseInt(lastUserId.substring(1))+ 1;
+        $('#userId').val('D'+nextNum);
+    }else {
+        $('#userId').val('D1');
+    }
 }
 

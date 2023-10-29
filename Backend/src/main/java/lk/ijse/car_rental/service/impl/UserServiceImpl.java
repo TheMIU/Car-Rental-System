@@ -85,8 +85,10 @@ public class UserServiceImpl implements UserService {
         userByUserId.setSalary(dto.getSalary());
         userByUserId.setContact(dto.getContact());
         userByUserId.setEmail(dto.getEmail());
+        userByUserId.setLicense_num(dto.getLicense_num());
+        userByUserId.setNic_num(dto.getNic_num());
         userByUserId.setEditable(dto.isEditable());
-        userByUserId.set_approved(dto.is_approved());
+        userByUserId.setApproved(dto.isApproved());
 
         userRepo.save(userByUserId);
     }
