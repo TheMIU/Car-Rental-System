@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Manage Vehicles</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width initial-scale=1" name="viewport">
+
+    <!-- Stylesheets -->
+    <link href="../../assets/css/normalize.css" rel="stylesheet">
+
+    <!-- boostrap -->
+    <link href="../../assets/boostrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- fontawsome -->
+    <link href="../../assets/fontawsome/css/all.min.css" rel="stylesheet">
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Gabarito&family=Kanit:wght@100;200;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Kanit', sans-serif;
+        }
+
+        input {
+            background-color: #dadada !important;
+            color: #050505 !important;
+        }
+
+        .custom-navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-white">
+<!-- nav bar ============================================= -->
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar ">
+    <div class="container-fluid">
+        <a class="navbar-brand">Easy Car Rental</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active"><a href="admin_dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item active"><a href="admin_manage_customer.html" class="nav-link">Customer</a></li>
+                <li class="nav-item active"><a href="admin_pending_customers.html" class="nav-link">Pending
+                    Customers</a></li>
+                <li class="nav-item active"><a href="admin_manage_driver.html" class="nav-link">Drivers</a></li>
+                <li class="nav-item active"><a href="#" class="nav-link">Vehicles</a></li>
+                <li class="nav-item active"><a href="#" class="nav-link">Payment</a></li>
+            </ul>
+            <span class="navbar-text">
+                <button id="profileButton" type="button" style="background: none; border: none; padding: 0;"
+                        data-bs-toggle="modal" data-bs-target="#Logged">
+                        <img src="../../assets/img/profile.png" width="30%" alt="Profile Image">
+                </button>
+            </span>
+        </div>
+    </div>
+</nav>
+<!-- ============================================= nav bar END -->
+
+<!-- Logged Modal ============================================= -->
+<div class="modal fade" id="Logged" tabindex="-1" aria-labelledby="LoggedLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="LoggedLabel"> Admin </h1>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!--logout-->
+                <div class="row mb-3">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <button href="../../index.html" id="btnLogout" type="button" class="btn btn-info float-end"
+                                data-bs-dismiss="modal">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= Logged Modal END -->
+
+<!-- vehicles table ================================= -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Manage Vehicles</h4>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group m-1">
+                <input type="text" id="search" class="form-control" placeholder="Search...">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-info" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered text-white">
+        <thead>
+        <tr>
+            <th>Vehicle ID</th>
+            <th>Register No</th>
+            <th>Brand</th>
+            <th>Type</th>
+            <th>Color</th>
+            <th>Passengers</th>
+            <th>Transmission Type</th>
+            <th>Fuel Type</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+
+    <nav>
+        <ul class="pagination" id="pagination"></ul>
+    </nav>
+    <hr>
+    <button id="addNew" class="btn-sm btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#moreInfo">
+        <i class="fas fa-plus" style="margin-right: 5px;"></i> Add New
+    </button>
+
+</div>
+<!-- ================================= vehicles table END -->
+
+<!-- vehicles details Modal ============================================= -->
+<div class="modal fade" id="moreInfo" tabindex="-1" aria-labelledby="moreModalLabel" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="moreModalLabel"> Vehicles Details </h1>
+
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="vehicleForm">
+                    <div class="row" style="width: 100%">
+                        <!-- Image select -->
+                        <div id="selectImages" class="col-sm-6" >
+                            <!--front-->
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="front" class="form-label">Front</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" id="front" name="front"
+                                           accept="image/*" required>
+                                </div>
+                            </div>
+                            <!--side1-->
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="side1" class="form-label">Side 1</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" id="side1" name="side1"
+                                           accept="image/*" required>
+                                </div>
+                            </div>
+                            <!--side2-->
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="side2" class="form-label">Side 2</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" id="side2" name="side2"
+                                           accept="image/*" required>
+                                </div>
+                            </div>
+                            <!--back-->
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="back" class="form-label">Back</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" id="back" name="back"
+                                           accept="image/*" required>
+                                </div>
+                            </div>
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <img id="f_image" src="../../assets/img/car1.jpg" class="img-fluid">
+                                    </div>
+                                    <div class="col">
+                                        <img id="s1_image" src="../../assets/img/car1.jpg" class="img-fluid">
+                                    </div>
+                                    <div class="col">
+                                        <img id="s2_image" src="../../assets/img/car1.jpg" class="img-fluid">
+                                    </div>
+                                    <div class="col">
+                                        <img id="b_image" src="../../assets/img/car1.jpg" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Image Slider -->
+                        <div id="sliderImages" class="col-sm-6">
+                            <div id="imageSlider" class="carousel slide">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="0"
+                                            class="active"
+                                            aria-current="true"
+                                            aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="1"
+                                            aria-label="Slide 2"></button>
+                                    <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="2"
+                                            aria-label="Slide 3"></button>
+                                    <button type="button" data-bs-target="#imageSlider" data-bs-slide-to="3"
+                                            aria-label="Slide 4"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="../../assets/img/car1.jpg" width="100%">
+                                        <div class="carousel-caption bg-opacity-25 bg-black"
+                                             style="left: 0; right: 0; bottom: 0;">
+                                            <p>front</p>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="../../assets/img/car2.jpg" width="100%">
+                                        <div class="carousel-caption bg-opacity-25 bg-black"
+                                             style="left: 0; right: 0; bottom: 0;">
+                                            <p>side1</p>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="../../assets/img/car3.jpg" width="100%">
+                                        <div class="carousel-caption bg-opacity-25 bg-black"
+                                             style="left: 0; right: 0; bottom: 0;">
+                                            <p>side2</p>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="../../assets/img/car2.jpg" width="100%">
+                                        <div class="carousel-caption bg-opacity-25 bg-black"
+                                             style="left: 0; right: 0; bottom: 0;">
+                                            <p>back</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="carousel-control-prev" type="button" data-bs-target="#imageSlider"
+                                        data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#imageSlider"
+                                        data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!--column 1-->
+                        <div class="col-sm-3">
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="vId" class="form-label">Vehicle ID</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="vId" name="vId" required readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="regNo" class="form-label">Register No</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="regNo" name="regNo" required readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="brand" class="form-label">Brand</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="brand" name="brand" required
+                                           readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="type" class="form-label">Type</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="type" name="type" required
+                                           readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="color" class="form-label">Color</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="color" name="color" required
+                                           readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <!--column 2-->
+                        <div class="col-sm-3">
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="passengers" class="form-label">passengers</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="passengers" name="passengers" required
+                                           readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="transmissionType" class="form-label">Transmission Type</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="transmissionType" name="transmissionType" required readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="fuelType" class="form-label">Fuel Type</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="fuelType" name="fuelType" required
+                                           readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="status" class="form-label">Status</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="status" name="status"
+                                           required readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-danger" id="delete">
+                    <i class="fas fa-trash" style="margin-right: 5px"></i>Delete
+                </button>
+
+                <button type="button" class="btn btn-sm btn-outline-info" id="edit">
+                    <i class="fas fa-pencil-alt" style="margin-right: 5px"></i>Edit
+                </button>
+
+                <button type="button" class="btn btn-sm btn-outline-info" id="update">
+                    <i class="fas fa-save" style="margin-right: 5px;"></i> Update
+                </button>
+
+                <button type="button" class="btn btn-sm btn-outline-info" id="save">
+                    <i class="fas fa-save" style="margin-right: 5px"></i>Save
+                </button>
+
+                <button type="button" class="btn btn-sm btn-outline-light" data-bs-dismiss="modal"
+                        id="cancel">
+                    <i class="fas fa-times" style="margin-right: 5px"></i>Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= vehicles details modal END -->
+
+<!-- scripts ============================================= -->
+<script src="../../assets/js/jquery-3.6.1.min.js"></script>
+<script src="../../assets/boostrap/js/bootstrap.js"></script>
+<script src="../../assets/js/common-js.js"></script>
+<script src="../../controller/admin/admin_manage_vehicle_controller.js"></script>
+<!-- ============================================= scripts END -->
+</body>
+</html>
