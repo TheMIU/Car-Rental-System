@@ -20,4 +20,3 @@ public class Rate {
     private double freeKmMonth;
     private double extraKm;
 }
-

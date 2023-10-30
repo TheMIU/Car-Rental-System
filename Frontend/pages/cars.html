@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Easy Car Rental</title>
+    <title>Cars</title>
     <meta charset="UTF-8">
     <meta content="width=device-width initial-scale=1" name="viewport">
 
@@ -33,19 +33,72 @@
             color: #050505 !important;
         }
 
-        .custom-navbar {
+       /* .custom-navbar {
             background-color: rgba(0, 0, 0, 0.7);
-            position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
             transition: background-color 0.3s;
         }
 
-        .active {
-            background-color: #0072b7;
+        nav .active {
+            margin: 0;
+            border: #00f1ff 1px solid;
+            border-radius: 5px;
+        }*/
+
+        /*//////////////////*/
+        /* Custom Navbar Styles */
+        .custom-navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .custom-navbar .navbar-nav .nav-link {
+            color: #fff;
+            font-weight: lighter;
+        }
+
+        .custom-navbar .navbar-nav .nav-link:hover {
+            background-color: #313131;
             color: #fff;
         }
+
+        .custom-navbar .navbar-nav .nav-item.active a.nav-link {
+            font-weight: normal;
+            color: #2dfff8;
+        }
+
+        .custom-navbar .navbar-text .btn:hover {
+            background-color: #fff; /* Button hover background color */
+            color: #0D6EFD; /* Button hover text color */
+        }
+
+        #profileImage img {
+            border-radius: 50%; /* Add a circular border to the profile image */
+        }
+
+        /*//////////////////*/
+        .car-list {
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .car {
+            text-align: center;
+            padding: 15px;
+            margin: 5px;
+            border-radius: 10px;
+            width: 20vw;
+            background-color: #111111;
+        }
+
     </style>
 </head>
 
@@ -88,7 +141,9 @@
 <!-- ============================================= nav bar END -->
 
 <!-- Login Modal ============================================= -->
-<div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+
     <div class="modal-dialog">
         <div class="modal-content bg-dark text-light">
             <div class="modal-header bg-dark">
@@ -97,13 +152,12 @@
                     <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
                 </button>
             </div>
-
-            <div class="modal-body">
-                <form>
+            <form method="post" id="loginForm">
+                <div class="modal-body">
                     <div class="row mb-3">
                         <label for="username" class="col-sm-3 col-form-label text-light">Username</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="username" name="username"
+                            <input type="text" class="form-control" id="username" name="loginName"
                                    placeholder="Enter your username" required>
                         </div>
                     </div>
@@ -120,23 +174,19 @@
                             <a href="#" class="text-info small">Forgot password ?</a>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-9">
-                            <button id="loginButton" type="button" class="btn btn-info float-end"
-                                    data-bs-dismiss="modal">Login
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info float-end" id="loginBtn">Login</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 <!-- ============================================= Login Modal END -->
 
 <!-- Register Modal ============================================= -->
-<div class="modal fade" id="registerInfo" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+<div class="modal fade" id="registerInfo" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-xl">
         <div class="modal-content bg-dark text-light">
             <div class="modal-header bg-dark">
@@ -148,7 +198,7 @@
             </div>
 
             <div class="modal-body">
-                <form>
+                <form method="POST" enctype="multipart/form-data" id="registerForm">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="row mb-3">
@@ -238,54 +288,48 @@
                             <!--cus_username-->
                             <div class="row mb-3">
                                 <div class="col-sm-3 text-light">
-                                    <label for="username" class="col-sm-3 col-form-label text-light">Username</label>
+                                    <label for="cus_username"
+                                           class="col-sm-3 col-form-label text-light">Username</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="cus_username" name="cus_username"
+                                    <input type="text" class="form-control" id="cus_username" name="loginName"
                                            placeholder="Enter username" required>
                                 </div>
                             </div>
 
                             <!--cus_password-->
                             <div class="row mb-3">
-                                <label for="password" class="col-sm-3 col-form-label text-light">Password</label>
+                                <label for="cus_password" class="col-sm-3 col-form-label text-light">Password</label>
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <input type="password" class="form-control" id="cus_password"
-                                               name="cus_password"
                                                placeholder="Enter password" required>
-                                        <button type="button" class="toggle-password btn btn-outline-secondary">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
                                     </div>
                                 </div>
                             </div>
 
                             <!--confirm_cus_password-->
                             <div class="row mb-3">
-                                <label for="password" class="col-sm-3 col-form-label text-light">Confirm
+                                <label for="con_cus_password" class="col-sm-3 col-form-label text-light">Confirm
                                     Password</label>
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <input type="password" class="form-control" id="con_cus_password"
-                                               name="con_cus_password"
+                                               name="password"
                                                placeholder="Confirm password" required>
-                                        <button type="button" class="toggle-password btn btn-outline-secondary">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
                                     </div>
                                 </div>
                             </div>
 
                             <!--submit-->
-                            <div class="row mb-3">
-                                <div class="col-sm-3"></div>
-                                <div class="col-sm-9">
-                                    <button type="submit" class="btn btn-info float-end">Submit</button>
+                            <div class="row mb-3 text-end">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-info" id="submitRegisterForm">
+                                        Submit
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </form>
             </div>
@@ -294,9 +338,34 @@
 </div>
 <!-- ============================================= Register Modal END -->
 
+<!-- Register Submitted Modal ============================================= -->
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="registerSubmitted"
+     tabindex="-1" aria-labelledby="registerSubmittedLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="registerSubmittedLabel"> Request Submitted </h1>
+
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>Your request has been submitted. We will notify you by email soon.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= Register Submitted Modal END -->
+
 <!-- Logged Modal ============================================= -->
 <div class="modal fade" id="Logged" tabindex="-1" aria-labelledby="LoggedLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
+    <div class="modal-dialog">
         <div class="modal-content bg-dark text-light">
             <div class="modal-header bg-dark">
                 <h1 class="modal-title fs-5" id="LoggedLabel"> John Smith </h1>
@@ -304,32 +373,119 @@
                     <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
                 </button>
             </div>
-
-            <div class="modal-body">
-                <!--logout-->
+            <div class="modal-body" id="editCustomerFields">
                 <div class="row mb-3">
-                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3 text-light">
+                        <label for="name" class="form-label">Name</label>
+                    </div>
                     <div class="col-sm-9">
-                        <button id="btnLogout" type="submit" class="btn btn-info float-end" data-bs-dismiss="modal">
-                            Logout
-                        </button>
+                        <input type="text" class="form-control" id="cus_name" name="name" required>
                     </div>
                 </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-light">
+                        <label for="address" class="form-label">Address</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="cus_address" name="address" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-light">
+                        <label for="contact" class="form-label">Contact</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="cus_contact" name="contact" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-light">
+                        <label for="email" class="form-label">Email</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" id="cus_email" name="email" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <!--editData-->
+                <button id="editData" type="button" class="btn btn-sm btn-outline-warning">
+                    <i class="fas fa-edit" style="margin-right: 5px;"></i> Edit Data
+                </button>
+
+                <!--update-->
+                <button id="update" type="button" class="btn btn-sm btn-outline-info">
+                    <i class="fas fa-save" style="margin-right: 5px;"></i> Update
+                </button>
+
+                <!--logout-->
+                <button id="logout" type="button" class="btn btn-sm btn-outline-danger">
+                    <i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i> Logout
+                </button>
             </div>
         </div>
     </div>
 </div>
 <!-- ============================================= Logged Modal END -->
 
-<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="container bg-black">
-        <h1>Cars</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias amet consectetur
-            cupiditate, eaque esse facilis fugit inventore, ipsa modi nesciunt nobis perspiciatis
-            reprehenderit sequi tempora totam ut voluptate! Non, provident.</p>
+<div class="car-list">
+    <div class="car">
+        <img src="../assets/img/car1.jpg" alt="Car 1" style="width: 100%" class="mb-2">
+        <h4>Car 1</h4>
+        <p>Description of Car 1.</p>
+        <p>Price: $XXX per day</p>
+        <button class="add-to-cart-button btn btn-sm btn-outline-warning">View more</button>
     </div>
-</div>
 
+    <div class="car">
+        <img src="../assets/img/car2.jpg" alt="Car 2" style="width: 100%">
+        <h2>Car 2</h2>
+        <p>Description of Car 2.</p>
+        <p>Price: $XXX per day</p>
+        <button class="add-to-cart-button">Add to Cart</button>
+    </div>
+
+    <div class="car">
+        <img src="../assets/img/car1.jpg" alt="Car 1" style="width: 100%">
+        <h2>Car 1</h2>
+        <p>Description of Car 1.</p>
+        <p>Price: $XXX per day</p>
+        <button class="add-to-cart-button">Add to Cart</button>
+    </div>
+
+    <div class="car">
+        <img src="../assets/img/car2.jpg" alt="Car 2" style="width: 100%">
+        <h2>Car 2</h2>
+        <p>Description of Car 2.</p>
+        <p>Price: $XXX per day</p>
+        <button class="add-to-cart-button">Add to Cart</button>
+        }
+    </div>
+
+    <div class="car">
+        <img src="../assets/img/car2.jpg" alt="Car 2" style="width: 100%">
+        <h2>Car 2</h2>
+        <p>Description of Car 2.</p>
+        <p>Price: $XXX per day</p>
+        <button class="add-to-cart-button">Add to Cart</button>
+        }
+    </div>
+
+    <div class="car">
+        <img src="../assets/img/car2.jpg" alt="Car 2" style="width: 100%">
+        <h2>Car 2</h2>
+        <p>Description of Car 2.</p>
+        <p>Price: $XXX per day</p>
+        <button class="add-to-cart-button">Add to Cart</button>
+        }
+    </div>
+
+
+</div>
 
 <!-- scripts ============================================= -->
 <script src="../assets/js/jquery-3.6.1.min.js"></script>

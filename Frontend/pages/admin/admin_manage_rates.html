@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Manage Rates</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width initial-scale=1" name="viewport">
+
+    <!-- Stylesheets -->
+    <link href="../../assets/css/normalize.css" rel="stylesheet">
+
+    <!-- boostrap -->
+    <link href="../../assets/boostrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- fontawsome -->
+    <link href="../../assets/fontawsome/css/all.min.css" rel="stylesheet">
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Gabarito&family=Kanit:wght@100;200;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Kanit', sans-serif;
+        }
+
+        input {
+            background-color: #dadada !important;
+            color: #050505 !important;
+        }
+
+        .custom-navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-white">
+<!-- nav bar ============================================= -->
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar ">
+    <div class="container-fluid">
+        <a class="navbar-brand">Easy Car Rental</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active"><a href="admin_dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item active"><a href="admin_manage_customer.html" class="nav-link">Customer</a></li>
+                <li class="nav-item active"><a href="admin_pending_customers.html" class="nav-link">Pending
+                    Customers</a></li>
+                <li class="nav-item active"><a href="#" class="nav-link">Drivers</a></li>
+                <li class="nav-item active"><a href="#" class="nav-link">Vehicles</a></li>
+                <li class="nav-item active"><a href="#" class="nav-link">Payment</a></li>
+            </ul>
+            <span class="navbar-text">
+                <button id="profileButton" type="button" style="background: none; border: none; padding: 0;"
+                        data-bs-toggle="modal" data-bs-target="#Logged">
+                        <img src="../../assets/img/profile.png" width="30%" alt="Profile Image">
+                </button>
+            </span>
+        </div>
+    </div>
+</nav>
+<!-- ============================================= nav bar END -->
+
+<!-- Logged Modal ============================================= -->
+<div class="modal fade" id="Logged" tabindex="-1" aria-labelledby="LoggedLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="LoggedLabel"> Admin </h1>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!--logout-->
+                <div class="row mb-3">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <button href="../../index.html" id="btnLogout" type="button" class="btn btn-info float-end"
+                                data-bs-dismiss="modal">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= Logged Modal END -->
+
+<!-- rates table ================================= -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Rates</h4>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group m-1">
+                <input type="text" id="search" class="form-control" placeholder="Search...">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-info" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered text-white">
+        <thead>
+        <tr>
+            <th>Rate ID</th>
+            <th>Daily Rate</th>
+            <th>Free km (Day)</th>
+            <th>Monthly Rate</th>
+            <th>Free km (Month)</th>
+            <th>Extra km price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+
+    <nav>
+        <ul class="pagination" id="pagination"></ul>
+    </nav>
+    <hr>
+    <button id="addNew" class="btn-sm btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#moreInfo">
+        <i class="fas fa-plus" style="margin-right: 5px;"></i> Add New
+    </button>
+</div>
+<!-- ================================= rates table END -->
+
+<!-- rates details Modal ============================================= -->
+<div class="modal fade" id="moreInfo" tabindex="-1" aria-labelledby="moreModalLabel" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="moreModalLabel"> Edit Rates </h1>
+
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="ratesForm">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="rId" class="form-label">Rate ID</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="rId" name="rId" required readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="dailyRate" class="form-label">Daily Rate</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="dailyRate" name="dailyRate" required
+                                           readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="freeKmDay" class="form-label">Free km (Day)</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="freeKmDay" name="freeKmDay" required
+                                           readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="monthlyRate" class="form-label">Monthly Rate</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="monthlyRate" name="monthlyRate"
+                                           required readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="freeKmMonth" class="form-label">Free km (Month)</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="freeKmMonth" name="freeKmMonth"
+                                           required readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="extraKm" class="form-label">Extra km price</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="extraKm" name="extraKm" required
+                                           readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row justify-content-center">
+                    <div class="row mb-3 text-end">
+                        <div class="col">
+                            <button type="button" class="btn btn-sm btn-outline-danger" id="delete">
+                                <i class="fas fa-trash" style="margin-right: 5px"></i>Delete
+                            </button>
+
+                            <button type="button" class="btn btn-sm btn-outline-info" id="edit">
+                                <i class="fas fa-pencil-alt" style="margin-right: 5px"></i>Edit
+                            </button>
+
+                            <button type="button" class="btn btn-sm btn-outline-info" id="update">
+                                <i class="fas fa-save" style="margin-right: 5px;"></i> Update
+                            </button>
+
+                            <button type="button" class="btn btn-sm btn-outline-info" id="save">
+                                <i class="fas fa-save" style="margin-right: 5px"></i>Save
+                            </button>
+
+                            <button type="button" class="btn btn-sm btn-outline-light" data-bs-dismiss="modal"
+                                    id="cancel">
+                                <i class="fas fa-times" style="margin-right: 5px"></i>Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= rates details modal END -->
+
+<!-- scripts ============================================= -->
+<script src="../../assets/js/jquery-3.6.1.min.js"></script>
+<script src="../../assets/boostrap/js/bootstrap.js"></script>
+<script src="../../assets/js/common-js.js"></script>
+<script src="../../controller/admin/admin_manage_rates_controller.js"></script>
+<!-- ============================================= scripts END -->
+</body>
+</html>
