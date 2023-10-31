@@ -19,12 +19,11 @@ public class Vehicle {
     private String type;
     private String color;
     private int passengers;
-    private String img;
     private String transmissionType;
     private String fuelType;
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "rid",insertable = false,updatable = false)
+    @JoinColumn(name = "rId", nullable = false)
     private Rate rate;
 }

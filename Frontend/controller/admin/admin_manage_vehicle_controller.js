@@ -55,6 +55,7 @@ function displayData() {
                 <td>${vehicle.transmissionType}</td>
                 <td>${vehicle.fuelType}</td>
                 <td>${vehicle.status}</td>
+                <td>${vehicle.rate.rid}</td>
                 <td><button class="btn btn-outline-info btn-sm more-button" data-bs-toggle="modal"
             data-bs-target="#moreInfo"> <i class="fas fa-ellipsis-h"></i>  More</button></td>
             `;
@@ -86,16 +87,37 @@ $("#table-body").on("click", ".more-button", function (event) {
     }
 });
 
-function updateModal(user) {
-    $('#vId').val(user.vid);
-    $('#regNo').val(user.regNo);
-    $('#brand').val(user.brand);
-    $('#type').val(user.type);
-    $('#color').val(user.color);
-    $('#passengers').val(user.passengers);
-    $('#transmissionType').val(user.transmissionType);
-    $('#fuelType').val(user.fuelType);
-    $('#status').val(user.status);
+function updateModal(vehicle) {
+    $('#vId').val(vehicle.vid);
+    $('#regNo').val(vehicle.regNo);
+    $('#brand').val(vehicle.brand);
+    $('#type').val(vehicle.type);
+    $('#color').val(vehicle.color);
+    $('#passengers').val(vehicle.passengers);
+    $('#transmissionType').val(vehicle.transmissionType);
+    $('#fuelType').val(vehicle.fuelType);
+    $('#status').val(vehicle.status);
+    $('#rid').val(vehicle.rate.rid);
+
+    loadImages(vehicle.vid + '_front.jpg', $('#slider_i1'));
+    loadImages(vehicle.vid + '_side1.jpg', $('#slider_i2'));
+    loadImages(vehicle.vid + '_side2.jpg', $('#slider_i3'));
+    loadImages(vehicle.vid + '_back.jpg', $('#slider_i4'));
+}
+
+function emptyModal() {
+    $('#vId').val('');
+    $('#regNo').val('');
+    $('#brand').val('');
+    $('#type').val('');
+    $('#color').val('');
+    $('#passengers').val('');
+    $('#transmissionType').val('');
+    $('#fuelType').val('');
+    $('#status').val('');
+    $('#rid').val('');
+
+    resetImagesToDefault();
 }
 
 ////////////// Delete
@@ -108,6 +130,7 @@ $('#delete').click(function () {
             url: baseURL + 'vehicle/' + vId,
             success: function (response) {
                 alert(response.data + ' vehicle deleted');
+                deleteImages(vId);
                 updateTable();
                 $('#moreInfo').modal('hide');
             },
@@ -127,6 +150,14 @@ $('#edit').click(function () {
 
     $('#selectImages').show();
     $('#sliderImages').hide();
+
+    let vid = $('#vId').val();
+    loadImages(vid + '_front.jpg', $('#f_image'));
+    loadImages(vid + '_side1.jpg', $('#s1_image'));
+    loadImages(vid + '_side2.jpg', $('#s2_image'));
+    loadImages(vid + '_back.jpg', $('#b_image'));
+
+    $('#front, #side1, #side2, #back').val('');
 });
 
 function makeEditableTextFields() {
@@ -139,6 +170,7 @@ function makeEditableTextFields() {
     $('#transmissionType').removeAttr('readonly');
     $('#fuelType').removeAttr('readonly');
     $('#status').removeAttr('readonly');
+    $('#rid').removeAttr('readonly');
 }
 
 $('#moreInfo').on('hidden.bs.modal', function () {
@@ -151,6 +183,7 @@ $('#moreInfo').on('hidden.bs.modal', function () {
     $('#transmissionType').attr('readonly', true);
     $('#fuelType').attr('readonly', true);
     $('#status').attr('readonly', true);
+    $('#rid').attr('readonly', true);
 });
 
 ///////////////////// table search
@@ -167,7 +200,7 @@ $(document).ready(function () {
             let match = false;
 
             // Loop through the columns (excluding the last one) and check for a match
-            $row.find("td:lt(4)").each(function () {
+            $row.find("td:lt(10)").each(function () {
                 let cellText = $(this).text().toLowerCase();
                 if (cellText.includes(filter)) {
                     match = true;
@@ -203,7 +236,8 @@ $('#addNew').click(function () {
     $('#edit').hide();
     $('#update').hide();
     $('#delete').hide();
-    updateModal('');
+
+    emptyModal();
     $('#regNo').focus();
     makeEditableTextFields();
     generateNextVehicleID();
@@ -223,6 +257,7 @@ $("#update").click(function () {
     let transmissionType = $('#transmissionType').val();
     let fuelType = $('#fuelType').val();
     let status = $('#status').val();
+    let rid = $('#rid').val();
 
     let vehicle = {
         "vid": vId,
@@ -233,7 +268,10 @@ $("#update").click(function () {
         "passengers": passengers,
         "transmissionType": transmissionType,
         "fuelType": fuelType,
-        "status": status
+        "status": status,
+        "rate": {
+            "rid": rid
+        }
     }
     console.log(vehicle);
 
@@ -248,6 +286,7 @@ $("#update").click(function () {
 
             success: function (res) {
                 alert(res.message);
+                uploadImages(vId);
                 updateTable();
                 $('#moreInfo').modal('hide');
             },
@@ -260,20 +299,57 @@ $("#update").click(function () {
 
 /////////////// save
 $("#save").click(function () {
-    const formData = new FormData(document.getElementById('vehicleForm'));
+    let vId = $('#vId').val();
+    let regNo = $('#regNo').val();
+    let brand = $('#brand').val();
+    let type = $('#type').val();
+    let color = $('#color').val();
+    let passengers = $('#passengers').val();
+    let transmissionType = $('#transmissionType').val();
+    let fuelType = $('#fuelType').val();
+    let status = $('#status').val();
+    let rid = $('#rid').val();
+
+    let vehicle = {
+        "vid": vId,
+        "regNo": regNo,
+        "brand": brand,
+        "type": type,
+        "color": color,
+        "passengers": passengers,
+        "transmissionType": transmissionType,
+        "fuelType": fuelType,
+        "status": status,
+        "rate": {
+            "rid": rid
+        }
+    }
+    console.log(vehicle);
+
+    // Check if images are selected
+    if (
+        !$("#front")[0].files[0] ||
+        !$("#side1")[0].files[0] ||
+        !$("#side2")[0].files[0] ||
+        !$("#back")[0].files[0]
+    ) {
+        alert("Please select all images before saving.");
+        return;
+    }
+
     $.ajax({
         type: "POST",
         url: baseURL + 'vehicle',
-        data: formData,
-        processData: false,
-        contentType: false,
-
+        data: JSON.stringify(vehicle),
+        contentType: "application/json",
         success: function (response) {
             alert(response.message);
+            uploadImages(vId);
             updateTable();
             $('#moreInfo').modal('hide');
         },
         error: function (error) {
+            console.log(error.responseJSON.message)
             alert('failed : ' + error.responseJSON.message);
         }
     });
@@ -289,4 +365,98 @@ function generateNextVehicleID() {
     }
 }
 
-///////////////////////////////////////////////////////////////////////////
+///////////////////////////////// handle images //////////////////////////////////////////
+// show selected images
+handleFileInputChange('#front', '#f_image');
+handleFileInputChange('#side1', '#s1_image');
+handleFileInputChange('#side2', '#s2_image');
+handleFileInputChange('#back', '#b_image');
+
+function handleFileInputChange(inputId, imageId) {
+    $(inputId).change(function () {
+        const file = this.files[0];
+        const image = $(imageId);
+
+        if (file) {
+            image.attr('src', URL.createObjectURL(file));
+        } else {
+            image.attr('src', '../../assets/img/NotSelected.jpg');
+        }
+    });
+}
+
+// reset images if cancel pressed
+$('#cancel').click(function () {
+    resetImagesToDefault();
+});
+
+function resetImagesToDefault() {
+    $('#f_image, #s1_image, #s2_image, #b_image').attr('src', '../../assets/img/NotSelected.jpg');
+    $('#front, #side1, #side2, #back').val('');
+}
+
+// upload images to server
+function uploadImages(vId) {
+    // Check if images are selected
+    if (
+        !$("#front")[0].files[0] ||
+        !$("#side1")[0].files[0] ||
+        !$("#side2")[0].files[0] ||
+        !$("#back")[0].files[0]
+    ) {
+        alert("Images are not updated. if you want to update images , select all images before update.");
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("frontImage", $("#front")[0].files[0]);
+    formData.append("side1Image", $("#side1")[0].files[0]);
+    formData.append("side2Image", $("#side2")[0].files[0]);
+    formData.append("backImage", $("#back")[0].files[0]);
+    formData.append("vId", vId);
+
+    $.ajax({
+        url: baseURL + 'vehicle/uploadImg',
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            console.log(response.message);
+        },
+        error: function (error) {
+            console.error("Error uploading images: " + error.responseJSON.message);
+        },
+    });
+}
+
+// delete images when vehicle deleted
+function deleteImages(vId) {
+    $(document).ready(function () {
+        $.ajax({
+            type: 'DELETE',
+            url: baseURL + 'vehicle/deleteImages/' + vId,
+            success: function () {
+                console.log("deleted");
+            },
+            error: function () {
+                alert('Error');
+            }
+        });
+    });
+}
+
+// loadImages from backend
+function loadImages(imageName, imgElement) {
+    $.ajax({
+        url: baseURL + 'vehicle/get_image/' + imageName,
+        method: 'GET',
+        success: function (response) {
+            imgElement.attr('src', "data:image/jpeg;base64," + response);
+        },
+        error: function (error) {
+            console.log("Error loading image: " + error);
+        }
+    });
+}
+
