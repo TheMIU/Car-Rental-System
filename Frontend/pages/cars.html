@@ -434,14 +434,14 @@
 
 <!-- car list ============================================= -->
 <div class="car-list" id="all_cars">
-   <!-- all cars-->
+    <!-- all cars-->
 </div>
 <!-- ============================================= car list END -->
 
 <!-- car details Modal ============================================= -->
 <div class="modal fade" id="moreInfo" tabindex="-1" aria-labelledby="moreModalLabel" aria-hidden="true"
      data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content bg-dark text-light">
             <div class="modal-header bg-dark">
                 <h1 class="modal-title fs-5" id="moreModalLabel"> Vehicles Details </h1>
@@ -530,7 +530,8 @@
                                         <label for="regNo" class="form-label">Register No</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="regNo" name="regNo" required readonly>
+                                        <input type="text" class="form-control" id="regNo" name="regNo" required
+                                               readonly>
                                     </div>
                                 </div>
 
@@ -571,7 +572,8 @@
                                         <label for="passengers" class="form-label">passengers</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="passengers" name="passengers" required
+                                        <input type="number" class="form-control" id="passengers" name="passengers"
+                                               required
                                                readonly>
                                     </div>
                                 </div>
@@ -621,7 +623,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-warning" id="add">
+                <button type="button" class="btn btn-sm btn-outline-warning" id="addToCart">
                     <i class="fas fa-shopping-cart" style="margin-right: 5px"></i>Add to cart
                 </button>
             </div>
@@ -629,6 +631,67 @@
     </div>
 </div>
 <!-- ============================================= car details modal END -->
+
+<!-- alert Modal ============================================= -->
+<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="alertModalLabel"> Added to cart ✔</h1>
+
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p> You can continue browsing or go to booking. </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-info" id="continue" data-bs-dismiss="modal">
+                    <i class="fas fa-play" style="margin-right: 5px;"></i> Continue serf
+                </button>
+
+                <button type="button" class="btn btn-sm btn-outline-warning" id="booking">
+                    <i class="fas fa-calendar" style="margin-right: 5px;"></i> Go to booking
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= alert modal END -->
+
+<!-- Booking Modal ============================================= -->
+<div class="modal fade" id="bookModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="bookModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="bookModalLabel">Booking</h1>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p> Modal body </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-danger" id="cancel" data-bs-dismiss="modal">
+                    <i class="fas fa-times-circle" style="margin-right: 5px;"></i> Cancel Order
+                </button>
+
+                <button type="button" class="btn btn-sm btn-outline-info" id="placeOrder">
+                    <i class="fas fa-check-circle" style="margin-right: 5px;"></i> Place Order
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= Booking modal END -->
 
 <!-- scripts ============================================= -->
 <script src="../assets/js/jquery-3.6.1.min.js"></script>

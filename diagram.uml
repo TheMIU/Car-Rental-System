@@ -3,65 +3,62 @@
   <ID>DATABASE</ID>
   <OriginalElement>c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b</OriginalElement>
   <nodes>
-    <node x="17.70261437908505" y="461.39869281045736">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.rate</node>
-    <node x="434.11243264285855" y="382.96860081545674">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.user</node>
-    <node x="52.85470065769246" y="683.2908496732026">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.bookingdetail</node>
-    <node x="253.64864158829673" y="315.58302087815275">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.booking</node>
-    <node x="-232.59477124182993" y="406.3986928104574">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.vehicle</node>
-    <node x="257.64864158829675" y="604.2521974306964">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.payment</node>
+    <node x="56.05527895588756" y="461.39869281045736">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.rate</node>
+    <node x="92.72968987315119" y="762.6011945007889">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.bookingdetail</node>
+    <node x="488.59466879750846" y="338.5067408363555">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.user</node>
+    <node x="276.3483972307025" y="315.58302087815275">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.booking</node>
+    <node x="-196.54461450201802" y="560.2126949003216">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.vehicle</node>
+    <node x="292.89864158829675" y="604.2521974306964">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.payment</node>
     <node x="17.70261437908505" y="305.78758169934645">c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.login</node>
   </nodes>
   <notes />
   <edges>
     <edge source="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.bookingdetail" target="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.booking" relationship="REFERENCES">
       <point x="37.68352698098849" y="-59.75218718626422" />
-      <point x="161.53822763868095" y="673.0219435736676" />
-      <point x="201.41321685413968" y="673.0219435736676" />
-      <point x="201.41321685413968" y="421.08302087815275" />
-      <point x="312.94888594589094" y="421.08302087815275" />
+      <point x="201.41321685413968" y="654.8568443051203" />
+      <point x="237.8006279836909" y="654.8568443051203" />
+      <point x="237.8006279836909" y="421.08302087815275" />
+      <point x="335.6486415882967" y="421.08302087815275" />
       <point x="-17.19975564240582" y="3.1928411908127146" />
     </edge>
     <edge source="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.payment" target="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.booking" relationship="REFERENCES">
       <point x="-37.25" y="-116.5" />
-      <point x="294.89864158829675" y="695.5559038662487" />
-      <point x="226.2516711229946" y="695.5559038662487" />
-      <point x="226.2516711229946" y="576.8881922675025" />
-      <point x="368.39864158829675" y="576.8881922675025" />
+      <point x="330.14864158829675" y="695.5559038662487" />
+      <point x="261.1001559714794" y="695.5559038662487" />
+      <point x="261.1001559714794" y="576.8881922675025" />
+      <point x="391.0983972307025" y="576.8881922675025" />
       <point x="38.25" y="105.5" />
-    </edge>
-    <edge source="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.user" target="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.login" relationship="REFERENCES">
-      <point x="0.0" y="-171.5" />
-      <point x="521.1124326428585" y="271.77220480668757" />
-      <point x="100.20261437908505" y="271.77220480668757" />
-      <point x="0.0" y="61.5" />
     </edge>
     <edge source="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.payment" target="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.user" relationship="REFERENCES">
       <point x="37.25" y="-116.5" />
-      <point x="369.39864158829675" y="886.6217345872518" />
-      <point x="564.6124326428585" y="886.6217345872518" />
+      <point x="404.64864158829675" y="886.6217345872518" />
+      <point x="619.0946687975085" y="886.6217345872518" />
       <point x="43.5" y="171.5" />
     </edge>
     <edge source="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.bookingdetail" target="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.vehicle" relationship="REFERENCES">
       <point x="-35.5" y="-61.5" />
-      <point x="88.35470065769246" y="871.0" />
-      <point x="-132.09477124182993" y="871.0" />
+      <point x="128.2296898731512" y="824.1011945007889" />
+      <point x="-96.04461450201802" y="824.1011945007889" />
       <point x="0.0" y="138.5" />
     </edge>
     <edge source="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.vehicle" target="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.rate" relationship="REFERENCES">
       <point x="0.0" y="-138.5" />
-      <point x="-132.09477124182993" y="498.0" />
-      <point x="94.70261437908505" y="498.0" />
+      <point x="-96.04461450201802" y="498.0" />
+      <point x="133.05527895588756" y="498.0" />
       <point x="0.0" y="83.5" />
     </edge>
     <edge source="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.booking" target="c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.user" relationship="REFERENCES">
       <point x="0.0" y="-105.5" />
-      <point x="330.14864158829675" y="291.72884012539186" />
-      <point x="477.6124326428585" y="291.72884012539186" />
-      <point x="-43.5" y="171.5" />
+      <point x="352.8483972307025" y="291.72884012539186" />
+      <point x="542.50271477452" y="291.72884012539186" />
+      <point x="542.50271477452" y="375.1859979101358" />
+      <point x="-53.86896346835465" y="-123.82074292621968" />
     </edge>
   </edges>
-  <settings layout="Hierarchic" zoom="0.8321739130434783" showDependencies="false" x="236.6427208466224" y="593.7115987460816" />
-  <SelectedNodes />
+  <settings layout="Hierarchic" zoom="0.8321739130434783" showDependencies="false" x="255.0" y="614.0" />
+  <SelectedNodes>
+    <node>c7bc14ae-93e1-43c1-b21f-d4ba03a68a9b.TABLE:car_rental_db.vehicle</node>
+  </SelectedNodes>
   <Categories>
     <Category>Columns</Category>
     <Category>Comments</Category>

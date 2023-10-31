@@ -1,5 +1,6 @@
 // get all vehicle data
 let vehicles = [];
+let cart = [];
 
 $.ajax({
     url: baseURL + 'vehicle',
@@ -54,7 +55,6 @@ $(document).on('click', '.add-to-cart-button', function () {
     $("#moreModalLabel").text(vid);
 });
 
-
 // load Image from backend
 function loadImages(imageName, imgElement) {
     $.ajax({
@@ -69,4 +69,35 @@ function loadImages(imageName, imgElement) {
     });
 }
 
+///////////////////////////////////////////////////
+// add to cart click
+$('#addToCart').click(function () {
+    let vid = $('#moreModalLabel').text();
 
+    // cart array
+    let found = false;
+    for (let i = 0; i < cart.length; i++) {
+        if (cart[i].vid === vid) {
+            // Increment the qty by 1
+            cart[i].qty += 1;
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        cart.push({vid: vid, qty: 1});
+    }
+
+    console.log(cart);
+
+    $("#moreInfo").modal("hide");
+    $("#alertModal").modal("show");
+});
+
+// place order button click
+$('#booking').click(function () {
+    console.log('clickd')
+    $("#alertModal").modal("hide");
+    $("#bookModal").modal("show");
+});
