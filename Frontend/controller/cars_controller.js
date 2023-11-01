@@ -34,7 +34,7 @@ function loadCarFrontImages() {
         const description = $("<p>").text(vehicles[v].brand);
         const price = $("<p>").text(vehicles[v].rate.dailyRate);
 
-        const button = $("<button>").addClass("add-to-cart-button btn btn-sm btn-outline-warning").text("View more");
+        const button = $("<button>").addClass("view-more-btn btn btn-sm btn-outline-warning").text("View more");
 
         carDiv.append(imgElement, h4Element, description, price, button);
         carListContainer.append(carDiv);
@@ -42,17 +42,24 @@ function loadCarFrontImages() {
 }
 
 // view more button click
-$(document).on('click', '.add-to-cart-button', function () {
+$(document).on('click', '.view-more-btn', function () {
     const vid = $(this).siblings("h4").text(); // Get the vid from the sibling h4 element
 
     const foundVehicle = vehicles.find(vehicle => vehicle.vid === vid);
     if (foundVehicle) {
         console.log(foundVehicle);
+        console.log(foundVehicle.vid)
+        loadImages(vid + '_front.jpg', $('#slider_i1'));
+        loadImages(vid + '_side1.jpg', $('#slider_i2'));
+        loadImages(vid + '_side2.jpg', $('#slider_i3'));
+        loadImages(vid + '_back.jpg', $('#slider_i4'));
+
+        $("#moreInfo").modal("show");
+        $("#moreModalLabel").text(vid);
+
     } else {
-        console.log("Vehicle not found");
+        alert("Vehicle not found");
     }
-    $("#moreInfo").modal("show");
-    $("#moreModalLabel").text(vid);
 });
 
 // load Image from backend
@@ -72,31 +79,35 @@ function loadImages(imageName, imgElement) {
 ///////////////////////////////////////////////////
 // add to cart click
 $('#addToCart').click(function () {
-    let vid = $('#moreModalLabel').text();
+    if (loggedIn) {
+        let vid = $('#moreModalLabel').text();
 
-    // cart array
-    let found = false;
-    for (let i = 0; i < cart.length; i++) {
-        if (cart[i].vid === vid) {
-            // Increment the qty by 1
-            cart[i].qty += 1;
-            found = true;
-            break;
+        // cart array
+        let found = false;
+        for (let i = 0; i < cart.length; i++) {
+            if (cart[i].vid === vid) {
+                // Increment the qty by 1
+                cart[i].qty += 1;
+                found = true;
+                break;
+            }
         }
+
+        if (!found) {
+            cart.push({
+                bookId: 'B10',
+                vid: vid,
+                qty: 1
+            });
+        }
+
+        console.log(cart);
+
+        $("#moreInfo").modal("hide");
+        $("#alertModal").modal("show");
+    } else {
+        alert("Login to continue !")
     }
-
-    if (!found) {
-        cart.push({
-            bookId: 'B10',
-            vid: vid,
-            qty: 1
-        });
-    }
-
-    console.log(cart);
-
-    $("#moreInfo").modal("hide");
-    $("#alertModal").modal("show");
 });
 
 // place order button click
