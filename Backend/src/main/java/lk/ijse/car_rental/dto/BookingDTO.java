@@ -19,7 +19,7 @@ public class BookingDTO {
     private Time bookTime;
     private String slip;
     private double loosDamage;
-    private Boolean isApproved;
+    private Boolean approved;
 
     private UserDTO user;
 }

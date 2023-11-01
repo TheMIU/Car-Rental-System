@@ -23,7 +23,7 @@ public class Booking {
     private Time bookTime;
     private String slip;
     private double loosDamage;
-    private Boolean isApproved;
+    private boolean approved;
 
     @ManyToOne
     @JoinColumn(name = "userId", insertable = false, updatable = false)

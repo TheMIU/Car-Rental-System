@@ -68,6 +68,7 @@ $("#registerBtn").on("click", function () {
         url: baseURL + "user/next_id",
         success: function (response) {
             nextUserID = response.data;
+            console.log(nextUserID)
         },
         error: function (error) {
             alert('failed : ' + error.responseJSON.message);

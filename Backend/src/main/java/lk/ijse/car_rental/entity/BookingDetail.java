@@ -13,17 +13,22 @@ import java.io.Serializable;
 @AllArgsConstructor
 @ToString
 @Entity
-public class BookingDetail implements Serializable{
+@IdClass(BookingVehicle_PK.class)
+public class BookingDetail implements Serializable {
     @Id
+    private String bookId;
+    @Id
+    private String vid;
+
+    private int qty;
+    private boolean completed;
+
     @ManyToOne
-    @JoinColumn(name = "bookid", insertable = false, updatable = false)
+    @JoinColumn(name = "bookId", referencedColumnName = "bookId", insertable = false, updatable = false)
     private Booking booking;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "vid", insertable = false, updatable = false)
+    @JoinColumn(name = "vid", referencedColumnName = "vid", insertable = false, updatable = false)
     private Vehicle vehicle;
 
-    private Integer qty;
-    private Boolean isCompleted;
 }

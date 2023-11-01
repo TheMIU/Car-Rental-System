@@ -100,4 +100,33 @@ $('#booking').click(function () {
     console.log('clickd')
     $("#alertModal").modal("hide");
     $("#bookModal").modal("show");
+
+    // clear div
+    $('#bookModalBody').empty();
+
+    // append description
+    const div = $("<div>");
+    for (i in cart) {
+        const description = $("<p>").text(cart[i].vid + ' : ' + cart[i].qty);
+        div.append(description);
+    }
+
+    $('#bookModalBody').append(div);
+});
+
+// cancel button click
+$('#cancelOrder').click(function () {
+    // confirm alert
+    if (confirm("Are you sure you want to cancel the order?")) {
+        cart = [];
+        console.log(cart);
+        $("#bookModal").modal("hide");
+    }else {
+        $("#bookModal").modal("show");
+    }
+});
+
+$('#placeOrder').click(function () {
+    console.log('order placed')
+    console.log(cart)
 });

@@ -441,7 +441,7 @@
 <!-- car details Modal ============================================= -->
 <div class="modal fade" id="moreInfo" tabindex="-1" aria-labelledby="moreModalLabel" aria-hidden="true"
      data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content bg-dark text-light">
             <div class="modal-header bg-dark">
                 <h1 class="modal-title fs-5" id="moreModalLabel"> Vehicles Details </h1>
@@ -513,108 +513,54 @@
                     </div>
 
                     <form id="vehicleForm" class="col-sm-6">
-                        <div class="row">
-                            <!--column 1-->
-                            <div class="col-sm-6">
-                                <div class="row mb-3">
-                                    <div class="col-sm-3 text-light">
-                                        <label for="vId" class="form-label">Vehicle ID</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="vId" name="vId" required readonly>
-                                    </div>
+                        <!--column 1-->
+                        <div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="vId" class="form-label">Vehicle ID</label>
                                 </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-sm-3 text-light">
-                                        <label for="regNo" class="form-label">Register No</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="regNo" name="regNo" required
-                                               readonly>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-sm-3 text-light">
-                                        <label for="brand" class="form-label">Brand</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="brand" name="brand" required
-                                               readonly>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-sm-3 text-light">
-                                        <label for="type" class="form-label">Type</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="type" name="type" required
-                                               readonly>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-sm-3 text-light">
-                                        <label for="color" class="form-label">Color</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="color" name="color" required
-                                               readonly>
-                                    </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="vId" name="vId" required readonly>
                                 </div>
                             </div>
-                            <!--column 2-->
-                            <div class="col-sm-6">
-                                <div class="row mb-3">
-                                    <div class="col-sm-3 text-light">
-                                        <label for="passengers" class="form-label">passengers</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="passengers" name="passengers"
-                                               required
-                                               readonly>
-                                    </div>
-                                </div>
 
-                                <div class="row mb-3">
-                                    <div class="col-sm-3 text-light">
-                                        <label for="transmissionType" class="form-label">Transmission Type</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="transmissionType"
-                                               name="transmissionType" required readonly>
-                                    </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="regNo" class="form-label">Register No</label>
                                 </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-sm-3 text-light">
-                                        <label for="fuelType" class="form-label">Fuel Type</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="fuelType" name="fuelType" required
-                                               readonly>
-                                    </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="regNo" name="regNo" required
+                                           readonly>
                                 </div>
+                            </div>
 
-                                <div class="row mb-3">
-                                    <div class="col-sm-3 text-light">
-                                        <label for="status" class="form-label">Status</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="status" name="status"
-                                               required readonly>
-                                    </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="brand" class="form-label">Brand</label>
                                 </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="brand" name="brand" required
+                                           readonly>
+                                </div>
+                            </div>
 
-                                <div class="row mb-3">
-                                    <div class="col-sm-3 text-light">
-                                        <label for="rid" class="form-label">Rate Id</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="rid" name="rid" required readonly>
-                                    </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="type" class="form-label">Type</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="type" name="type" required
+                                           readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3 text-light">
+                                    <label for="color" class="form-label">Color</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="color" name="color" required
+                                           readonly>
                                 </div>
                             </div>
                         </div>
@@ -623,10 +569,16 @@
             </div>
 
             <div class="modal-footer">
+                <div>
+                    <label>Qty</label>
+                    <input type="number" value="1" class="ml-2" id="quantity" style="width: 50px;">
+                </div>
+
                 <button type="button" class="btn btn-sm btn-outline-warning" id="addToCart">
-                    <i class="fas fa-shopping-cart" style="margin-right: 5px"></i>Add to cart
+                    <i class="fas fa-shopping-cart" style="margin-right: 5px;"></i>Add to cart
                 </button>
             </div>
+
         </div>
     </div>
 </div>
@@ -675,12 +627,12 @@
                 </button>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body" id="bookModalBody">
                 <p> Modal body </p>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-danger" id="cancel" data-bs-dismiss="modal">
+                <button type="button" class="btn btn-sm btn-outline-danger" id="cancelOrder">
                     <i class="fas fa-times-circle" style="margin-right: 5px;"></i> Cancel Order
                 </button>
 
