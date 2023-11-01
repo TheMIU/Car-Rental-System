@@ -86,7 +86,11 @@ $('#addToCart').click(function () {
     }
 
     if (!found) {
-        cart.push({vid: vid, qty: 1});
+        cart.push({
+            bookId: 'B10',
+            vid: vid,
+            qty: 1
+        });
     }
 
     console.log(cart);
@@ -121,7 +125,7 @@ $('#cancelOrder').click(function () {
         cart = [];
         console.log(cart);
         $("#bookModal").modal("hide");
-    }else {
+    } else {
         $("#bookModal").modal("show");
     }
 });
@@ -129,45 +133,28 @@ $('#cancelOrder').click(function () {
 
 //////////////////////// place order
 $('#placeOrder').click(function () {
-    console.log('order placed')
-    console.log(cart)
-
-
     ////////////
+    console.log("cart : " + cart)
+
     const bookingObject = {
         bookId: 'B10',
         userId: 'C1',
         driverId: 'D1',
-        bookDate: '2023-11-01', // Correctly formatted date
-        bookTime: '14:30:00', // Correctly formatted time
+        bookDate: '2023-11-01',
+        bookTime: '14:30:00',
         slip: 'S123',
         loosDamage: 50.25,
         approved: false,
 
-        user: {
-            userId: 'C1'
-        },
-        bookingDetail: cart/*[
-            {
-                bookId: 'B10',
-                vid: 'V1',
-                qty: 2,
-                completed: true,
-            },
-            {
-                bookId: 'B10',
-                vid: 'V2',
-                qty: 1,
-                completed: true,
-            }
-        ]*/
+        user: {userId: 'C1'},
+        bookingDetails: cart
     };
 
     console.log(bookingObject)
     /////////////////
 
     $.ajax({
-        url: baseURL+'place-order',
+        url: baseURL + 'place-order',
         method: 'POST',
         contentType: "application/json",
         data: JSON.stringify(bookingObject),
@@ -175,6 +162,8 @@ $('#placeOrder').click(function () {
 
         success: function (res) {
             alert(res.message);
+            cart = [];
+            $("#bookModal").modal("hide");
         },
         error: function (error) {
             console.log(error.responseJSON.message)

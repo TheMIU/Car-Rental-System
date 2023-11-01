@@ -1,6 +1,5 @@
 package lk.ijse.car_rental.dto;
 
-import lk.ijse.car_rental.entity.BookingDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +7,7 @@ import lombok.ToString;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -24,5 +24,5 @@ public class BookingDTO {
     private Boolean approved;
 
     private UserDTO user;
-    private ArrayList<BookingDetailDTO> bookingDetail;
+    private List<BookingDetailDTO> bookingDetails;
 }
