@@ -27,4 +27,9 @@ public class BookingServiceImpl implements BookingService {
         return mapper.map(all, new TypeToken<List<BookingDTO>>() {
         }.getType());
     }
+
+    @Override
+    public void approveBooking(String bookId) {
+        bookingRepo.approveBooking(bookId);
+    }
 }
