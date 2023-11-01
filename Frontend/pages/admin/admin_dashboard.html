@@ -72,6 +72,34 @@
 </nav>
 <!-- ============================================= nav bar END -->
 
+<!-- Logged Modal ============================================= -->
+<div class="modal fade" id="Logged" tabindex="-1" aria-labelledby="LoggedLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="LoggedLabel"> Admin </h1>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!--logout-->
+                <div class="row mb-3">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <button href="../../index.html" id="btnLogout" type="button" class="btn btn-info float-end"
+                                data-bs-dismiss="modal">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= Logged Modal END -->
+
 <!-- admin dashboard content ============================================= -->
 <div class="container d-flex align-items-center bg-dark">
     <div class="container">
@@ -137,6 +165,7 @@
 <!-- scripts ============================================= -->
 <script src="../../assets/js/jquery-3.6.1.min.js"></script>
 <script src="../../assets/boostrap/js/bootstrap.js"></script>
+<script src="../../assets/js/common-js.js"></script>
 <!-- ============================================= scripts END -->
 </body>
 </html>

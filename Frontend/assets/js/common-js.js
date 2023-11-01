@@ -8,8 +8,18 @@ $('#btnLogout').click(function () {
     let absoluteURL = rootLocation + '/' + relativeURL;
     console.log(absoluteURL);
 
+    logout();
     window.location.href = absoluteURL;
 });
+
+// logout
+function logout() {
+    // Clear the login state in localStorage
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('username');
+    localStorage.removeItem('type');
+    localStorage.removeItem('loginId');
+}
 
 ////////////// enlarge images when click
 $(".enlargeableImg").click(function () {

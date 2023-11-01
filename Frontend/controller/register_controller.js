@@ -1,48 +1,7 @@
 let nextUserID = "";
-let logged = false;
-let loginId;
-
-// Login
-$("#loginBtn").on("click", function () {
-    var formData = $('#loginForm').serialize();
-
-    $.ajax({
-        type: "POST",
-        url: baseURL + "login/check",
-        data: formData,
-
-        success: function (response) {
-            console.log(response.data)
-
-            // get logging Id
-            loginId = response.data.loginId;
-            console.log(loginId);
-
-            if (response.data === null || response.data.type === null) {
-                alert("Login failed !");
-            } else if (response.data.type === 'admin') {
-                window.location.href = '../pages/admin/admin_dashboard.html';
-            } else if (response.data.type === 'driver') {
-                window.location.href = '../pages/driver/driver_dashboard.html';
-            } else if (response.data.type === 'customer') {
-                alert("Login success !");
-                getLoggedCustomer();
-                logged = true;
-                profileChange();
-                $('#login').modal('hide');
-
-                // Clear register form
-                $("#loginForm").find("input:not([type='submit'])").val("");
-            }
-        },
-        error: function (error) {
-            alert('failed : ' + error.responseJSON.message);
-        }
-    });
-});
 
 // get logged customer data
-function getLoggedCustomer() {
+function getLoggedCustomer(loginId) {
     $.ajax({
         url: baseURL + 'user/' + loginId,
         method: 'GET',
@@ -132,42 +91,6 @@ $togglePasswordButtons.click(function () {
         $cus_passwordInput.attr('type', 'password');
         $(this).html('<i class="fas fa-eye"></i>');
     }
-});
-
-//////////////////////////////
-// login profile change
-$('#profileImage').hide();
-$('#not_logged').show();
-
-function profileChange() {
-    if (logged) {
-        $('#profileImage').show();
-        $('#not_logged').hide();
-    } else {
-        $('#profileImage').hide();
-        $('#not_logged').show();
-    }
-}
-
-// logout
-$('#logout').click(function () {
-    let logoutConfirmed = confirm("Are you sure you want to log out?");
-
-    if (logoutConfirmed) {
-        location.reload();
-    }
-});
-
-$('#profileButton').click(function () {
-    $('#editCustomerFields').hide();
-    $('#update').hide();
-    $('#editData').show();
-});
-
-$('#editData').click(function () {
-    $('#editCustomerFields').show();
-    $('#update').show();
-    $('#editData').hide();
 });
 
 /////////////// update
