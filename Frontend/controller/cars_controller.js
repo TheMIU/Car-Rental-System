@@ -126,7 +126,59 @@ $('#cancelOrder').click(function () {
     }
 });
 
+
+//////////////////////// place order
 $('#placeOrder').click(function () {
     console.log('order placed')
     console.log(cart)
+
+
+    ////////////
+    const bookingObject = {
+        bookId: 'B10',
+        userId: 'C1',
+        driverId: 'D1',
+        bookDate: '2023-11-01', // Correctly formatted date
+        bookTime: '14:30:00', // Correctly formatted time
+        slip: 'S123',
+        loosDamage: 50.25,
+        approved: false,
+
+        user: {
+            userId: 'C1'
+        },
+        bookingDetail: cart/*[
+            {
+                bookId: 'B10',
+                vid: 'V1',
+                qty: 2,
+                completed: true,
+            },
+            {
+                bookId: 'B10',
+                vid: 'V2',
+                qty: 1,
+                completed: true,
+            }
+        ]*/
+    };
+
+    console.log(bookingObject)
+    /////////////////
+
+    $.ajax({
+        url: baseURL+'place-order',
+        method: 'POST',
+        contentType: "application/json",
+        data: JSON.stringify(bookingObject),
+        async: false,
+
+        success: function (res) {
+            alert(res.message);
+        },
+        error: function (error) {
+            console.log(error.responseJSON.message)
+            alert(error.responseJSON.message);
+        }
+    });
 });

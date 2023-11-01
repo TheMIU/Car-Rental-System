@@ -1,10 +1,12 @@
 package lk.ijse.car_rental.dto;
 
+import lk.ijse.car_rental.entity.BookingDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Data
@@ -22,4 +24,5 @@ public class BookingDTO {
     private Boolean approved;
 
     private UserDTO user;
+    private ArrayList<BookingDetailDTO> bookingDetail;
 }

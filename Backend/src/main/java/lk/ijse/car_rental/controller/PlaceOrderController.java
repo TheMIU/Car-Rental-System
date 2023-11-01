@@ -16,6 +16,10 @@ public class PlaceOrderController {
 
     @PostMapping
     public ResponseUtil purchaseOrder(@RequestBody BookingDTO dto) {
+        System.out.println("BookingDetail : "+dto.getBookingDetail());
+        System.out.println("User : "+dto.getUser());
+        System.out.println("DTO : "+dto);
+
         service.placeOrder(dto);
         return new ResponseUtil("Ok", "Success", dto);
     }

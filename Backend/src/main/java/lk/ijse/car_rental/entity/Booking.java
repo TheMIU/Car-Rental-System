@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,4 +29,7 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "userId", insertable = false, updatable = false)
     private User user;
+
+    @OneToMany(mappedBy = "booking",cascade = CascadeType.ALL)
+    private List<BookingDetail> bookingDetails;
 }
