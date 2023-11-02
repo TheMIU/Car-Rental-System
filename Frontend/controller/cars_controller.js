@@ -173,9 +173,14 @@ $('#addToCart').click(function () {
     if (loggedIn) {
         let vid = $('#moreModalLabel').text();
 
-        cart.push({vid: vid, driverId: 'D1'});
+        const existingVehicle = cart.find(item => item.vid === vid);
 
-        console.log(cart);
+        if (existingVehicle) {
+            alert("This vehicle is already in your cart.");
+        } else {
+            cart.push({vid: vid, driverId: 'D1'});
+            console.log(cart);
+        }
 
         $("#moreInfo").modal("hide");
         $("#alertModal").modal("show");
@@ -184,24 +189,94 @@ $('#addToCart').click(function () {
     }
 });
 
-///////
-// place order button click
+// booking click
 $('#booking').click(function () {
     $("#alertModal").modal("hide");
     $("#bookModal").modal("show");
 
-    // clear div
+    // Clear div
     $('#bookModalBody').empty();
 
-    // append description
-    const div = $("<div>");
-    for (i in cart) {
-        const description = $("<p>").text(cart[i].vid + ' : ' + cart[i].driverId);
-        div.append(description);
-    }
+    // Define the table columns
+    const columns = ["Vehicle Id", "Book Date", "Book Time", "Action"];
 
-    $('#bookModalBody').append(div);
+    // Create the table
+    const table = $("<table>").addClass("vehicle-booking-table table table-bordered text-white");
+
+    // Create the table header
+    const thead = $("<thead>");
+    const headerRow = $("<tr>");
+
+    columns.forEach(columnTitle => {
+        const th = $("<th>").text(columnTitle);
+        headerRow.append(th);
+    });
+
+    thead.append(headerRow);
+    table.append(thead);
+
+    // Create the table body
+    const tbody = $("<tbody>");
+
+    // Define an object to keep track of seen vehicle IDs
+    const seenVehicleIds = {};
+
+    // Iterate through cart data and create rows
+    cart.forEach(item => {
+        const vehicleId = item.vid;
+
+        // Check if the vehicle ID has already been added to the table
+        if (!seenVehicleIds[vehicleId]) {
+            const row = $("<tr>");
+
+            // 1st column (Vehicle Id)
+            const vehicleIdInput = $("<td>").append(
+                $("<label>").text(vehicleId)
+            );
+
+            // 2nd column (Book Date)
+            const bookDateInput = $("<td>").append(
+                $("<input>").attr("type", "date")
+            );
+
+            // 3rd column (Book Time)
+            const bookTimeInput = $("<td>").append(
+                $("<input>").attr("type", "time")
+            );
+
+            /*      // 4th column (Price Label with ID 'price')
+                  const priceLabel = $("<td>").attr("id", "price");*/
+
+            // 5th column (Remove button)
+            const removeButton = $("<td>").append(
+                $("<button>")
+                    .text("Remove")
+                    .addClass("btn btn-outline-danger btn-sm")
+                    .click(function () {
+                        row.remove();
+                        delete seenVehicleIds[vehicleId];
+                        // Remove the item from the cart array
+                        cart = cart.filter(item => item.vid !== vehicleId);
+                        console.log(cart);
+                    })
+            );
+
+            // Add the vehicle ID to the seenVehicleIds object
+            seenVehicleIds[vehicleId] = true;
+
+            row.append(vehicleIdInput, bookDateInput, bookTimeInput, removeButton);
+            tbody.append(row);
+        }
+    });
+
+    table.append(tbody);
+
+    // Append the table to #bookModalBody
+    $('#bookModalBody').append(table);
 });
+
+///////
+
 
 // cancel button click
 $('#cancelOrder').click(function () {
@@ -275,6 +350,6 @@ $('#placeOrder').click(function () {
     });
 });
 
-function test(){
+function test() {
     console.log($('#bookModalLabel').text());
 }

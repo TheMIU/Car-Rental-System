@@ -16,7 +16,6 @@ import java.util.List;
 public class BookingDTO {
     private String bookId;
     private String userId;
-    private String driverId;
     private Date bookDate;
     private Time bookTime;
     private String slip;

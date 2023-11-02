@@ -14,6 +14,6 @@ import javax.persistence.Id;
 public class BookingDetailDTO {
     private String bookId;
     private String vid;
-    private int qty;
+    private String driverId;
     private boolean completed;
 }

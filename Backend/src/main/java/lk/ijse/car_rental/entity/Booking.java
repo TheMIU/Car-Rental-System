@@ -19,7 +19,6 @@ public class Booking {
     @Id
     private String bookId;
     private String userId;
-    private String driverId;
     private Date bookDate;
     private Time bookTime;
     private String slip;

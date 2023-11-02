@@ -19,6 +19,7 @@ public class BookingDetail implements Serializable {
     private String bookId;
     @Id
     private String vid;
+
     private String driverId;
     private boolean completed;
 
