@@ -11,10 +11,10 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 public class PaymentDTO {
-    private String pId;
+    private String pid;
     private String reason;
-    private String bId;
-    private String uId;
+    private String bid;
+    private String uid;
     private Date paidDate;
     private double amount;
     private String method;

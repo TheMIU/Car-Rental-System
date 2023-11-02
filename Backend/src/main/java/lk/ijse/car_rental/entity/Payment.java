@@ -14,19 +14,19 @@ import java.util.Date;
 @Entity
 public class Payment {
     @Id
-    private String pId;
+    private String pid;
     private String reason;
-    private String bId;
-    private String uId;
+    private String bid;
+    private String uid;
     private Date paidDate;
     private double amount;
     private String method;
 
     @ManyToOne
-    @JoinColumn(name = "b_id",insertable = false,updatable = false)
+    @JoinColumn(name = "bid",insertable = false,updatable = false)
     private Booking booking;
 
     @ManyToOne
-    @JoinColumn(name = "u_id",insertable = false,updatable = false)
+    @JoinColumn(name = "uid",insertable = false,updatable = false)
     private User user;
 }
