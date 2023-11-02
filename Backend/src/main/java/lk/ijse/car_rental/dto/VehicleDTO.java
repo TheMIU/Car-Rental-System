@@ -19,6 +19,7 @@ public class VehicleDTO {
     private String transmissionType;
     private String fuelType;
     private String status;
+    private double distance;
 
     private RateDTO rate;
 }

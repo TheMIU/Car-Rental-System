@@ -28,6 +28,7 @@ $("#registerBtn").on("click", function () {
         success: function (response) {
             nextUserID = response.data;
             console.log(nextUserID)
+            $('#registerModalLabel').text('Register : '+nextUserID);
         },
         error: function (error) {
             alert('failed : ' + error.responseJSON.message);
@@ -120,7 +121,7 @@ $("#update").click(function () {
 
             success: function (res) {
                 alert(res.message);
-                getLoggedCustomer();
+                getLoggedCustomer(loginId);
                 $('#Logged').modal('hide');
             },
             error: function (error) {

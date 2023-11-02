@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta content="width=device-width initial-scale=1" name="viewport">
 
+    <!--favicon-->
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+
     <!-- Stylesheets -->
     <link href="assets/css/normalize.css" rel="stylesheet">
 
@@ -26,15 +29,15 @@
         }
 
         /* Override all input field colors */
-        .modal-body input[type="text"],
-        .modal-body input[type="password"],
-        .modal-body input[type="email"] {
+        input {
             background-color: #dadada !important;
             color: #050505 !important;
         }
 
+        /*//////////////////*/
+        /* Custom Navbar Styles */
         .custom-navbar {
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.84);
             position: fixed;
             top: 0;
             width: 100%;
@@ -42,11 +45,26 @@
             transition: background-color 0.3s;
         }
 
-        nav .active {
-            margin: 0;
-            border: #00f1ff 1px solid;
-            border-radius: 5px;
+        .custom-navbar .navbar-nav .nav-link {
+            color: #fff;
+            font-weight: lighter;
         }
+
+        .custom-navbar .navbar-nav .nav-link:hover {
+            background-color: #313131;
+            color: #fff;
+        }
+
+        .custom-navbar .navbar-nav .nav-item.active a.nav-link {
+            font-weight: normal;
+            color: #2dfff8;
+        }
+
+        .custom-navbar .navbar-text .btn:hover {
+            background-color: #fff;
+            color: #0D6EFD;
+        }
+        /*//////////////////*/
     </style>
 </head>
 
@@ -54,7 +72,7 @@
 <!-- nav bar ============================================= -->
 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar ">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">Easy Car Rental</a>
+        <a class="navbar-brand"><img class="navbar-brand" src="assets/img/logo.png" style="height: auto; width:40px;">Easy Car Rental  </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -62,7 +80,7 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-                <li class="nav-item "><a href="pages/about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="pages/about.html" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="pages/services.html" class="nav-link">Services</a></li>
                 <li class="nav-item"><a href="pages/pricing.html" class="nav-link">Pricing</a></li>
                 <li class="nav-item"><a href="pages/cars.html" class="nav-link">Cars</a></li>
@@ -71,7 +89,7 @@
             <!--not logged-->
             <span id="not_logged" class="navbar-text">
        <button class="btn btn-outline-info btn-sm" data-bs-toggle="modal"
-               data-bs-target="#registerInfo" id="registerBtn">Register</button>
+               data-bs-target="#registerInfo">Register</button>
        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
                data-bs-target="#login"> Login </button>
             </span>
@@ -80,7 +98,7 @@
             <span class="navbar-text" id="profileImage">
                 <button id="profileButton" type="button" style="background: none; border: none; padding: 0;"
                         data-bs-toggle="modal" data-bs-target="#Logged">
-                <img src="assets/img/profile.png" width="30%" alt="Profile Image">
+                <img src="../assets/img/profile.png" width="30%" alt="Profile Image">
                 </button>
             </span>
         </div>
@@ -250,24 +268,30 @@
                                 <label for="cus_password" class="col-sm-3 col-form-label text-light">Password</label>
                                 <div class="col-sm-9">
                                     <div class="input-group">
-                                        <input type="password" class="form-control" id="cus_password"
+                                        <input type="password" class="form-control" id="cus_password" name="password"
                                                placeholder="Enter password" required>
+                                        <button type="button" class="toggle-password btn btn-outline-secondary">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+                            <!--
 
-                            <!--confirm_cus_password-->
-                            <div class="row mb-3">
-                                <label for="con_cus_password" class="col-sm-3 col-form-label text-light">Confirm
-                                    Password</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <input type="password" class="form-control" id="con_cus_password"
-                                               name="password"
-                                               placeholder="Confirm password" required>
-                                    </div>
-                                </div>
-                            </div>
+                                                        &lt;!&ndash;confirm_cus_password&ndash;&gt;
+                                                        <div class="row mb-3">
+                                                            <label for="con_cus_password" class="col-sm-3 col-form-label text-light">Confirm
+                                                                Password</label>
+                                                            <div class="col-sm-9">
+                                                                <div class="input-group">
+                                                                    <input type="password" class="form-control" id="con_cus_password"
+                                                                           name="password"
+                                                                           placeholder="Confirm password" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                            -->
+
 
                             <!--submit-->
                             <div class="row mb-3 text-end">
@@ -374,7 +398,7 @@
                 <button id="logout" type="button" class="btn btn-sm btn-outline-danger">
                     <i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i> Logout
                 </button>
-                 </div>
+            </div>
         </div>
     </div>
 </div>
@@ -397,7 +421,7 @@
             <div class="carousel-item active" style="height: 100vh; width: 100vw;">
                 <img src="assets/img/car1.jpg" class="d-block w-100 h-100" style="object-fit: cover;">
                 <div class="carousel-caption bg-opacity-75 bg-black" style="left: 0; right: 0; bottom: 0;">
-                    <a href="pages/cars.html" class="btn btn-info">Rent a Car</a>
+                    <a href="pages/cars.html" class="btn btn-outline-warning m-3">Rent a Car</a>
                     <p>Explore our wide range of cars and find the perfect one for your journey.</p>
                     <br>
                 </div>
@@ -406,7 +430,7 @@
             <div class="carousel-item " style="height: 100vh; width: 100vw;">
                 <img src="assets/img/car2.jpg" class="d-block w-100 h-100" style="object-fit: cover;">
                 <div class="carousel-caption bg-opacity-75 bg-black" style="left: 0; right: 0; bottom: 0;">
-                    <a href="pages/cars.html" class="btn btn-info">Rent a Car</a>
+                    <a href="pages/cars.html" class="btn btn-outline-warning  m-3">Rent a Car</a>
                     <p>Your Journey, Your Choice - Explore Our Car Selection.</p>
                     <br>
                 </div>
@@ -415,7 +439,7 @@
             <div class="carousel-item" style="height: 100vh; width: 100vw;">
                 <img src="assets/img/car3.jpg" class="d-block w-100 h-100" style="object-fit: cover;">
                 <div class="carousel-caption bg-opacity-75 bg-black" style="left: 0; right: 0; bottom: 0;">
-                    <a href="pages/cars.html" class="btn btn-info">Rent a Car</a>
+                    <a href="pages/cars.html" class="btn btn-outline-warning  m-3">Rent a Car</a>
                     <p>Drive Your Dreams – Browse Our Car Rental Collection.</p>
                     <br>
                 </div>

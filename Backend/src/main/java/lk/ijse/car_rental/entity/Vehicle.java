@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
 import javax.persistence.*;
 
 @Data
@@ -22,6 +23,7 @@ public class Vehicle {
     private String transmissionType;
     private String fuelType;
     private String status;
+    private double distance;
 
     @ManyToOne
     @JoinColumn(name = "rId", nullable = false)
