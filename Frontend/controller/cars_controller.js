@@ -30,8 +30,8 @@ function loadCarFrontImages() {
         const imgElement = $("<img>").attr("src", '').attr("alt", vid).css("width", "100%").addClass("mb-2");
         loadImages(vid + '_front.jpg', imgElement);
 
-        const h4Element = $("<h4>").text(vid);
-        const description = $("<p>").text(vehicles[v].brand);
+        const h4Element = $("<h4>").text(vehicles[v].brand);
+        const description = $("<p id='v_id'>").text(vid);
         const price = $("<p>").text(vehicles[v].rate.dailyRate);
 
         const button = $("<button>").addClass("view-more-btn btn btn-sm btn-outline-warning").text("View more");
@@ -43,7 +43,8 @@ function loadCarFrontImages() {
 
 // view more button click
 $(document).on('click', '.view-more-btn', function () {
-    const vid = $(this).siblings("h4").text(); // Get the vid from the sibling h4 element
+    let vid = $(this).closest('.car').find('#v_id').text();
+    console.log(vid);
 
     const foundVehicle = vehicles.find(vehicle => vehicle.vid === vid);
     if (foundVehicle) {
@@ -54,8 +55,98 @@ $(document).on('click', '.view-more-btn', function () {
         loadImages(vid + '_side2.jpg', $('#slider_i3'));
         loadImages(vid + '_back.jpg', $('#slider_i4'));
 
+
         $("#moreInfo").modal("show");
         $("#moreModalLabel").text(vid);
+
+        // car details
+        var detailsContainer = $('#details');
+
+        var bookingHtml = `
+        <table style="margin-left: 20px">
+          <tr>
+            <td>Vehicle ID</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.vid}</span></td>
+          </tr>
+          
+          <tr>
+            <td>Reg. No</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.regNo}</span></td>
+          </tr> 
+          
+          <tr>
+            <td>Passengers</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.passengers}</span></td>
+          </tr>
+          
+          <tr>
+            <td>Color</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.color}</span></td>
+          </tr>
+          
+          <tr>
+            <td>Type</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.type}</span></td>
+          </tr>
+          
+          <tr>
+            <td>Brand</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.brand}</span></td>
+          </tr>
+          
+          <tr>
+            <td>Transmission Type</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.transmissionType}</span></td>
+          </tr>
+          
+          <tr>
+            <td>Fuel Type</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.fuelType}</span></td>
+          </tr>
+          
+          <tr>
+            <td>Price for extra km</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.rate.extraKm}</span></td>
+          </tr>
+          
+          <tr>
+            <td>Daily Rate</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.rate.dailyRate}</span></td>
+          </tr> 
+          
+          <tr>
+            <td>Free km p'day</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.rate.freeKmDay}</span></td>
+          </tr>
+          
+          <tr>
+            <td>Monthly Rate</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.rate.monthlyRate}</span></td>
+          </tr> 
+          
+          <tr>
+            <td>Free km p'month</td>
+            <td>:</td>
+            <td><span style="color: #00f1ff">${foundVehicle.rate.freeKmMonth}</span></td>
+          </tr>
+          
+        </table>
+        `;
+
+        detailsContainer.html(bookingHtml);
+        //////////////
 
     } else {
         alert("Vehicle not found");
