@@ -173,24 +173,7 @@ $('#addToCart').click(function () {
     if (loggedIn) {
         let vid = $('#moreModalLabel').text();
 
-        // cart array
-        let found = false;
-        for (let i = 0; i < cart.length; i++) {
-            if (cart[i].vid === vid) {
-                // Increment the qty by 1
-                cart[i].qty += 1;
-                found = true;
-                break;
-            }
-        }
-
-        if (!found) {
-            cart.push({
-                bookId: 'B10',
-                vid: vid,
-                qty: 1
-            });
-        }
+        cart.push({vid: vid, driverId: 'D1'});
 
         console.log(cart);
 
@@ -201,9 +184,9 @@ $('#addToCart').click(function () {
     }
 });
 
+///////
 // place order button click
 $('#booking').click(function () {
-    console.log('clickd')
     $("#alertModal").modal("hide");
     $("#bookModal").modal("show");
 
@@ -213,7 +196,7 @@ $('#booking').click(function () {
     // append description
     const div = $("<div>");
     for (i in cart) {
-        const description = $("<p>").text(cart[i].vid + ' : ' + cart[i].qty);
+        const description = $("<p>").text(cart[i].vid + ' : ' + cart[i].driverId);
         div.append(description);
     }
 
@@ -234,13 +217,31 @@ $('#cancelOrder').click(function () {
 
 
 //////////////////////// place order
-$('#placeOrder').click(function () {
-    ////////////
-    console.log("cart : " + cart)
+// get next book id
+$.ajax({
+    url: baseURL + '/booking/next',
+    method: 'GET',
+    success: function (res) {
+        $('#bookModalLabel').text(res.data);
+    },
+    error: function (error) {
+        console.log(error.responseJSON.message);
+        alert(error.responseJSON.message);
+    }
+});
 
-    const bookingObject = {
-        bookId: 'B10',
-        userId: 'C1',
+$('#placeOrder').click(function () {
+    let book_Id = $('#bookModalLabel').text();
+    cart.forEach(item => {
+        item.bookId = book_Id;
+    });
+
+    let userIdName = $('#LoggedLabel').text();
+    let userId = userIdName.match(/\b\w+\b/)[0];
+
+    let bookingObject = {
+        bookId: book_Id,
+        userId: userId,
         driverId: 'D1',
         bookDate: '2023-11-01',
         bookTime: '14:30:00',
@@ -248,12 +249,12 @@ $('#placeOrder').click(function () {
         loosDamage: 50.25,
         approved: false,
 
-        user: {userId: 'C1'},
+        user: {userId: userId},
         bookingDetails: cart
     };
 
-    console.log(bookingObject)
-    /////////////////
+    console.log("cart : " + JSON.stringify(cart))
+    console.log("booking : " + JSON.stringify(bookingObject))
 
     $.ajax({
         url: baseURL + 'place-order',
@@ -273,3 +274,7 @@ $('#placeOrder').click(function () {
         }
     });
 });
+
+function test(){
+    console.log($('#bookModalLabel').text());
+}

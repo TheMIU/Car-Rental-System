@@ -7,4 +7,7 @@ public interface BookingService {
     List<BookingDTO> getAllBookings();
 
     void approveBooking(String bookId);
+
+    String getNextBookId();
 }
+

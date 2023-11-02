@@ -32,4 +32,22 @@ public class BookingServiceImpl implements BookingService {
     public void approveBooking(String bookId) {
         bookingRepo.approveBooking(bookId);
     }
+
+    @Override
+    public String getNextBookId() {
+        String lastBookId = bookingRepo.findLastRecord();
+        System.out.println("Last : " + lastBookId);
+
+        if (lastBookId == null) {
+            return "B1";
+        } else {
+            String[] lastNum = lastBookId.split("B");
+            int lastId = Integer.parseInt(lastNum[1]);
+            int newId = lastId + 1;
+
+            System.out.println("New : " + newId);
+
+            return "B" + newId;
+        }
+    }
 }

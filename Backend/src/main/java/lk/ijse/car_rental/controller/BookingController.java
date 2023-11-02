@@ -23,4 +23,10 @@ public class BookingController {
         bookingService.approveBooking(bookId);
         return new ResponseUtil("Ok", "Success", null);
     }
+
+    @GetMapping("/next")
+    public  ResponseUtil getNextBookID(){
+        String nextBookId =  bookingService.getNextBookId();
+        return new ResponseUtil("Ok", "Success", nextBookId);
+    }
 }

@@ -6,8 +6,11 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface BookingRepo extends JpaRepository<Booking,String> {
+public interface BookingRepo extends JpaRepository<Booking, String> {
     @Modifying
     @Query("UPDATE Booking b SET b.approved = true WHERE b.bookId = :bookId")
     void approveBooking(@Param("bookId") String bookId);
+
+    @Query(value = "SELECT bookId FROM booking ORDER BY CAST(SUBSTRING(bookId, 2) AS UNSIGNED) DESC limit 1", nativeQuery = true)
+    String findLastRecord();
 }
