@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 @Data
@@ -15,7 +17,10 @@ public class PaymentDTO {
     private String reason;
     private String bid;
     private String uid;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date paidDate;
+
     private double amount;
     private String method;
 

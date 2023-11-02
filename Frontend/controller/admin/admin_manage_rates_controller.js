@@ -1,4 +1,3 @@
-////////// get driver data to table
 let data;
 let tableBody;
 let pagination;
