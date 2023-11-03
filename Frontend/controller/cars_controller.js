@@ -55,14 +55,13 @@ $(document).on('click', '.view-more-btn', function () {
         loadImages(vid + '_side2.jpg', $('#slider_i3'));
         loadImages(vid + '_back.jpg', $('#slider_i4'));
 
-
         $("#moreInfo").modal("show");
         $("#moreModalLabel").text(vid);
 
         // car details
-        var detailsContainer = $('#details');
+        let detailsContainer = $('#details');
 
-        var bookingHtml = `
+        let bookingHtml = `
         <table style="margin-left: 20px">
           <tr>
             <td>Vehicle ID</td>
@@ -146,7 +145,6 @@ $(document).on('click', '.view-more-btn', function () {
         `;
 
         detailsContainer.html(bookingHtml);
-        //////////////
 
     } else {
         alert("Vehicle not found");
@@ -194,13 +192,11 @@ $('#booking').click(function () {
     $("#alertModal").modal("hide");
     $("#bookModal").modal("show");
 
-    // Clear div
     $('#bookModalBody').empty();
 
-    // Define the table columns
-    const columns = ["Vehicle Id", "Book Date", "Book Time", "Driver", "Loss Damage", "Slip", "Action"];
+    // table columns
+    const columns = ["Vehicle Id", "Book Date", "Driver", "Loss Damage", "Slip", "Action"];
 
-    // Create the table
     const table = $("<table>").addClass("vehicle-booking-table table table-bordered text-white");
 
     // Create the table header
@@ -235,13 +231,12 @@ $('#booking').click(function () {
             );
 
             // column 2
-            const bookDateInput = $("<td>").append(
-                $("<input>").attr("type", "date").addClass("form-control")
-            );
+            const datetimeInput = $("<td>").append(
+                $("<label>").text("From"),
+                $("<input>").attr("type", "datetime-local").addClass("form-control form-control-sm"),
 
-            // column 3
-            const bookTimeInput = $("<td>").append(
-                $("<input>").attr("type", "time").addClass("form-control")
+                $("<label>").text("To"),
+                $("<input>").attr("type", "datetime-local").addClass("form-control form-control-sm")
             );
 
             // column 4
@@ -255,9 +250,29 @@ $('#booking').click(function () {
             );
 
             // column 5
-            const lossDamageInput = $("<td>").append(
-                $("<label>").text("0000")
+            let lossDamageInput = $("<td>").append(
+                $("<label>").text(vehicleId.type)
             );
+
+            // change loss damage by type
+            $.ajax({
+                url: baseURL + 'vehicle',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    let vehicles = response.data;
+                    let find = vehicles.find(vehicle => vehicle.vid === vehicleId);
+                    console.log(find.type);
+
+                    if (find.type === 'general') lossDamageInput.find("label").text(10000);
+                    if (find.type === 'premium') lossDamageInput.find("label").text(15000);
+                    if (find.type === 'luxury') lossDamageInput.find("label").text(20000);
+
+                },
+                error: function (error) {
+                    console.log("Error : " + error)
+                }
+            });
 
             // column 6
             const slipInput = $("<td>").append(
@@ -284,7 +299,7 @@ $('#booking').click(function () {
             // Add the vehicle ID to the seenVehicleIds object
             seenVehicleIds[vehicleId] = true;
 
-            row.append(vehicleIdInput, bookDateInput, bookTimeInput, checkboxCell, lossDamageInput, slipInput, removeButton);
+            row.append(vehicleIdInput, datetimeInput, checkboxCell, lossDamageInput, slipInput, removeButton);
             tbody.append(row);
         }
     });
@@ -333,6 +348,32 @@ $('#placeOrder').click(function () {
 
     let userIdName = $('#LoggedLabel').text();
     let userId = userIdName.match(/\b\w+\b/)[0];
+
+
+    ///////////////////
+    // Create an empty array to store the data from the table
+    const tableData = [];
+
+// Loop through the table rows in the tbody
+    $('#bookModalBody tbody tr').each(function () {
+        const rowData = {
+            'Vehicle Id': $(this).find('td:eq(0) label').text(),
+            'Book Date From': $(this).find('td:eq(1) input[type="datetime-local"]:eq(0)').val(),
+            'Book Date To': $(this).find('td:eq(1) input[type="datetime-local"]:eq(1)').val(),
+            'Driver Needed': $(this).find('td:eq(2) input[type="checkbox"]').prop('checked'),
+            'Loss Damage': $(this).find('td:eq(3) label').text(),
+            'Slip': $(this).find('td:eq(4) input[type="file"]').val()
+        };
+
+        tableData.push(rowData);
+    });
+
+// Log the data for each row
+    tableData.forEach(row => {
+        console.log(row);
+    });
+
+    ///////////////////
 
     let bookingObject = {
         bookId: book_Id,
