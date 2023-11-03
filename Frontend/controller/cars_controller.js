@@ -198,7 +198,7 @@ $('#booking').click(function () {
     $('#bookModalBody').empty();
 
     // Define the table columns
-    const columns = ["Vehicle Id", "Book Date", "Book Time", "Action"];
+    const columns = ["Vehicle Id", "Book Date", "Book Time", "Driver", "Loss Damage", "Slip", "Action"];
 
     // Create the table
     const table = $("<table>").addClass("vehicle-booking-table table table-bordered text-white");
@@ -229,25 +229,45 @@ $('#booking').click(function () {
         if (!seenVehicleIds[vehicleId]) {
             const row = $("<tr>");
 
-            // 1st column (Vehicle Id)
+            // column 1
             const vehicleIdInput = $("<td>").append(
                 $("<label>").text(vehicleId)
             );
 
-            // 2nd column (Book Date)
+            // column 2
             const bookDateInput = $("<td>").append(
-                $("<input>").attr("type", "date")
+                $("<input>").attr("type", "date").addClass("form-control")
             );
 
-            // 3rd column (Book Time)
+            // column 3
             const bookTimeInput = $("<td>").append(
-                $("<input>").attr("type", "time")
+                $("<input>").attr("type", "time").addClass("form-control")
             );
 
-            /*      // 4th column (Price Label with ID 'price')
-                  const priceLabel = $("<td>").attr("id", "price");*/
+            // column 4
+            const checkboxCell = $("<td>").append(
+                $("<div>").addClass("form-check").append(
+                    $("<input>")
+                        .attr("type", "checkbox")
+                        .prop("checked", true)
+                        .attr("id", "needDriver")
+                )
+            );
 
-            // 5th column (Remove button)
+            // column 5
+            const lossDamageInput = $("<td>").append(
+                $("<label>").text("0000")
+            );
+
+            // column 6
+            const slipInput = $("<td>").append(
+                $("<input>")
+                    .attr("type", "file")
+                    .attr("name", "Slip")
+                    .addClass("form-control form-control-sm")
+            );
+
+            // column 7
             const removeButton = $("<td>").append(
                 $("<button>")
                     .text("Remove")
@@ -264,7 +284,7 @@ $('#booking').click(function () {
             // Add the vehicle ID to the seenVehicleIds object
             seenVehicleIds[vehicleId] = true;
 
-            row.append(vehicleIdInput, bookDateInput, bookTimeInput, removeButton);
+            row.append(vehicleIdInput, bookDateInput, bookTimeInput, checkboxCell, lossDamageInput, slipInput, removeButton);
             tbody.append(row);
         }
     });
@@ -328,7 +348,6 @@ $('#placeOrder').click(function () {
         bookingDetails: cart
     };
 
-    console.log("cart : " + JSON.stringify(cart))
     console.log("booking : " + JSON.stringify(bookingObject))
 
     $.ajax({
