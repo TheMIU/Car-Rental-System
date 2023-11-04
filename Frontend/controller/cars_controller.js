@@ -176,8 +176,7 @@ $('#addToCart').click(function () {
         if (existingVehicle) {
             alert("This vehicle is already in your cart.");
         } else {
-            cart.push({vid: vid, driverId: 'D1'});
-            console.log(cart);
+            cart.push({vid: vid});
         }
 
         $("#moreInfo").modal("hide");
@@ -328,17 +327,22 @@ $('#cancelOrder').click(function () {
 
 //////////////////////// place order
 // get next book id
-$.ajax({
-    url: baseURL + '/booking/next',
-    method: 'GET',
-    success: function (res) {
-        $('#bookModalLabel').text(res.data);
-    },
-    error: function (error) {
-        console.log(error.responseJSON.message);
-        alert(error.responseJSON.message);
-    }
-});
+getNextBookID();
+
+function getNextBookID(){
+    $.ajax({
+        url: baseURL + '/booking/next',
+        method: 'GET',
+        success: function (res) {
+            $('#bookModalLabel').text(res.data);
+        },
+        error: function (error) {
+            console.log(error.responseJSON.message);
+            alert(error.responseJSON.message);
+        }
+    });
+}
+
 
 $('#placeOrder').click(function () {
     let book_Id = $('#bookModalLabel').text();
@@ -349,46 +353,62 @@ $('#placeOrder').click(function () {
     let userIdName = $('#LoggedLabel').text();
     let userId = userIdName.match(/\b\w+\b/)[0];
 
-
     ///////////////////
-    // Create an empty array to store the data from the table
-    const tableData = [];
+    // Loop through the cart items
+    cart.forEach(item => {
+        // Find the corresponding row in the table for the cart item
+        const $row = $('#bookModalBody tbody tr').filter(function () {
+            return $(this).find('td:eq(0) label').text() === item.vid;
+        });
 
-// Loop through the table rows in the tbody
-    $('#bookModalBody tbody tr').each(function () {
-        const rowData = {
-            'Vehicle Id': $(this).find('td:eq(0) label').text(),
-            'Book Date From': $(this).find('td:eq(1) input[type="datetime-local"]:eq(0)').val(),
-            'Book Date To': $(this).find('td:eq(1) input[type="datetime-local"]:eq(1)').val(),
-            'Driver Needed': $(this).find('td:eq(2) input[type="checkbox"]').prop('checked'),
-            'Loss Damage': $(this).find('td:eq(3) label').text(),
-            'Slip': $(this).find('td:eq(4) input[type="file"]').val()
-        };
-
-        tableData.push(rowData);
+        // Add data to the cart item
+        item['bookDateFrom'] = $row.find('td:eq(1) input[type="datetime-local"]:eq(0)').val();
+        item['bookDateTo'] = $row.find('td:eq(1) input[type="datetime-local"]:eq(1)').val();
+        item['driverNeeded'] = $row.find('td:eq(2) input[type="checkbox"]').prop('checked');
+        item['lossDamage'] = $row.find('td:eq(3) label').text();
+        item['slip'] = $row.find('td:eq(4) input[type="file"]').val();
     });
 
-// Log the data for each row
-    tableData.forEach(row => {
-        console.log(row);
+    console.log(cart);
+
+   /* // load all drivers and assign random driver to cart
+    $.ajax({
+        url: baseURL + 'user',
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            let allItems = response.data;
+            let selectedDrivers = allItems.filter(driver => driver.type === 'driver');
+            console.log(selectedDrivers)
+            // Iterate through the cart and assign random drivers to items where driverNeeded is true
+            cart.forEach(item => {
+                console.log( "Item need: "+item.driverNeeded)
+                if (item.driverNeeded) {
+                    const randomIndex = Math.floor(Math.random() * selectedDrivers.length);
+                    const randomDriver = selectedDrivers[randomIndex];
+                    item['driverId'] = randomDriver.userId;
+                }
+            });
+
+            console.log(cart);
+        },
+        error: function (error) {
+            console.log("Error fetching data: " + error);
+        }
     });
 
-    ///////////////////
+    // upload slip
 
     let bookingObject = {
         bookId: book_Id,
         userId: userId,
-        driverId: 'D1',
-        bookDate: '2023-11-01',
-        bookTime: '14:30:00',
-        slip: 'S123',
-        loosDamage: 50.25,
+        bookDate: new Date(),
         approved: false,
-
         user: {userId: userId},
         bookingDetails: cart
     };
 
+    console.log("cart : " + JSON.stringify(cart))
     console.log("booking : " + JSON.stringify(bookingObject))
 
     $.ajax({
@@ -402,14 +422,69 @@ $('#placeOrder').click(function () {
             alert(res.message);
             cart = [];
             $("#bookModal").modal("hide");
+            getNextBookID();
         },
         error: function (error) {
             console.log(error.responseJSON.message)
             alert(error.responseJSON.message);
         }
     });
-});
+});*/
 
-function test() {
-    console.log($('#bookModalLabel').text());
-}
+// Load all drivers and assign random driver to cart
+    $.ajax({
+        url: baseURL + 'user',
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            let allItems = response.data;
+            let selectedDrivers = allItems.filter(driver => driver.type === 'driver');
+            console.log(selectedDrivers);
+
+            // Iterate through the cart and assign random drivers to items where driverNeeded is true
+            cart.forEach(item => {
+                if (item.driverNeeded) {
+                    const randomIndex = Math.floor(Math.random() * selectedDrivers.length);
+                    const randomDriver = selectedDrivers[randomIndex];
+                    item['driverId'] = randomDriver.userId;
+                }
+            });
+
+            console.log(cart);
+
+            let bookingObject = {
+                bookId: book_Id,
+                userId: userId,
+                bookDate: new Date(),
+                approved: false,
+                user: { userId: userId },
+                bookingDetails: cart
+            };
+
+            console.log("cart : " + JSON.stringify(cart))
+            console.log("booking : " + JSON.stringify(bookingObject))
+
+            $.ajax({
+                url: baseURL + 'place-order',
+                method: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify(bookingObject),
+                async: false,
+
+                success: function (res) {
+                    alert(res.message);
+                    cart = [];
+                    $("#bookModal").modal("hide");
+                    getNextBookID();
+                },
+                error: function (error) {
+                    console.log(error.responseJSON.message)
+                    alert(error.responseJSON.message);
+                }
+            });
+        },
+        error: function (error) {
+            console.log("Error fetching data: " + error);
+        }
+    });
+});

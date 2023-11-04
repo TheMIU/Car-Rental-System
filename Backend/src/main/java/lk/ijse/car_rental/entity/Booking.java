@@ -20,9 +20,6 @@ public class Booking {
     private String bookId;
     private String userId;
     private Date bookDate;
-    private Time bookTime;
-    private String slip;
-    private double loosDamage;
     private boolean approved;
 
     @ManyToOne

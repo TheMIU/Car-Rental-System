@@ -51,7 +51,7 @@ public class JPAConfig {
         va.setDatabasePlatform(env.getRequiredProperty("pro.dial"));
         va.setDatabase(Database.MYSQL);
         va.setGenerateDdl(true);
-        va.setShowSql(true);
+        va.setShowSql(false); // show
         return va;
     }
 

@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -22,6 +23,11 @@ public class BookingDetail implements Serializable {
 
     private String driverId;
     private boolean completed;
+
+    private Date bookDateFrom;
+    private Date bookDateTo;
+    private double lossDamage;
+    private String slipName;
 
     @ManyToOne
     @JoinColumn(name = "bookId", referencedColumnName = "bookId", insertable = false, updatable = false)

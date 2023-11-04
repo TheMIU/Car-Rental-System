@@ -17,10 +17,7 @@ public class BookingDTO {
     private String bookId;
     private String userId;
     private Date bookDate;
-    private Time bookTime;
-    private String slip;
-    private double loosDamage;
-    private Boolean approved;
+    private boolean approved;
 
     private UserDTO user;
     private List<BookingDetailDTO> bookingDetails;

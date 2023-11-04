@@ -1,11 +1,14 @@
 package lk.ijse.car_rental.dto;
 
+import lk.ijse.car_rental.entity.Booking;
+import lk.ijse.car_rental.entity.Vehicle;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Id;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -16,4 +19,11 @@ public class BookingDetailDTO {
     private String vid;
     private String driverId;
     private boolean completed;
+    private Date bookDateFrom;
+    private Date bookDateTo;
+    private double lossDamage;
+    private String slipName;
+
+    private BookingDTO booking;
+    private VehicleDTO vehicle;
 }
