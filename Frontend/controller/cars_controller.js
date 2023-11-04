@@ -329,7 +329,7 @@ $('#cancelOrder').click(function () {
 // get next book id
 getNextBookID();
 
-function getNextBookID(){
+function getNextBookID() {
     $.ajax({
         url: baseURL + '/booking/next',
         method: 'GET',
@@ -366,72 +366,13 @@ $('#placeOrder').click(function () {
         item['bookDateTo'] = $row.find('td:eq(1) input[type="datetime-local"]:eq(1)').val();
         item['driverNeeded'] = $row.find('td:eq(2) input[type="checkbox"]').prop('checked');
         item['lossDamage'] = $row.find('td:eq(3) label').text();
-        item['slip'] = $row.find('td:eq(4) input[type="file"]').val();
+        item['slip'] = $row.find('td:eq(4) input[type="file"]').prop('files')[0];
+        item['slipName'] = book_Id + '_' + item.vid + '.jpg';
     });
 
     console.log(cart);
 
-   /* // load all drivers and assign random driver to cart
-    $.ajax({
-        url: baseURL + 'user',
-        method: 'GET',
-        dataType: 'json',
-        success: function (response) {
-            let allItems = response.data;
-            let selectedDrivers = allItems.filter(driver => driver.type === 'driver');
-            console.log(selectedDrivers)
-            // Iterate through the cart and assign random drivers to items where driverNeeded is true
-            cart.forEach(item => {
-                console.log( "Item need: "+item.driverNeeded)
-                if (item.driverNeeded) {
-                    const randomIndex = Math.floor(Math.random() * selectedDrivers.length);
-                    const randomDriver = selectedDrivers[randomIndex];
-                    item['driverId'] = randomDriver.userId;
-                }
-            });
-
-            console.log(cart);
-        },
-        error: function (error) {
-            console.log("Error fetching data: " + error);
-        }
-    });
-
-    // upload slip
-
-    let bookingObject = {
-        bookId: book_Id,
-        userId: userId,
-        bookDate: new Date(),
-        approved: false,
-        user: {userId: userId},
-        bookingDetails: cart
-    };
-
-    console.log("cart : " + JSON.stringify(cart))
-    console.log("booking : " + JSON.stringify(bookingObject))
-
-    $.ajax({
-        url: baseURL + 'place-order',
-        method: 'POST',
-        contentType: "application/json",
-        data: JSON.stringify(bookingObject),
-        async: false,
-
-        success: function (res) {
-            alert(res.message);
-            cart = [];
-            $("#bookModal").modal("hide");
-            getNextBookID();
-        },
-        error: function (error) {
-            console.log(error.responseJSON.message)
-            alert(error.responseJSON.message);
-        }
-    });
-});*/
-
-// Load all drivers and assign random driver to cart
+    // Load all drivers and assign random driver to cart
     $.ajax({
         url: baseURL + 'user',
         method: 'GET',
@@ -441,7 +382,7 @@ $('#placeOrder').click(function () {
             let selectedDrivers = allItems.filter(driver => driver.type === 'driver');
             console.log(selectedDrivers);
 
-            // Iterate through the cart and assign random drivers to items where driverNeeded is true
+            // assign random driver if driverNeeded is true
             cart.forEach(item => {
                 if (item.driverNeeded) {
                     const randomIndex = Math.floor(Math.random() * selectedDrivers.length);
@@ -452,36 +393,71 @@ $('#placeOrder').click(function () {
 
             console.log(cart);
 
-            let bookingObject = {
-                bookId: book_Id,
-                userId: userId,
-                bookDate: new Date(),
-                approved: false,
-                user: { userId: userId },
-                bookingDetails: cart
-            };
+            const slipImagesSelected = cart.every(item => item.slip && item.slipName);
 
-            console.log("cart : " + JSON.stringify(cart))
-            console.log("booking : " + JSON.stringify(bookingObject))
+            if (slipImagesSelected) {
+                // save slip
+                cart.forEach(item => {
+                    const imageName = book_Id + '_' + item.vid + '.jpg';
+                    saveSlipImage(item.slip, imageName);
+                });
 
-            $.ajax({
-                url: baseURL + 'place-order',
-                method: 'POST',
-                contentType: "application/json",
-                data: JSON.stringify(bookingObject),
-                async: false,
+                // save an individual slip image
+                function saveSlipImage(slip, imageName) {
+                    const formData = new FormData();
+                    formData.append('image', slip);
+                    formData.append('imageName', imageName);
 
-                success: function (res) {
-                    alert(res.message);
-                    cart = [];
-                    $("#bookModal").modal("hide");
-                    getNextBookID();
-                },
-                error: function (error) {
-                    console.log(error.responseJSON.message)
-                    alert(error.responseJSON.message);
+                    $.ajax({
+                        url: baseURL + 'booking/uploadImg',
+                        method: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (res) {
+                            console.log(imageName + " " + res.message);
+                        },
+                        error: function (error) {
+                            console.log(error.responseJSON.message)
+                            alert(error.responseJSON.message);
+                        }
+                    });
                 }
-            });
+
+                let bookingObject = {
+                    bookId: book_Id,
+                    userId: userId,
+                    bookDate: new Date(),
+                    approved: false,
+                    user: {userId: userId},
+                    bookingDetails: cart
+                };
+
+                console.log("cart : " + JSON.stringify(cart))
+                console.log("booking : " + JSON.stringify(bookingObject))
+
+                $.ajax({
+                    url: baseURL + 'place-order',
+                    method: 'POST',
+                    contentType: "application/json",
+                    data: JSON.stringify(bookingObject),
+                    async: false,
+
+                    success: function (res) {
+                        alert(res.message);
+                        cart = [];
+                        $("#bookModal").modal("hide");
+                        getNextBookID();
+                    },
+                    error: function (error) {
+                        console.log(error.responseJSON.message)
+                        alert(error.responseJSON.message);
+                    }
+                });
+            } else {
+                alert("Not all slip images have been saved. Please make sure all images are uploaded.");
+            }
+
         },
         error: function (error) {
             console.log("Error fetching data: " + error);
