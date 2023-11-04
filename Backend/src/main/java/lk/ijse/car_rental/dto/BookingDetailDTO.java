@@ -1,5 +1,6 @@
 package lk.ijse.car_rental.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lk.ijse.car_rental.entity.Booking;
 import lk.ijse.car_rental.entity.Vehicle;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,8 @@ public class BookingDetailDTO {
     private double lossDamage;
     private String slipName;
 
+    @JsonIgnore
     private BookingDTO booking;
+    @JsonIgnore
     private VehicleDTO vehicle;
 }

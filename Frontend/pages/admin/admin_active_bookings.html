@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pending Bookings</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width initial-scale=1" name="viewport">
+
+    <!-- Stylesheets -->
+    <link href="../../assets/css/normalize.css" rel="stylesheet">
+
+    <!-- boostrap -->
+    <link href="../../assets/boostrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- fontawsome -->
+    <link href="../../assets/fontawsome/css/all.min.css" rel="stylesheet">
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Gabarito&family=Kanit:wght@100;200;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Kanit', sans-serif;
+        }
+
+        /* Override all input field colors */
+        .modal-body input[type="text"],
+        .modal-body input[type="password"],
+        .modal-body input[type="email"] {
+            background-color: #dadada !important;
+            color: #050505 !important;
+        }
+
+        .custom-navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-white">
+<!-- nav bar ============================================= -->
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar ">
+    <div class="container-fluid">
+        <a class="navbar-brand">Easy Car Rental</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active"><a href="admin_dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item active"><a href="admin_manage_customer.html" class="nav-link">Customer</a></li>
+                <li class="nav-item active"><a href="admin_pending_customers.html" class="nav-link">Pending
+                    Customers</a></li>
+                <li class="nav-item active"><a href="#" class="nav-link">Drivers</a></li>
+                <li class="nav-item active"><a href="#" class="nav-link">Vehicles</a></li>
+                <li class="nav-item active"><a href="#" class="nav-link">Payment</a></li>
+            </ul>
+            <span class="navbar-text">
+                <button id="profileButton" type="button" style="background: none; border: none; padding: 0;"
+                        data-bs-toggle="modal" data-bs-target="#Logged">
+                        <img src="../../assets/img/profile.png" width="30%" alt="Profile Image">
+                </button>
+            </span>
+        </div>
+    </div>
+</nav>
+<!-- ============================================= nav bar END -->
+
+<!-- Logged Modal ============================================= -->
+<div class="modal fade" id="Logged" tabindex="-1" aria-labelledby="LoggedLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="LoggedLabel"> Admin </h1>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!--logout-->
+                <div class="row mb-3">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                        <button id="btnLogout" type="button" class="btn btn-info float-end"
+                                data-bs-dismiss="modal">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= Logged Modal END -->
+
+<!-- pending bookings table ============================= -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Pending Bookings</h4>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group m-1">
+                <input type="text" id="search" class="form-control" placeholder="Search...">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-info" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered text-white">
+        <thead>
+        <tr>
+            <th>Book Id</th>
+            <th>Book Date</th>
+            <th>UserId</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+
+    <nav>
+        <ul class="pagination" id="pagination"></ul>
+    </nav>
+</div>
+<!-- ============================= pending bookings table END -->
+
+<!-- pending bookings details Modal ============================================= -->
+<div class="modal fade" id="moreInfo" tabindex="-1" aria-labelledby="moreModalLabel" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="moreModalLabel"> Booking </h1>
+
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row mb-6" id="details">
+                            <!--booking details-->
+                        </div>
+                    </div>
+                   <!-- <div class="col-sm-6">
+                        &lt;!&ndash;<div class="row mb-3">
+                            <div class="col-sm-3 text-light">
+                                <label id="id_img_front_label" class="form-label">Slip</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <img class="enlargeableImg" width="50%"
+                                     id="id_img_front" alt="id_img_front" style="cursor: zoom-in;">
+                            </div>
+                        </div>&ndash;&gt;
+                    </div>-->
+                </div>
+
+                <hr>
+
+                <div class="row justify-content-center">
+                    <div class="row mb-3 text-end">
+                        <div class="col">
+                           <!-- <button type="button" class="btn btn-outline-danger" id="decline"
+                                    data-bs-toggle="modal" data-bs-target="#declinedReason"> Decline
+                            </button>
+                            <button type="button" class="btn btn-outline-info" id="approve">Approve</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= customer details modal END -->
+
+<!-- Decline Reason Modal ============================================= -->
+<div class="modal fade" id="declinedReason" tabindex="-1" aria-labelledby="declinedReasonModalLabel" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header bg-dark">
+                <h1 class="modal-title fs-5" id="declinedReasonModalLabel"> Rejected Reason </h1>
+
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <input class="form-control" id="rejected_reason" type="text">
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-outline-info" id="send"><i class="fas fa-paper-plane"></i> Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================= Decline Reason Modal END -->
+
+<!-- scripts ============================================= -->
+<script src="../../assets/js/jquery-3.6.1.min.js"></script>
+<script src="../../assets/boostrap/js/bootstrap.js"></script>
+<script src="../../controller/admin/admin_active_bookings_controller.js"></script>
+<script src="../../assets/js/common-js.js"></script>
+<!-- ============================================= scripts END -->
+</body>
+</html>

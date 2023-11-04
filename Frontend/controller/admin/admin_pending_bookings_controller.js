@@ -29,7 +29,7 @@ function updateTable() {
             updatePagination();
         },
         error: function (error) {
-            console.log("Error fetching data: " + error);
+            console.log(error)
         }
     });
 }
@@ -49,16 +49,19 @@ function displayData() {
 
     dataToDisplay.forEach((booking) => {
         const row = document.createElement("tr");
+
+        const bookingDetailsHtml = booking.bookingDetails.map((detail) => {
+            return ` Driver : ${detail.driverId} | Vehicle: ${detail.vid} | Loss damage : ${detail.lossDamage}`;
+        }).join('<br>');
+
         row.innerHTML = `
-                <td>${booking.bookId}</td>
-                <td>${new Date(booking.bookDate).toLocaleDateString()}</td>
-                <td>${booking.bookTime}</td>
-                <td>${booking.userId}</td>
-                <td>${booking.driverId}</td>
-                <td>${booking.loosDamage}</td>
-                <td><button class="btn btn-outline-info btn-sm more-button" data-bs-toggle="modal"
-            data-bs-target="#moreInfo"> <i class="fas fa-ellipsis-h"></i>  More</button></td>
-            `;
+        <td>${booking.bookId}</td>
+        <td>${new Date(booking.bookDate).toLocaleDateString()}</td>
+        <td>${booking.userId}</td>
+        <td>${bookingDetailsHtml}</td>
+        <td><button class="btn btn-outline-info btn-sm more-button" data-bs-toggle="modal"
+        data-bs-target="#moreInfo"> <i class="fas fa-ellipsis-h"></i>  More</button></td>
+    `;
         tableBody.appendChild(row);
     });
 }
@@ -84,6 +87,12 @@ $("#table-body").on("click", ".more-button", function (event) {
 
         // Update the modal
         updateModal(Booking);
+
+        // load images
+        $('img[data-image-name]').each(function () {
+            const imageName = $(this).attr('data-image-name');
+            loadImages(imageName, $(this));
+        });
     }
 });
 
@@ -102,11 +111,19 @@ function updateModal(Booking) {
         <td>:</td>
         <td><span style="color: #00f1ff">${new Date(Booking.bookDate).toLocaleDateString()}</span></td>
       </tr>
-      <tr>
-        <td>Book time</td>
-        <td>:</td>
-        <td><span style="color: #00f1ff">${Booking.bookTime}</span></td>
-      </tr>
+      
+        <tr>
+          <td>Description</td>
+          <td>:</td>
+          <td>
+            <span style="color: #00f1ff">
+              ${Booking.bookingDetails.map((detail) => {
+        return `Driver: ${detail.driverId} <br> Vehicle: ${detail.vid} <br> Loss damage: ${detail.lossDamage} <br> Slip Image: <img src="" alt="${detail.slipName}" data-image-name="${detail.slipName}" width="50%">`;
+    }).join('<br>')}
+            </span>
+          </td>
+        </tr>
+
       
       <tr>
         <td>User Name</td>
@@ -128,35 +145,11 @@ function updateModal(Booking) {
          <td>:</td>
         <td><span style="color: #00f1ff">${Booking.user.address}</span></td>
       </tr>
-      
-      <tr>
-        <td>Driver(s)</td>
-         <td>:</td>
-        <td><span style="color: #00f1ff">${Booking.driverId}</span></td>
-      </tr>
-      <tr>
-        <td>Loss Damage</td>
-         <td>:</td>
-        <td><span style="color: #00f1ff">${Booking.loosDamage}</span></td>
-      </tr>
+    
     </table>
   `;
 
     detailsContainer.html(bookingHtml);
-}
-
-///////////// loadImages
-function loadImages(imageName, imgElement) {
-    $.ajax({
-        url: baseURL + 'user/get_image/' + imageName,
-        method: 'GET',
-        success: function (response) {
-            imgElement.attr('src', "data:image/jpeg;base64," + response);
-        },
-        error: function (error) {
-            console.log("Error loading image: " + error);
-        }
-    });
 }
 
 ///////////////////// table search
@@ -209,3 +202,17 @@ $('#approve').click(function () {
         }
     });
 });
+
+///////////////////// load slip images
+function loadImages(imageName, imgElement) {
+    $.ajax({
+        url: baseURL + 'booking/get_image/' + imageName,
+        method: 'GET',
+        success: function (response) {
+            imgElement.attr('src', "data:image/jpeg;base64," + response);
+        },
+        error: function (error) {
+            console.log("Error loading image: " + error);
+        }
+    });
+}

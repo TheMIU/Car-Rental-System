@@ -1,5 +1,6 @@
 package lk.ijse.car_rental.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,7 @@ public class BookingDetail implements Serializable {
     @ManyToOne
     @JoinColumn(name = "bookId", referencedColumnName = "bookId", insertable = false, updatable = false)
     private Booking booking;
-
+    
     @ManyToOne
     @JoinColumn(name = "vid", referencedColumnName = "vid", insertable = false, updatable = false)
     private Vehicle vehicle;
