@@ -24,6 +24,7 @@ public class UserController {
     // get next user id
     @GetMapping("/next_id")
     public ResponseUtil getNextUserId() {
+        System.out.println(service.getNextUserID());
         return new ResponseUtil("Ok", "Get next user id Success", service.getNextUserID());
     }
 

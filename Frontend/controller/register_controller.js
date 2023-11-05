@@ -22,6 +22,7 @@ function getLoggedCustomer(loginId) {
 
 // get next id
 $("#registerBtn").on("click", function () {
+    console.log('Register')
     $.ajax({
         type: "GET",
         url: baseURL + "user/next_id",
