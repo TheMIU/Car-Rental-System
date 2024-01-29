@@ -4,7 +4,7 @@ const baseURL = 'http://localhost:8080/Backend_war/';
 ////////// logout navigation
 $('#btnLogout').click(function () {
     let rootLocation = window.location.origin;
-    let relativeURL = '../Car%20Rental%20System/Frontend/index.html';
+    let relativeURL = '../Car-Rental-System/Frontend/index.html';
     let absoluteURL = rootLocation + '/' + relativeURL;
     console.log(absoluteURL);
 
