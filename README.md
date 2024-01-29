@@ -1,13 +1,13 @@
 # Car Rental System
 Car Rental System using Spring
 
-####Frontend: 
+#### Frontend: 
 * Boostrap
 * HTML
 * CSS
 * JavaScript
 
-####Backend: 
+#### Backend: 
 * Spring
 * Java
 
